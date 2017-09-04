@@ -79,28 +79,28 @@ class GBPD:
                     cordinate_1[0], cordinate_1[1], cordinate_1[2], cordinate_1[3] + cordinate_2[3])
 
         # Clean Directory
-        [self.IMPORT_MANAGER.os.remove("custom_test/cutted/" + x) for x in self.IMPORT_MANAGER.os.listdir("custom_test/cutted/")]
+        [self.IMPORT_MANAGER.os.remove("Outdoor_Object_Recognition_Engine/custom_test/cutted/" + x) for x in self.IMPORT_MANAGER.os.listdir("Outdoor_Object_Recognition_Engine/custom_test/cutted/")]
 
         # Run the 2nd wave predictions for the combined images
         for i, (key, value) in enumerate(combined_grid.items()):
             x, y, w, h = value
             image = image_array[y: y + h, x: x + w]
-            path = "custom_test/cutted/" + str(i) + ".jpg"
+            path = "Outdoor_Object_Recognition_Engine/custom_test/cutted/" + str(i) + ".jpg"
             self.IMPORT_MANAGER.imutils.imsave(path, image)
 
             pred = self.predict_for_single_image(self.preprocess_image(path))
             self.IMPORT_MANAGER.os.remove(path)
-            self.IMPORT_MANAGER.imutils.imsave("custom_test/cutted/" + str(i) + "_" + pred + ".jpg", image)
+            self.IMPORT_MANAGER.imutils.imsave("Outdoor_Object_Recognition_Engine/custom_test/cutted/" + str(i) + "_" + pred + ".jpg", image)
 
         fig, ax = self.IMPORT_MANAGER.plt.subplots(1)
-        ax.imshow(image_array)
+        #ax.imshow(image_array)
 
         for key, value in combined_grid.items():
             x, y, w, h = value
             rect = self.IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=2, edgecolor='g', facecolor='none')
-            ax.add_patch(rect)
+            #ax.add_patch(rect)
 
-        self.IMPORT_MANAGER.plt.show()
+        #self.IMPORT_MANAGER.plt.show()
 
     # Loads the image and the classifier
     def load_image_and_classifier(self):
