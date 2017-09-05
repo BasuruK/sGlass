@@ -20,7 +20,7 @@ class GBPD:
 
         self.new_image = image_stream
 
-        # if 100 x 100 window were to slide thought the image, identify the parameters for the loop condition
+        # if N x M window were to slide thought the image, identify the parameters for the loop condition
         slide_window_height_and_width = (256, 256)
 
         # Convert the image in to an numpy array
@@ -40,13 +40,9 @@ class GBPD:
             for col in range(0, col_count_after_substraction):
                 # Change the X and Y locations respectively to add the sliding window effect.
                 cropped_image = image_array[y: y + h, x: x + w]
-
                 image_cordinates_grid[str(count) + '_rect'] = (x, y, w, h)
-
                 cropped_image = self.preprocess_image(cropped_image)
-
                 image_cordinates_grid[str(count) + '_prediction'] = self.predict_for_single_image(cropped_image)
-
                 x += w
                 count += 1
             x = 0
@@ -74,6 +70,16 @@ class GBPD:
                     print("Extreme Case of Y Join Found")
                     combined_grid[str(i) + '_rect'] = (
                         cordinate_1[0], cordinate_1[1], cordinate_1[2], cordinate_1[3] + cordinate_2[3])
+
+        # Run Final Prediction for the Bounding Boxes found from GBPD algorithm
+        bounding_boxes = [_,self.IMPORT_MANAGER.np.zeros()]
+        for key, vlaue in combined_grid.items():
+
+
+        return combined_grid
+
+
+
 
     # Returns the labels for the classes according to the folder structure of classes
     @staticmethod
