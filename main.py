@@ -3,11 +3,11 @@ import time
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 
 # Initiate Outdoor Object Recognition Module
-Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (512, 512))
+Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (256, 256))
 
 start_time = time.time()
 
-image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/cat.sandamini.jpg')
+image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/cat.12.jpg')
 image_coordinates_with_predictions = Grid_based_probability_detection.main(image_stream=image_stream)
 
 print("GBPD algorithm Execution Time: ", time.time() - start_time)
