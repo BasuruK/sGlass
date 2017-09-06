@@ -2,6 +2,7 @@ class GBPD:
     IMPORT_MANAGER = None
     new_image = None
     classifier = None
+    output_bounding_boxes = None
 
     def __init__(self, imports, classifier):
         self.IMPORT_MANAGER = imports
@@ -12,6 +13,7 @@ class GBPD:
         del self.IMPORT_MANAGER
         del self.new_image
         del self.classifier
+        del self.output_bounding_boxes
 
     # Execute Main Functionality
     def main(self, image_stream):
@@ -41,7 +43,7 @@ class GBPD:
                 # Change the X and Y locations respectively to add the sliding window effect.
                 cropped_image = image_array[y: y + h, x: x + w]
                 image_cordinates_grid[str(count) + '_rect'] = (x, y, w, h)
-                cropped_image = self.preprocess_image(cropped_image)
+                cropped_image = self.prepossess_image(cropped_image)
                 image_cordinates_grid[str(count) + '_prediction'] = self.predict_for_single_image(cropped_image)
                 x += w
                 count += 1
@@ -72,14 +74,14 @@ class GBPD:
                         cordinate_1[0], cordinate_1[1], cordinate_1[2], cordinate_1[3] + cordinate_2[3])
 
         # Run Final Prediction for the Bounding Boxes found from GBPD algorithm
-        bounding_boxes = [_,self.IMPORT_MANAGER.np.zeros()]
-        for key, vlaue in combined_grid.items():
+        self.output_bounding_boxes = [len(combined_grid)]
+        for key, value in combined_grid.items():
+            x, y, w, h = value
+            prediction = self.prepossess_image(image_array[y: y + h, x: x + w])
+            prediction = self.predict_for_single_image(prediction)
+            self.output_bounding_boxes.append((prediction, self.IMPORT_MANAGER.np.array([x, y, w, h])))
 
-
-        return combined_grid
-
-
-
+        return self.output_bounding_boxes
 
     # Returns the labels for the classes according to the folder structure of classes
     @staticmethod
@@ -96,7 +98,7 @@ class GBPD:
         return labels[out[0]]
 
     # Pre-process image
-    def preprocess_image(self, cropped_image_array):
+    def prepossess_image(self, cropped_image_array):
         cropped_image = self.IMPORT_MANAGER.Image.fromarray(cropped_image_array)
         cropped_image = cropped_image.resize((64, 64))
         cropped_image = self.IMPORT_MANAGER.keras_preprocess.img_to_array(cropped_image)
