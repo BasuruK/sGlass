@@ -3,10 +3,12 @@ class GBPD:
     new_image = None
     classifier = None
     output_bounding_boxes = None
+    window_size = None
 
-    def __init__(self, imports, classifier):
+    def __init__(self, imports, classifier, window_size=(256, 256)):
         self.IMPORT_MANAGER = imports
         self.classifier = classifier
+        self.window_size = window_size
         print("Imports Loaded Successfully")
 
     def __del__(self):
@@ -14,6 +16,7 @@ class GBPD:
         del self.new_image
         del self.classifier
         del self.output_bounding_boxes
+        del self.window_size
 
     # Execute Main Functionality
     def main(self, image_stream):
@@ -23,7 +26,7 @@ class GBPD:
         self.new_image = image_stream
 
         # if N x M window were to slide thought the image, identify the parameters for the loop condition
-        slide_window_height_and_width = (256, 256)
+        slide_window_height_and_width = self.window_size
 
         # Convert the image in to an numpy array
         image_array = self.IMPORT_MANAGER.np.array(self.new_image)
@@ -92,10 +95,12 @@ class GBPD:
     # Run prediction for a single image
     def predict_for_single_image(self, image):
         # label the images according the folder structure
-
         labels = self.get_labels_for_classes()
-        out = self.classifier.predict_classes(image, verbose=0)
-        return labels[out[0]]
+        out = self.classifier.predict(image, verbose=0)[0]
+        index = self.classifier.predict_classes(image, verbose=0)
+        out = [(format(x * 100, '.2f') + "%") for x in out]
+        out = ' '.join(list(zip(labels, out))[index[0]])
+        return out
 
     # Pre-process image
     def prepossess_image(self, cropped_image_array):
