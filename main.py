@@ -7,7 +7,7 @@ Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_o
 
 start_time = time.time()
 
-image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/cat.12.jpg')
+image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/dog.6.jpg')
 image_coordinates_with_predictions = Grid_based_probability_detection.main(image_stream=image_stream)
 
 print("GBPD algorithm Execution Time: ", time.time() - start_time)
