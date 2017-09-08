@@ -1,4 +1,6 @@
 """
+Author : Balasuriya B.K | IT14020254
+
 Grid Based Probability Detection is a method proposed to address identifying multiple objects in a scene.
 The algorithm applies a sliding window mechanism with the help of a powerful image classifier to filter
 object locations.
