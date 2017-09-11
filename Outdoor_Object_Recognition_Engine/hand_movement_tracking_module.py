@@ -7,7 +7,7 @@ applying color detection + skin detection algorithms to extract out the hand.
 @DRAWBACKS :- The detection algorithm changes its values based on the skin color, only one type of skin color can
 operate the system at a particular time, and only able to detect single hand.
 
-TODO: OPTIMIZE THE DETECTION ALGORITHMS, GET A CLEANED OUTPUT
+TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
 """
 
 import cv2
@@ -20,108 +20,116 @@ class TrackHand:
     blurValue = None
     threshold = None
     objectColor = None
+    camera = None
+    cameraController = None
 
-    def __init__(self, threshold):
-        self.blurValue = 5
+    def __init__(self, threshold=70, camera=0, blur_value=21):
+        self.blurValue = 21
         self.threshold = threshold
+        self.camera = camera
+        self.blurValue = blur_value
+        self.cameraController = cv2.VideoCapture(self.camera)
 
     def main(self):
 
-        cap = cv2.VideoCapture(0)
-
         while True:
-            _, self.frame = cap.read()
 
-            frame = cv2.flip(self.frame, 1)
+            if self.objectColor is None:
+                # Checking if the color profile is already saved
+                self.objectColor = self.get_hsv_of_hand()
 
-            self.objectColor = self.get_hsv_of_hand()
-            # TODO wait till the upper method executes and try to put complex functions in to methods
-            hsv_color = cv2.cvtColor(self.object_color, cv2.COLOR_BGR2HSV)
+            elif self.objectColor is not None:
 
-            object_histogram = cv2.calcHist([hsv_color], [0, 1], None, [12, 15], [0, 180, 0, 256])
+                _, self.frame = self.cameraController.read()
+                self.frame = cv2.flip(self.frame, 1)
 
-            cv2.normalize(object_histogram, object_histogram, 0, 255, cv2.NORM_MINMAX)
+                hsv_frame, object_histogram = self.get_hsv_of_frame()
 
-            hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                object_segment = cv2.calcBackProject([hsv_frame], [0, 1], object_histogram, [0, 180, 0, 256], 1)
+                disc = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+                cv2.filter2D(object_segment, -1, disc, object_segment)
+                _, threshold_object_segment = cv2.threshold(object_segment, self.threshold, 255, cv2.THRESH_BINARY)
 
-            object_segment = cv2.calcBackProject([hsv_frame], [0, 1], object_histogram, [0, 180, 0, 256], 1)
-            disc = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-            cv2.filter2D(object_segment, -1, disc, object_segment)
+                threshold_object_segment = cv2.merge(
+                    (threshold_object_segment, threshold_object_segment, threshold_object_segment))
 
-            _, threshold_object_segment = cv2.threshold(object_segment, 70, 255, cv2.THRESH_BINARY)
+                located_object = cv2.bitwise_and(self.frame, threshold_object_segment)
+                located_object_gray = cv2.cvtColor(located_object, cv2.COLOR_BGR2GRAY)
+                _, located_object_thresh = cv2.threshold(located_object_gray, self.threshold, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-            threshold_object_segment = cv2.merge(
-                (threshold_object_segment, threshold_object_segment, threshold_object_segment))
-            located_object = cv2.bitwise_and(frame, threshold_object_segment)
+                # located_object = cv2.GaussianBlur(located_object_thresh, (5, 5), 0, located_object_thresh)
+                located_object = cv2.medianBlur(located_object_thresh, self.blurValue)
 
-            located_object_gray = cv2.cvtColor(located_object, cv2.COLOR_BGR2GRAY)
+                # res = cv2.bitwise_and(self.frame, self.frame, mask=located_object)
 
-            _, located_object_thresh = cv2.threshold(located_object_gray, 70, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                im2, contours, hierarchy = cv2.findContours(located_object, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-            located_object = cv2.GaussianBlur(located_object_thresh, (5, 5), 0, located_object_thresh)
-            # located_object = cv2.medianBlur(located_object_thresh, 5)
+                if self.get_max_contour(contours) is not None:
 
-            res = cv2.bitwise_and(frame, frame, mask=located_object)
+                    max_contours = contours[self.get_max_contour(contours)]
+                    hull = cv2.convexHull(max_contours)
+                    defects = self.get_defects(max_contours)
+                    centroid = self.get_centroid(max_contours)
+                    # cv2.drawContours(frame, [max_contours], 0, (255,150,0) ,3)
+                    # cv2.drawContours(self.frame, [hull], 0, (255, 150, 0), 3)
 
-            im2, contours, hierarchy = cv2.findContours(located_object, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+                    for i in range(defects.shape[0]):
+                        s, e, f, d = defects[i, 0]
+                        start = tuple(max_contours[s][0])
+                        end = tuple(max_contours[e][0])
+                        far = tuple(max_contours[f][0])
 
-            if self.get_max_contour(contours) is not None:
+                        # cv2.arrowedLine(self.frame, far, start, [128, 255, 120], 2)
+                        # cv2.circle(self.frame, far, 5, [0, 0, 255], -1)
+                        cv2.circle(self.frame, centroid, 5, [128, 128, 128], -1)
 
-                max_contours = contours[self.get_max_contour(contours)]
-                hull = cv2.convexHull(max_contours)
-                defects = self.get_defects(max_contours)
-                centroid = self.get_centroid(max_contours)
-                # cv2.drawContours(frame, [max_contours], 0, (255,150,0) ,3)
-                cv2.drawContours(frame, [hull], 0, (255, 150, 0), 3)
+                        cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
 
-                for i in range(defects.shape[0]):
-                    s, e, f, d = defects[i, 0]
-                    start = tuple(max_contours[s][0])
-                    end = tuple(max_contours[e][0])
-                    far = tuple(max_contours[f][0])
-                    # cv2.line(frame,start,end,[0,255,0],2)
-                    # cv2.circle(frame,far,5,[0,0,255],-1)
+                    if centroid is not None and defects is not None and len(defects) > 0:
+                        furthest_point = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
 
-                if centroid is not None and defects is not None and len(defects) > 0:
-                    furthest_point = self.get_furthest_point(defects, max_contours, centroid)
+                        if furthest_point is not None:
+                            cv2.circle(self.frame, furthest_point, 5, [0, 255, 0], -1)
+                            cv2.arrowedLine(self.frame, centroid, furthest_point, [128, 255, 120], 2)
+                            cv2.putText(self.frame, "Furthest Point", furthest_point, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (51, 153, 255),
+                                       1, cv2.LINE_AA)
 
-                    if furthest_point is not None:
-                        cv2.circle(frame, furthest_point, 5, [0, 255, 0], -1)
-
-            cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
-
-            cv2.resizeWindow('Frame', 1024, 768)
-
-            cv2.imshow("Frame", frame)
-            if cv2.waitKey(1) == 13:
-                break
+                cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
+                cv2.resizeWindow('Frame', 1024, 768)
+                cv2.imshow("Frame", self.frame)
+                if cv2.waitKey(1) == 13:
+                    break
 
         cv2.destroyAllWindows()
-        cap.release()
+        self.cameraController.release()
 
-    @staticmethod
+    # Returns the HSV converted Frame obtained from the camera
+    def get_hsv_of_frame(self):
+        hsv_color = cv2.cvtColor(self.objectColor, cv2.COLOR_BGR2HSV)
+        object_histogram = cv2.calcHist([hsv_color], [0, 1], None, [12, 15], [0, 180, 0, 256])
+        cv2.normalize(object_histogram, object_histogram, 0, 255, cv2.NORM_MINMAX)
+        hsv_frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
+        return hsv_frame, object_histogram
+
+    # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
 
-        cap = cv2.VideoCapture(0)
-
         while True:
-            _, frame = cap.read()
-
+            _, frame = self.cameraController.read()
             frame = cv2.flip(frame, 1)
-
             cv2.putText(frame, "Please put your hand in the box", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (255, 0, 0),
                         1, cv2.LINE_AA)
-            cv2.rectangle(frame, (100, 100), (150, 150), (255, 0, 255), 2)
+            cv2.rectangle(frame, (200, 200), (250, 250), (255, 0, 255), 2)
             cv2.imshow("frame", frame)
 
             if cv2.waitKey(1) == 13:
-                object_color = frame[100:150, 100:150]
+                object_color = frame[200:250, 200:250]
                 cv2.destroyAllWindows()
-                cap.release()
                 return object_color
 
+    # Returns the Contour with the maximum area
     @staticmethod
-    def get_max_contour(self, contours):
+    def get_max_contour(contours):
         # Returns the contour with maximum area
         length = len(contours)
         maxArea = -1
@@ -137,8 +145,9 @@ class TrackHand:
         else:
             return None
 
+    # Returns Convexity Defects in a given Contour
     @staticmethod
-    def get_defects(self, contour):
+    def get_defects(contour):
         hull = cv2.convexHull(contour, returnPoints=False)
         if hull is not None and len(hull) > 3 and len(contour) > 3:
             defects = cv2.convexityDefects(contour, hull)
@@ -146,8 +155,9 @@ class TrackHand:
         else:
             return None
 
+    # Returns the furthest Point in a given Convex Hull
     @staticmethod
-    def get_furthest_point(self, defects, contour, centroid):
+    def get_furthest_point(defects, contour, centroid):
         s = defects[:, 0][:, 0]
         cx, cy = centroid
 
@@ -167,8 +177,9 @@ class TrackHand:
         else:
             return None
 
+    # Returns the middle point of the contour
     @staticmethod
-    def get_centroid(self, contour):
+    def get_centroid(contour):
         moments = cv2.moments(contour)
         if moments['m00'] != 0:
             cx = int(moments['m10'] / moments['m00'])
@@ -176,3 +187,6 @@ class TrackHand:
             return cx, cy
         else:
             return None
+
+xx = TrackHand(70, 0)
+xx.main()
