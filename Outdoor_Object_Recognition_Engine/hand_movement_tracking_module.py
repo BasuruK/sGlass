@@ -113,7 +113,6 @@ class TrackHand:
 
     # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
-
         while True:
             _, frame = self.cameraController.read()
             frame = cv2.flip(frame, 1)
@@ -133,7 +132,7 @@ class TrackHand:
         # Returns the contour with maximum area
         length = len(contours)
         maxArea = -1
-        ci= - 1
+        ci = - 1
         if length > 0:
             for i in range(length):
                 temp = contours[i]

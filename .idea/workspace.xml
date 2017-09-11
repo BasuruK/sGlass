@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e10b1147-1fe7-4a5d-85ba-1d834e68b4ac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Basuru_Kusal.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Basuru_Kusal.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/hand_movement_tracking_module.py" afterPath="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/hand_movement_tracking_module.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,7 +15,7 @@
     <SUITE FILE_PATH="coverage/sGlass$ss.coverage" NAME="ss Coverage Results" MODIFIED="1505117215534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
     <SUITE FILE_PATH="coverage/sGlass$Unnamed.coverage" NAME="main Coverage Results" MODIFIED="1504533676571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/sGlass$train_CNN.coverage" NAME="train_CNN Coverage Results" MODIFIED="1504534258247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
-    <SUITE FILE_PATH="coverage/sGlass$hand_movement_tracking_module.coverage" NAME="hand_movement_tracking_module Coverage Results" MODIFIED="1505152490212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
+    <SUITE FILE_PATH="coverage/sGlass$hand_movement_tracking_module.coverage" NAME="hand_movement_tracking_module Coverage Results" MODIFIED="1505153013002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
     <SUITE FILE_PATH="coverage/sGlass$main.coverage" NAME="main Coverage Results" MODIFIED="1504724198141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/sGlass$imports__1_.coverage" NAME="imports (1) Coverage Results" MODIFIED="1504628109532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/sGlass$imports.coverage" NAME="imports Coverage Results" MODIFIED="1504532725004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -42,8 +40,8 @@
       <file leaf-file-name="hand_movement_tracking_module.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/hand_movement_tracking_module.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+            <state relative-caret-position="1099">
+              <caret line="114" column="30" lean-forward="false" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
               <folding>
                 <element signature="e#488#498#0" expanded="true" />
               </folding>
@@ -962,8 +960,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/hand_movement_tracking_module.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+        <state relative-caret-position="1099">
+          <caret line="114" column="30" lean-forward="false" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
           <folding>
             <element signature="e#488#498#0" expanded="true" />
           </folding>
