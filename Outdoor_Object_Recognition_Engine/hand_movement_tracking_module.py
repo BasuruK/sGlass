@@ -23,12 +23,24 @@ class TrackHand:
     camera = None
     cameraController = None
 
+    # Temporary Property
+    objectHistogram = None
+
     def __init__(self, threshold=70, camera=0, blur_value=21):
-        self.blurValue = 21
+        self.blurValue = blur_value
         self.threshold = threshold
         self.camera = camera
         self.blurValue = blur_value
         self.cameraController = cv2.VideoCapture(self.camera)
+
+    def __del__(self):
+        del self.frame
+        del self.blurValue
+        del self.threshold
+        del self.objectColor
+        del self.camera
+        del self.cameraController
+        del self.objectHistogram
 
     def main(self):
 
@@ -36,18 +48,19 @@ class TrackHand:
 
             if self.objectColor is None:
                 # Checking if the color profile is already saved
-                self.objectColor = self.get_hsv_of_hand()
+                self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
 
             elif self.objectColor is not None:
 
                 _, self.frame = self.cameraController.read()
                 self.frame = cv2.flip(self.frame, 1)
 
-                hsv_frame, object_histogram = self.get_hsv_of_frame()
+                hsv_frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
 
-                object_segment = cv2.calcBackProject([hsv_frame], [0, 1], object_histogram, [0, 180, 0, 256], 1)
+                object_segment = cv2.calcBackProject([hsv_frame], [0, 1], self.objectHistogram, [0, 180, 0, 256], 1)
                 disc = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
                 cv2.filter2D(object_segment, -1, disc, object_segment)
+
                 _, threshold_object_segment = cv2.threshold(object_segment, self.threshold, 255, cv2.THRESH_BINARY)
 
                 threshold_object_segment = cv2.merge(
@@ -97,19 +110,12 @@ class TrackHand:
                 cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
                 cv2.resizeWindow('Frame', 1024, 768)
                 cv2.imshow("Frame", self.frame)
+                cv2.imshow("Thresh", located_object)
                 if cv2.waitKey(1) == 13:
                     break
 
         cv2.destroyAllWindows()
         self.cameraController.release()
-
-    # Returns the HSV converted Frame obtained from the camera
-    def get_hsv_of_frame(self):
-        hsv_color = cv2.cvtColor(self.objectColor, cv2.COLOR_BGR2HSV)
-        object_histogram = cv2.calcHist([hsv_color], [0, 1], None, [12, 15], [0, 180, 0, 256])
-        cv2.normalize(object_histogram, object_histogram, 0, 255, cv2.NORM_MINMAX)
-        hsv_frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
-        return hsv_frame, object_histogram
 
     # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
@@ -119,12 +125,20 @@ class TrackHand:
             cv2.putText(frame, "Please put your hand in the box", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (255, 0, 0),
                         1, cv2.LINE_AA)
             cv2.rectangle(frame, (200, 200), (250, 250), (255, 0, 255), 2)
+            cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
+            cv2.resizeWindow('frame', 1024, 768)
             cv2.imshow("frame", frame)
 
             if cv2.waitKey(1) == 13:
                 object_color = frame[200:250, 200:250]
                 cv2.destroyAllWindows()
-                return object_color
+                # Convert object color in to HSV range
+                hsv_color = cv2.cvtColor(object_color, cv2.COLOR_BGR2HSV)
+                # Calculate the Histogram
+                object_histogram = cv2.calcHist([hsv_color], [0, 1], None, [12, 15], [0, 180, 0, 256])
+                # Normalize the Histogram
+                object_histogram = cv2.normalize(object_histogram, object_histogram, 0, 255, cv2.NORM_MINMAX)
+                return object_color, object_histogram
 
     # Returns the Contour with the maximum area
     @staticmethod
@@ -187,5 +201,5 @@ class TrackHand:
         else:
             return None
 
-xx = TrackHand(70, 0)
+xx = TrackHand(70, 0, 11)
 xx.main()
