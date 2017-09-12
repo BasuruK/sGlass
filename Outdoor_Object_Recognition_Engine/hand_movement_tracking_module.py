@@ -8,6 +8,8 @@ applying color detection + skin detection algorithms to extract out the hand.
 operate the system at a particular time, and only able to detect single hand.
 
 TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
+TODO: Identify the color profile first at the beginning of the program and then use that to Track the hand, this way it
+is easier to capture the input quickly when the Speech Recognition Module is integrated
 """
 
 import cv2
@@ -22,6 +24,7 @@ class TrackHand:
     objectColor = None
     camera = None
     cameraController = None
+    furthestPoint = None
 
     # Temporary Property
     objectHistogram = None
@@ -41,6 +44,7 @@ class TrackHand:
         del self.camera
         del self.cameraController
         del self.objectHistogram
+        del self.furthestPoint
 
     def main(self):
 
@@ -95,17 +99,17 @@ class TrackHand:
                         # cv2.arrowedLine(self.frame, far, start, [128, 255, 120], 2)
                         # cv2.circle(self.frame, far, 5, [0, 0, 255], -1)
                         cv2.circle(self.frame, centroid, 5, [128, 128, 128], -1)
-
                         cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
 
                     if centroid is not None and defects is not None and len(defects) > 0:
-                        furthest_point = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
+                        self.furthestPoint = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
 
-                        if furthest_point is not None:
-                            cv2.circle(self.frame, furthest_point, 5, [0, 255, 0], -1)
-                            cv2.arrowedLine(self.frame, centroid, furthest_point, [128, 255, 120], 2)
-                            cv2.putText(self.frame, "Furthest Point", furthest_point, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (51, 153, 255),
+                        if self.furthestPoint is not None:
+                            cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
+                            cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
+                            cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (51, 153, 255),
                                        1, cv2.LINE_AA)
+                            print("Furthest Point", self.furthestPoint)
 
                 cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
                 cv2.resizeWindow('Frame', 1024, 768)
@@ -117,6 +121,10 @@ class TrackHand:
         cv2.destroyAllWindows()
         self.cameraController.release()
 
+    # Returns the Finger tip location at the current frame
+    def get_finger_tip_location(self):
+        return self.furthestPoint
+
     # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
         while True:
@@ -124,13 +132,13 @@ class TrackHand:
             frame = cv2.flip(frame, 1)
             cv2.putText(frame, "Please put your hand in the box", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (255, 0, 0),
                         1, cv2.LINE_AA)
-            cv2.rectangle(frame, (200, 200), (250, 250), (255, 0, 255), 2)
+            cv2.rectangle(frame, (200, 200), (300, 300), (255, 0, 255), 2)
             cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
             cv2.resizeWindow('frame', 1024, 768)
             cv2.imshow("frame", frame)
 
             if cv2.waitKey(1) == 13:
-                object_color = frame[200:250, 200:250]
+                object_color = frame[200:300, 200:300]
                 cv2.destroyAllWindows()
                 # Convert object color in to HSV range
                 hsv_color = cv2.cvtColor(object_color, cv2.COLOR_BGR2HSV)
@@ -201,5 +209,5 @@ class TrackHand:
         else:
             return None
 
-xx = TrackHand(70, 0, 11)
+xx = TrackHand(70, 0, 21)
 xx.main()
