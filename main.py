@@ -1,7 +1,9 @@
 import imports as IMPORT_MANAGER
 import time
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
-
+'''
+TODO: Attach the hand recognition module to main
+'''
 # Initiate Outdoor Object Recognition Module
 Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (256, 256))
 
