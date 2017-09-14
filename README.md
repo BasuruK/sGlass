@@ -1,6 +1,7 @@
 # Project sGlass :eyeglasses:
 ## A Learning Platform for Visually Impaired :books:
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]() [![AUR](https://img.shields.io/aur/license/yaourt.svg)]()
+
 **sGlass** is a platform designed for Visually Impaired Children to support them though theier lerning tasks.
 As children with such dissability is it s hard task for them to learn on how to precieve the objects arround them
 and identifying them. 
