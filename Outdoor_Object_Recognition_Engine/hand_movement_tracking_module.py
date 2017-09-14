@@ -8,8 +8,6 @@ applying color detection + skin detection algorithms to extract out the hand.
 operate the system at a particular time, and only able to detect single hand.
 
 TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
-TODO: Identify the color profile first at the beginning of the program and then use that to Track the hand, this way it
-is easier to capture the input quickly when the Speech Recognition Module is integrated
 """
 
 import cv2
@@ -46,7 +44,7 @@ class TrackHand:
         del self.objectHistogram
         del self.furthestPoint
 
-    def main(self):
+    def track_hand(self):
 
         while True:
 
@@ -108,22 +106,18 @@ class TrackHand:
                             cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
                             cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
                             cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (51, 153, 255),
-                                       1, cv2.LINE_AA)
-                            print("Furthest Point", self.furthestPoint)
+                                        1, cv2.LINE_AA)
+                            # print("Furthest Point", self.furthestPoint)
 
                 cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
                 cv2.resizeWindow('Frame', 1024, 768)
                 cv2.imshow("Frame", self.frame)
                 cv2.imshow("Thresh", located_object)
                 if cv2.waitKey(1) == 13:
-                    break
-
-        cv2.destroyAllWindows()
-        self.cameraController.release()
-
-    # Returns the Finger tip location at the current frame
-    def get_finger_tip_location(self):
-        return self.furthestPoint
+                    # Return the frame and the furthest point
+                    cv2.destroyAllWindows()
+                    self.cameraController.release()
+                    return self.get_pointing_point()
 
     # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
@@ -209,5 +203,15 @@ class TrackHand:
         else:
             return None
 
-xx = TrackHand(70, 0, 21)
-xx.main()
+    # Returns the image and the location of the point of the furthest finger
+    def get_pointing_point(self):
+        frame_returned = self.frame
+        finger_pointed = self.furthestPoint
+        # frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
+        return frame_returned, finger_pointed
+
+
+
+
+
+
