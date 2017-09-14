@@ -9,6 +9,7 @@ The accuracy of the detection algorithm depends on the accuracy of the classific
 
 
 class GBPD:
+
     IMPORT_MANAGER = None
     new_image = None
     classifier = None

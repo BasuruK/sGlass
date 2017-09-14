@@ -37,6 +37,8 @@ print("Application Started")
 
 
 # If there are any global methods you need to access throughout the program, place them here
+
+# Returns a randomized color code for the use of Bounding Box creation on GBPD algorithm
 def randomize_color():
     cnames = {
         'aliceblue': '#F0F8FF','antiquewhite': '#FAEBD7', 'aqua': '#00FFFF','aquamarine': '#7FFFD4','azure': '#F0FFFF'

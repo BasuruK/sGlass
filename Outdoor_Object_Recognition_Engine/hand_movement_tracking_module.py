@@ -97,7 +97,7 @@ class TrackHand:
                         # cv2.arrowedLine(self.frame, far, start, [128, 255, 120], 2)
                         # cv2.circle(self.frame, far, 5, [0, 0, 255], -1)
                         cv2.circle(self.frame, centroid, 5, [128, 128, 128], -1)
-                        cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
+                        cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
 
                     if centroid is not None and defects is not None and len(defects) > 0:
                         self.furthestPoint = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
@@ -105,8 +105,7 @@ class TrackHand:
                         if self.furthestPoint is not None:
                             cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
                             cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
-                            cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.60, (51, 153, 255),
-                                        1, cv2.LINE_AA)
+                            # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
                             # print("Furthest Point", self.furthestPoint)
 
                 cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
@@ -208,6 +207,7 @@ class TrackHand:
         frame_returned = self.frame
         finger_pointed = self.furthestPoint
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
+        frame_returned = cv2.resize(frame_returned, (2, 2), interpolation=cv2.INTER_AREA)  # Resize the Image
         return frame_returned, finger_pointed
 
 
