@@ -6,6 +6,8 @@ The algorithm applies a sliding window mechanism with the help of a powerful ima
 object locations.
 The accuracy of the detection algorithm depends on the accuracy of the classification model used.
 """
+
+
 class GBPD:
     IMPORT_MANAGER = None
     new_image = None

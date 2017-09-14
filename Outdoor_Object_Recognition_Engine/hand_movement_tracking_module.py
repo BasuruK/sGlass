@@ -207,7 +207,7 @@ class TrackHand:
     def get_pointing_point(self):
         frame_returned = self.frame
         finger_pointed = self.furthestPoint
-        # frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
+        frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
         return frame_returned, finger_pointed
 
 
