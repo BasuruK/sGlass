@@ -104,7 +104,7 @@ class TrackHand:
 
                         if self.furthestPoint is not None:
                             cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
-                            cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
+                            # cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
                             # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
                             # print("Furthest Point", self.furthestPoint)
 
@@ -207,11 +207,5 @@ class TrackHand:
         frame_returned = self.frame
         finger_pointed = self.furthestPoint
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
-        frame_returned = cv2.resize(frame_returned, (2, 2), interpolation=cv2.INTER_AREA)  # Resize the Image
+        frame_returned = cv2.resize(frame_returned, (1024, 768), interpolation=cv2.INTER_AREA)  # Resize the Image
         return frame_returned, finger_pointed
-
-
-
-
-
-
