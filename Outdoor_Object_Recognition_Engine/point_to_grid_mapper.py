@@ -1,44 +1,36 @@
-import cv2
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
-
-'''
-Finger Location (217, 245)
-
-cat 100.00% [256   0 512 256]
-cat 100.00% [512 256 512 256]
-cat 100.00% [  0 256 512 256]
-cat 100.00% [512   0 512 256]
-cat 100.00% [256 256 512 256]
-car 100.00% [256 512 512 256]
-cat 100.00% [512 512 512 256]
-cat 100.00% [  0 512 512 256]
-cat 100.00% [  0   0 512 256]
-
+"""
 TODO:
-1. Make a Range from x, y, w, h values ✔
-2. Check weather the point is in the range calculated above. 
-'''
+1. Make a Range from x, y, w, h values. ✔
+2. Check weather the point is in the range calculated above. ✔
+3. Change the function to get both Prediction string and the bounding box and return the prediction string
+with the bounding box FIX THE RETURN VALUE
+"""
 
-bboxes = [[256, 0, 512, 256], [512, 256, 512, 256], [0,256, 512, 256], [512,0,512,256], [256,256,512,256],[256,512,512,256],[512,512,512,256], [0,512,512,256], [0,0,512,256]]
-finger_l = (217, 245)
 
-for x, y, w, h in bboxes:
-    # print("x {}, y {}, w {}, h {}".format(x, y, w, h))
-    # plt.scatter(x + w, y + h)
+class PointToFingerMapper:
 
-    print("x:{} to x + w:{},  y:{} to y + h:{}".format(x, x+w, y, y+w))
-    print(finger_l)
+    boundingBoxes = None
+    Finger_l = None  # Finger Pointing Location
+    prediction = None
 
-    # Find if the pointer is in the mentioned region
+    def __init__(self, bounding_box, pointer_location):
+        self.boundingBoxes = bounding_box
+        self.Finger_l = pointer_location
+        finger_px, finger_py = self.Finger_l
 
-    plt.scatter(x, y)
-    plt.scatter(w+x, h+y)
-    plt.scatter(finger_l[0], finger_l[1])
-    break
+        for prediction, (x, y, w, h) in self.boundingBoxes:
+            x_plus_w = x + w
+            y_plus_h = y + h
 
-# plt.scatter(X, Y)
-# plt.scatter(W, H, marker="x", s=100)
-# plt.scatter(finger_location[0], finger_location[1])
-plt.show()
+            # Find if the pointer is in the mentioned region
+            if finger_px >= x and finger_px <= x_plus_w and finger_py >= y and finger_py <= y_plus_h:
+                self.prediction = prediction
+                self.boundingBoxes = (x, y, w, h)
+                self.return_value()
+
+    def __del__(self):
+        del self.boundingBoxes
+        del self.Finger_l
+
+    def return_value(self):
+        return self.prediction, self.boundingBoxes

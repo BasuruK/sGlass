@@ -1,6 +1,7 @@
 import imports as IMPORT_MANAGER
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
+from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 
 '''
 TODO: Methodology
@@ -18,19 +19,15 @@ Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPOR
                                         window_size=(256, 256))
 # Track the hand
 captured_frame, finger_location = Hand_Tracker.track_hand()
-saving_image = captured_frame.copy()
 print("Finger Location", finger_location)
 
-# Display the Captured Picture
-captured_frame = IMPORT_MANAGER.Image.fromarray(captured_frame)
 
 # Calculate the time for GBPD execution time
 start_time = IMPORT_MANAGER.time.time()
 # image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/dog.6.jpg')
+captured_frame = IMPORT_MANAGER.Image.fromarray(captured_frame)
 image_coordinates_with_predictions = Grid_Based_Probability_Detection.main(captured_frame)
 print("GBPD algorithm Execution Time: ", IMPORT_MANAGER.time.time() - start_time)
-
-# Show the image with bounding boxes
 
 fig, ax = IMPORT_MANAGER.plt.subplots(1)
 ax.imshow(captured_frame)
@@ -47,3 +44,6 @@ for prediction, image_coordinates in image_coordinates_with_predictions[1:]:
 
 IMPORT_MANAGER.plt.show()
 
+# Initiate Finger to GBPD Mapper
+Pointer_To_Location = PointToFingerMapper(image_coordinates_with_predictions[1:], finger_location)
+print(Pointer_To_Location)
