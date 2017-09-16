@@ -88,25 +88,26 @@ class TrackHand:
                     # cv2.drawContours(frame, [max_contours], 0, (255,150,0) ,3)
                     # cv2.drawContours(self.frame, [hull], 0, (255, 150, 0), 3)
 
-                    for i in range(defects.shape[0]):
-                        s, e, f, d = defects[i, 0]
-                        start = tuple(max_contours[s][0])
-                        end = tuple(max_contours[e][0])
-                        far = tuple(max_contours[f][0])
+                    if defects.shape[0] is not None:  # To ensure the camera accidentally does not pick up empty object
+                        for i in range(defects.shape[0]):
+                            s, e, f, d = defects[i, 0]
+                            start = tuple(max_contours[s][0])
+                            end = tuple(max_contours[e][0])
+                            far = tuple(max_contours[f][0])
 
-                        # cv2.arrowedLine(self.frame, far, start, [128, 255, 120], 2)
-                        # cv2.circle(self.frame, far, 5, [0, 0, 255], -1)
-                        cv2.circle(self.frame, centroid, 5, [128, 128, 128], -1)
-                        cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
+                            # cv2.arrowedLine(self.frame, far, start, [128, 255, 120], 2)
+                            # cv2.circle(self.frame, far, 5, [0, 0, 255], -1)
+                            cv2.circle(self.frame, centroid, 5, [128, 128, 128], -1)
+                            cv2.putText(self.frame, "Center", centroid, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (128, 128, 128), 1, cv2.LINE_AA)  # Mark the Center of the hull
 
-                    if centroid is not None and defects is not None and len(defects) > 0:
-                        self.furthestPoint = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
+                        if centroid is not None and defects is not None and len(defects) > 0:
+                            self.furthestPoint = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
 
-                        if self.furthestPoint is not None:
-                            cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
-                            # cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
-                            # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
-                            # print("Furthest Point", self.furthestPoint)
+                            if self.furthestPoint is not None:
+                                cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
+                                # cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
+                                # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
+                                # print("Furthest Point", self.furthestPoint)
 
                 cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
                 cv2.resizeWindow('Frame', 1024, 768)

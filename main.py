@@ -46,4 +46,31 @@ IMPORT_MANAGER.plt.show()
 
 # Initiate Finger to GBPD Mapper
 Pointer_To_Location = PointToFingerMapper(image_coordinates_with_predictions[1:], finger_location)
-print(Pointer_To_Location)
+prediction_for_selected_box, selected_box = Pointer_To_Location.main()
+
+print("Predicted : {}, box {}".format(prediction_for_selected_box, selected_box))
+
+fig, ax = IMPORT_MANAGER.plt.subplots(1)
+# Extract the Regions // Ignore the index 0
+ax.imshow(captured_frame)
+
+
+
+for x, y, w, h in selected_box:
+    #x, y, w, h = selected_box
+    color = IMPORT_MANAGER.randomize_color()
+    rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
+    circlesx = IMPORT_MANAGER.patches.Circle((x, y), 10)
+    circlesy = IMPORT_MANAGER.patches.Circle((x+w, y+h), 10)
+    circlesxw = IMPORT_MANAGER.patches.Circle((x+w, 0), 10)
+    circlesyh = IMPORT_MANAGER.patches.Circle((0, y+h), 10)
+    #IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
+    ax.add_patch(rect)
+    ax.add_patch(circlesx)
+    ax.add_patch(circlesy)
+    ax.add_patch(circlesxw)
+    ax.add_patch(circlesyh)
+
+IMPORT_MANAGER.plt.show()
+
+
