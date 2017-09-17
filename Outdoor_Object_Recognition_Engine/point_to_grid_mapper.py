@@ -85,17 +85,40 @@ ax.imshow(image)
 for x, y, w, h in selected_box:
     color = randomize_color()
     rect = patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
-    p1 = patches.Circle((x, y), 15)
-    p2 = patches.Circle((x+w, y), 15)
-    p3 = patches.Circle((x + w, y + h), 15)
-    p4 = patches.Circle((x, y+h), 15)
 
-    ax.add_patch(rect)
-    ax.add_patch(p1)
-    ax.add_patch(p2)
-    ax.add_patch(p3)
-    ax.add_patch(p4)
+    x1 = x
+    y1 = y
+    x2 = x + w
+    y2 = y
+    x3 = x + w
+    y3 = y + h
+    x4 = x
+    y4 = y + h
+    fingerx = 145
+    fingery = 249
+
+    p = (fingerx, fingery)
+    p1 = (x1, y1)
+    p2 = (x2, y2)
+    p3 = (x3, y3)
+    p4 = (x4, y4)
+
+
+    # pd1 = patches.Circle(p1, 15)
+    # pd2 = patches.Circle(p2, 15)
+    # pd3 = patches.Circle(p3, 15)
+    # pd4 = patches.Circle(p4, 15)
+    #
+    # ax.add_patch(rect)
+    # ax.add_patch(pd1)
+    # ax.add_patch(pd2)
+    # ax.add_patch(pd3)
+    # ax.add_patch(pd4)
+
+    print("p1: {}, \np2: {}, \np3: {}, \np4: {}".format(p1, p2, p3, p4))
+
 
 plt.show()
+
 
 
