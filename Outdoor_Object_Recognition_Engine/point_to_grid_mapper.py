@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import skimage.io as imutils
 import random
-
+import math
 
 def randomize_color():
     cnames = {
@@ -27,62 +27,21 @@ def randomize_color():
         'darkred': '#8B0000', 'darksalmon': '#E9967A', 'darkseagreen': '#8FBC8F', 'darkslateblue': '#483D8B'}
     return random.sample(cnames.items(), 1)[0][1]
 
-
-class PointToFingerMapper:
-
-    boundingBoxes = [[0, 256, 512, 256]
-                    , [512, 0, 512, 256]
-                    , [0,0, 512, 256]
-                    , [0,512, 512, 256]
-                    , [512, 512, 512, 256]
-                    , [256, 0, 512, 256]
-                    , [256, 256, 512, 256]
-                    , [512, 256, 512, 256]]
-
-    Finger_l = (145, 249)  # Finger Pointing Location
-    prediction = None
-    returnBox = []
-
-    def __init__(self, bounding_box, pointer_location):
-        self.prediction = "bird"
-        # self.boundingBoxes = bounding_box
-        # self.Finger_l = pointer_location
-
-    # def __del__(self):
-    #     del self.boundingBoxes
-    #     del self.Finger_l
-    #     del self.prediction
-    #     del self.returnBox
-
-    def main(self):
-        finger_px, finger_py = self.Finger_l
-
-        for (x, y, w, h) in self.boundingBoxes:
-            x_plus_w = x + w
-            y_plus_h = y + h
-
-            self.boundingBoxes = (x, y, w, h)
-            self.returnBox.append([x, y, w, h])
-            break
-
-        print(self.returnBox)
-        print("Finger loc :", self.Finger_l)
-        return self.prediction, self.returnBox
-
-
-
-
-# Initiate Finger to GBPD Mapper
-Pointer_To_Location = PointToFingerMapper(1, 1)
-prediction_for_selected_box, selected_box = Pointer_To_Location.main()
-
 image = imutils.imread("edited.jpg")
 
 fig, ax = plt.subplots(1)
 # Extract the Regions // Ignore the index 0
-ax.imshow(image)
 
-for x, y, w, h in selected_box:
+boundingBoxes = [[256  , 0, 512, 256],
+                [512 ,  0 ,512 ,256],
+                [  0 ,  0 ,512, 256],
+                [512, 512, 512 ,256],
+                [256, 256, 512, 256]]
+
+
+#boundingBoxes = [[0, 256, 512, 256]]
+
+for x, y, w, h in boundingBoxes:
     color = randomize_color()
     rect = patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
 
@@ -94,8 +53,8 @@ for x, y, w, h in selected_box:
     y3 = y + h
     x4 = x
     y4 = y + h
-    fingerx = 145
-    fingery = 249
+    fingerx = 502
+    fingery = 112
 
     p = (fingerx, fingery)
     p1 = (x1, y1)
@@ -103,21 +62,22 @@ for x, y, w, h in selected_box:
     p3 = (x3, y3)
     p4 = (x4, y4)
 
+    pd1 = patches.Circle(p1, 15)
+    pd2 = patches.Circle(p2, 15)
+    pd3 = patches.Circle(p3, 15)
+    pd4 = patches.Circle(p4, 15)
+    plt.scatter(fingerx, fingery)
 
-    # pd1 = patches.Circle(p1, 15)
-    # pd2 = patches.Circle(p2, 15)
-    # pd3 = patches.Circle(p3, 15)
-    # pd4 = patches.Circle(p4, 15)
-    #
     # ax.add_patch(rect)
-    # ax.add_patch(pd1)
-    # ax.add_patch(pd2)
-    # ax.add_patch(pd3)
-    # ax.add_patch(pd4)
+    # ax.add_patch(pd)
+    ax.add_patch(pd1)
+    ax.add_patch(pd2)
+    ax.add_patch(pd3)
+    ax.add_patch(pd4)
 
     print("p1: {}, \np2: {}, \np3: {}, \np4: {}".format(p1, p2, p3, p4))
 
-
+plt.gca().invert_yaxis()
 plt.show()
 
 
