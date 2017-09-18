@@ -34,6 +34,10 @@ class TrackHand:
         self.blurValue = blur_value
         self.cameraController = cv2.VideoCapture(self.camera)
 
+        # Set the Resolution of the Camera to 1024 x 768
+        self.cameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
+        self.cameraController.set(cv2.CAP_PROP_FRAME_WIDTH, 1150)
+
     def __del__(self):
         del self.frame
         del self.blurValue
@@ -109,8 +113,8 @@ class TrackHand:
                                 # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
                                 # print("Furthest Point", self.furthestPoint)
 
-                cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
-                cv2.resizeWindow('Frame', 1024, 768)
+                # cv2.namedWindow('Frame', cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow('Frame', 1024, 768)
                 cv2.imshow("Frame", self.frame)
                 cv2.imshow("Thresh", located_object)
                 if cv2.waitKey(1) == 13:
@@ -126,13 +130,13 @@ class TrackHand:
             frame = cv2.flip(frame, 1)
             cv2.putText(frame, "Please put your hand in the box", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (255, 0, 0),
                         1, cv2.LINE_AA)
-            cv2.rectangle(frame, (200, 200), (300, 300), (255, 0, 255), 2)
-            cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
-            cv2.resizeWindow('frame', 1024, 768)
+            cv2.rectangle(frame, (300, 300), (500, 500), (255, 0, 255), 2)
+            # cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
+            # cv2.resizeWindow('frame', 1024, 768)
             cv2.imshow("frame", frame)
 
             if cv2.waitKey(1) == 13:
-                object_color = frame[200:300, 200:300]
+                object_color = frame[300:500, 300:500]
                 cv2.destroyAllWindows()
                 # Convert object color in to HSV range
                 hsv_color = cv2.cvtColor(object_color, cv2.COLOR_BGR2HSV)
@@ -207,7 +211,7 @@ class TrackHand:
     def get_pointing_point(self):
         frame_returned = self.frame
         finger_pointed = self.furthestPoint
-        # frame_returned = cv2.resize(frame_returned, (1024, 768), interpolation=cv2.INTER_LINEAR)  # Resize the Image # HAS A BUG
         cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", frame_returned)
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
+        print(frame_returned.shape)
         return frame_returned, finger_pointed

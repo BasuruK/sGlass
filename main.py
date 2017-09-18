@@ -3,20 +3,12 @@ from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import G
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 
-'''
-TODO: Methodology
-1. Run the Hand tracking Module. ✔
-2. When the user issues the command take a snap. ✔
-3. Take the exact coordinates of the users pointing finger. ✔
-4. Send the snap to GBPD for classification. ✔
-5. Identify the location of the bounding box corresponding to the location of the finger point. ✔
-(BUG)6. Fix the resolution issue.
-'''
+
 # Initiate Outdoor Object Recognition Module & Hand Tracking Module
 # Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (256, 256))
 Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
 Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPORT_MANAGER.outdoor_objects_classifier,
-                                        window_size=(128, 128))
+                                        window_size=(256, 256))
 # Track the hand
 captured_frame, finger_location = Hand_Tracker.track_hand()
 print("Finger Location", finger_location)
