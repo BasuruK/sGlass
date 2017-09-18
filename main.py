@@ -45,7 +45,7 @@ IMPORT_MANAGER.plt.show()
 
 # Initiate Finger to GBPD Mapper
 Pointer_To_Location = PointToFingerMapper(image_coordinates_with_predictions[1:], finger_location)
-prediction_for_selected_box, selected_box = Pointer_To_Location.main()
+prediction_and_selected_box = Pointer_To_Location.main()
 
-#print("Predicted : {}, box {}".format(prediction_for_selected_box, selected_box))
+print("Predicted : {}".format(prediction_and_selected_box))
 

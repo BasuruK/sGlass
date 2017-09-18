@@ -19,6 +19,7 @@ class PointToFingerMapper:
         self.BoundingBoxes = bounding_box
         self.Finger_l = finger_location
         self.PredictionAndBoundingBox = [[]]
+        print(self.BoundingBoxes)
 
     def __del__(self):
         del self.BoundingBoxes
@@ -55,7 +56,7 @@ class PointToFingerMapper:
             p4_subtract_p1_magnitude_squared = p4_subtract_p1[0] ** 2 + p4_subtract_p1[1] ** 2
 
             # # Calculate (P - P1)
-            point = (p[0] - x1, p[1] - x2)
+            point = (p[0] - x1, p[1] - y1)
 
             # Apply to the Equation
             if 0 <= point[0] * p2_subtract_p1[0] + point[1] * p2_subtract_p1[1] <= p2_subtract_p1_magnitude_squared:
@@ -67,4 +68,4 @@ class PointToFingerMapper:
             else:
                 print("Finger is not inside any of the cells")
 
-            return self.PredictionAndBoundingBox
+        return self.PredictionAndBoundingBox
