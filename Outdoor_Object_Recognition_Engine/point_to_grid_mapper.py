@@ -18,8 +18,7 @@ class PointToFingerMapper:
     def __init__(self, bounding_box, finger_location):
         self.BoundingBoxes = bounding_box
         self.Finger_l = finger_location
-        self.PredictionAndBoundingBox = [[]]
-        print(self.BoundingBoxes)
+        self.PredictionAndBoundingBox = []
 
     def __del__(self):
         del self.BoundingBoxes
