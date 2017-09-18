@@ -209,6 +209,6 @@ class TrackHand:
         frame_returned = self.frame
         finger_pointed = self.furthestPoint
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
-        frame_returned = cv2.resize(frame_returned, (1024, 768), interpolation=cv2.INTER_AREA)  # Resize the Image
+        # frame_returned = cv2.resize(frame_returned, (1024, 768), interpolation=cv2.INTER_AREA)  # Resize the Image # HAS A BUG
         cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", frame_returned)
         return frame_returned, finger_pointed
