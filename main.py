@@ -1,3 +1,8 @@
+"""
+Main.py handles the main functions of the Application.
+NO UNAUTHORIZED EDITS ARE ALLOWED
+"""
+
 import imports as IMPORT_MANAGER
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
@@ -39,6 +44,8 @@ Pointer_To_Location = PointToFingerMapper(image_coordinates_with_predictions[1:]
 prediction_and_selected_box = Pointer_To_Location.main()
 
 print("Predicted : {}".format(prediction_and_selected_box))
+if len(prediction_and_selected_box) is 0:
+    print("The Object user is pointing cannot be identified")
 
 read_image = IMPORT_MANAGER.imutils.imread("Outdoor_Object_Recognition_Engine/edited.jpg")
 
