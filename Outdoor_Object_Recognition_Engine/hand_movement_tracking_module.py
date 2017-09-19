@@ -92,7 +92,7 @@ class TrackHand:
                     # cv2.drawContours(frame, [max_contours], 0, (255,150,0) ,3)
                     # cv2.drawContours(self.frame, [hull], 0, (255, 150, 0), 3)
 
-                    if defects.shape[0] is not None:  # To ensure the camera accidentally does not pick up empty object
+                    if defects is not None and defects.shape[0]is not None:  # To ensure the camera accidentally does not pick up empty object
                         for i in range(defects.shape[0]):
                             s, e, f, d = defects[i, 0]
                             start = tuple(max_contours[s][0])

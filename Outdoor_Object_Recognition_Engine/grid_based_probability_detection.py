@@ -93,8 +93,7 @@ class GBPD:
             x, y, w, h = value
             prediction = self.prepossess_image(image_array[y: y + h, x: x + w])
             prediction = self.predict_for_single_image(prediction)
-            self.output_bounding_boxes.append((prediction, self.IMPORT_MANAGER.np.array([x, y, w, h])))
-
+            self.output_bounding_boxes.append([prediction, self.IMPORT_MANAGER.np.array([x, y, w, h])])
         return self.output_bounding_boxes
 
     # Returns the labels for the classes according to the folder structure of classes

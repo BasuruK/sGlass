@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Training data and Testing data
+Outdoor_Object_Recognition_Engine/dataset
+Outdoor_Object_Recognition_Engine/custom_test
+
