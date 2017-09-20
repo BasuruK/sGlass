@@ -13,7 +13,7 @@ from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFinger
 # Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (256, 256))
 Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
 Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPORT_MANAGER.outdoor_objects_classifier,
-                                        window_size=(128, 128))
+                                        window_size=(256, 256))
 # Track the hand
 captured_frame, finger_location = Hand_Tracker.track_hand()
 print("Finger Location", finger_location)
