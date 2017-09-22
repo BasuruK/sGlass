@@ -108,7 +108,7 @@ class TrackHand:
                             self.furthestPoint = self.get_furthest_point(defects, max_contours, centroid)  # Get the furthest point from the detects
 
                             if self.furthestPoint is not None:
-                                cv2.circle(self.frame, self.furthestPoint, 5, [0, 255, 0], -1)
+                                cv2.circle(self.frame, self.furthestPoint, 8, [0, 255, 0], -1)
                                 # cv2.arrowedLine(self.frame, centroid, self.furthestPoint, [128, 255, 120], 2)
                                 # cv2.putText(self.frame, "Furthest Point", self.furthestPoint, cv2.FONT_HERSHEY_SIMPLEX, 0.50, (51, 153, 255), 1, cv2.LINE_AA)
                                 # print("Furthest Point", self.furthestPoint)
