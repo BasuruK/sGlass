@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e10b1147-1fe7-4a5d-85ba-1d834e68b4ac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sGlass.iml" afterPath="$PROJECT_DIR$/.idea/sGlass.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,15 +14,15 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/sGlass$grid_based_probability_detection.coverage" NAME="grid_based_probability_detection Coverage Results" MODIFIED="1504551437655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
-    <SUITE FILE_PATH="coverage/sGlass$imports__1_.coverage" NAME="imports (1) Coverage Results" MODIFIED="1504628109532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/sGlass$imports.coverage" NAME="imports Coverage Results" MODIFIED="1506084176522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sGlass$train_CNN___Copy.coverage" NAME="train_CNN - Copy Coverage Results" MODIFIED="1505836063982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
     <SUITE FILE_PATH="coverage/sGlass$main.coverage" NAME="main Coverage Results" MODIFIED="1506065521185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sGlass$hand_movement_tracking_module.coverage" NAME="hand_movement_tracking_module Coverage Results" MODIFIED="1505705046665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
     <SUITE FILE_PATH="coverage/sGlass$Unnamed.coverage" NAME="main Coverage Results" MODIFIED="1504533676571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/sGlass$train_CNN.coverage" NAME="train_CNN Coverage Results" MODIFIED="1505820813283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
     <SUITE FILE_PATH="coverage/sGlass$point_to_grid_mapper.coverage" NAME="point_to_grid_mapper Coverage Results" MODIFIED="1505748471518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
-    <SUITE FILE_PATH="coverage/sGlass$train_CNN___Copy.coverage" NAME="train_CNN - Copy Coverage Results" MODIFIED="1505836063982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
+    <SUITE FILE_PATH="coverage/sGlass$imports.coverage" NAME="imports Coverage Results" MODIFIED="1506084176522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sGlass$imports__1_.coverage" NAME="imports (1) Coverage Results" MODIFIED="1504628109532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/sGlass$ss.coverage" NAME="ss Coverage Results" MODIFIED="1505117215534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
-    <SUITE FILE_PATH="coverage/sGlass$hand_movement_tracking_module.coverage" NAME="hand_movement_tracking_module Coverage Results" MODIFIED="1505705046665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -31,20 +30,20 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="imports.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imports.py">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="38" column="6" lean-forward="false" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+            <state relative-caret-position="500">
+              <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="805">
+            <state relative-caret-position="1037">
               <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding />
             </state>
@@ -80,11 +79,11 @@
         <option value="$PROJECT_DIR$/imports.py" />
         <option value="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/point_to_grid_mapper.py" />
         <option value="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/grid_based_probability_detection.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/train_CNN.py" />
         <option value="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/train_CNN - Copy.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/hand_movement_tracking_module.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -95,10 +94,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -115,7 +114,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -144,7 +143,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -152,7 +151,7 @@
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="C:/Anaconda3/envs/TFTest/python.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="add_unversioned_files" value="true" />
   </component>
@@ -527,15 +526,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17196766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1762481" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32898173" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2864424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2864424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -567,7 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -590,7 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -620,7 +618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -643,7 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -666,7 +662,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -709,13 +704,6 @@
     <entry file="file://C:/Anaconda3/envs/TFTest/Lib/site-packages/matplotlib/patches.py" />
     <entry file="file://C:/Anaconda3/envs/TFTest/Lib/site-packages/tensorflow/python/client/session.py" />
     <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/dataset/test_set/cars/car.1.jpg" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="102" column="32" lean-forward="false" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/train_CNN.py" />
     <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/train_CNN - Copy.py" />
     <entry file="file://$PROJECT_DIR$/Outdoor_Object_Recognition_Engine/edited.jpg">
@@ -727,10 +715,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="94" column="20" lean-forward="false" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
-          <folding>
-            <element signature="e#488#498#0" expanded="true" />
-            <marker date="1506083521349" expanded="true" signature="4914:5263" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -738,7 +722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="885">
           <caret line="85" column="57" lean-forward="false" selection-start-line="85" selection-start-column="57" selection-end-line="85" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -746,22 +729,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="885">
           <caret line="56" column="34" lean-forward="false" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/imports.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
+        <state relative-caret-position="17">
           <caret line="38" column="6" lean-forward="false" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        <state relative-caret-position="500">
+          <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
           <folding />
         </state>
       </provider>
