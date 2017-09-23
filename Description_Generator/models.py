@@ -5,7 +5,7 @@ from keras.layers.merge import Add
 from keras.layers.recurrent import LSTM, GRU
 from keras.regularizers import l2
 
-def NIC(max_token_length, vocabulary_size, rnn='lstm' ,num_image_features=2048,
+def DscGenModel(max_token_length, vocabulary_size, rnn='lstm' ,num_image_features=2048,
         hidden_size=512, embedding_size=512, regularizer=1e-8):
 
     # word embedding
@@ -51,8 +51,6 @@ def NIC(max_token_length, vocabulary_size, rnn='lstm' ,num_image_features=2048,
                                     activation='softmax'),
                                     name='output')(recurrent_network)
 
-    print(text_input, image_input)
     inputs = [text_input, image_input]
-    print('HELLOWW!!')
     model = Model(inputs=inputs, outputs=output)
     return model

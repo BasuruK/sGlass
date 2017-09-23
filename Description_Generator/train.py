@@ -3,13 +3,13 @@ from keras.callbacks import ReduceLROnPlateau
 from descriptionGeneratorModel import DscGenModel
 from dataSetHandler import DataHandler
 from preprocessedDataHandler import PreprocessDataHandler
-from models import NIC
+from models import DscGenModel
 from descriptionGenerator import Generator
 
 num_epochs = 200
-batch_size = 1
+batch_size = 64
 root_path = 'Data/'
-selected_CNN = 'basuru'
+selected_CNN = 'vgg19'
 captions_Dataset = root_path + 'Captions/IAPR_2012_captions.txt'
 data_handler = DataHandler(root_path=root_path, caption_file=captions_Dataset,
                             maximum_caption_length=50,
@@ -21,19 +21,13 @@ data_handler = DataHandler(root_path=root_path, caption_file=captions_Dataset,
 data_handler.process_data()
 
 preProcessDataHandler = PreprocessDataHandler(root_path=root_path, batch_size=batch_size, cnn_name=selected_CNN)
-#preProcessDataHandler = Generator(data_path=root_path, batch_size=batch_size)
 
 num_training_samples =  preProcessDataHandler.training_data.shape[0]
 num_testing_samples = preProcessDataHandler.testing_data.shape[0]
 print('Number of training samples:', num_training_samples)
 print('Number of testing samples:', num_testing_samples)
 
-print('MAX_TOKEN = ', preProcessDataHandler.maximum_token_length)
-print('VSIZE = ', preProcessDataHandler.vocabulary_size)
-print('FEATS = ', preProcessDataHandler.image_features)
-
-
-model = NIC(max_token_length=preProcessDataHandler.maximum_token_length,
+model = DscGenModel(max_token_length=preProcessDataHandler.maximum_token_length,
             vocabulary_size=preProcessDataHandler.vocabulary_size,
             rnn='lstm',
             num_image_features=preProcessDataHandler.image_features,
@@ -89,7 +83,3 @@ def plot_graphs_on_data(history):
     plt.xlabel('Epocs')
     plt.legend(['Train Data', 'Test Data'], loc = 'upper left')
     plt.show()
-
-#generator = Generator(model, root_path=root_path)
-
-#generator.show_caption()

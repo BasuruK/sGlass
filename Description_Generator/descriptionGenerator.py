@@ -73,7 +73,7 @@ class Generator(object):
                 break
             else:
                 generated_caption.append(word)
-                
+
         return ' '.join(generated_caption)
         
     def get_image_features_to_evaluate(self, image_path):
