@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import random
-from dataSetHandler import DataHandler
+from .dataSetHandler import DataHandler
 
 '''
 This class handles preprocessed data of the DataHandler and provide into 

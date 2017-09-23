@@ -62,3 +62,5 @@ for prediction, image_coordinates in prediction_and_selected_box:
 
 IMPORT_MANAGER.plt.show()
 
+
+

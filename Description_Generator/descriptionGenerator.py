@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 import h5py
-from dataSetHandler import DataHandler
+from .dataSetHandler import DataHandler
 
 class Generator(object):
     

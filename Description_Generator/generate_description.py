@@ -11,7 +11,6 @@ class DescriptionGenerator:
 
     def __init__(self, import_manager):
         self.importManager = import_manager
-
         self.generator = self.importManager.Generator
 
     def main(self, image_path):
