@@ -117,7 +117,7 @@ class TrackHand:
                 # cv2.resizeWindow('Frame', 1024, 768)
                 cv2.imshow("Frame", self.frame)
                 cv2.imshow("Thresh", located_object)
-                if cv2.waitKey(1) == 13:
+                if cv2.waitKey(20) & 0xFF == 10: # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
                     # Return the frame and the furthest point
                     cv2.destroyAllWindows()
                     self.cameraController.release()
@@ -135,7 +135,7 @@ class TrackHand:
             # cv2.resizeWindow('frame', 1024, 768)
             cv2.imshow("frame", frame)
 
-            if cv2.waitKey(1) == 13:
+            if cv2.waitKey(20) & 0xFF == 10:  # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
                 object_color = frame[300:500, 300:500]
                 cv2.destroyAllWindows()
                 # Convert object color in to HSV range
