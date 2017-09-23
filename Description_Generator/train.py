@@ -1,5 +1,6 @@
 from keras.callbacks import ModelCheckpoint, History
 from keras.callbacks import ReduceLROnPlateau
+import matplotlib.pyplot as plt
 from descriptionGeneratorModel import DscGenModel
 from dataSetHandler import DataHandler
 from preprocessedDataHandler import PreprocessDataHandler
