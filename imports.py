@@ -30,7 +30,7 @@ from keras.models import load_model
 
 # Load Outdoor Object Recognition Model
 print("Loading AI Models")
-outdoor_objects_classifier = load_model('Outdoor_Object_Recognition_Engine/my_model.h5')
+outdoor_objects_classifier = load_model('Outdoor_Object_Recognition_Engine/prediction_model.h5')
 
 print("All Modules Loaded within: ", time.time() - start_time)
 print("Application Started")
