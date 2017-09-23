@@ -104,3 +104,7 @@ ENV/
 Outdoor_Object_Recognition_Engine/dataset
 Outdoor_Object_Recognition_Engine/custom_test
 
+# Description Generator
+
+
+\.idea/workspace\.xml
