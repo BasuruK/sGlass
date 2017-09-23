@@ -1,5 +1,5 @@
 from keras.models import load_model
-from .descriptionGenerator import Generator
+from Description_Generator.descriptionGenerator import Generator
 
 root_path = 'Data/'
 model_filename = root_path + 'PreTrainedModels/vgg19/descGenrator.30-2.19.hdf5'

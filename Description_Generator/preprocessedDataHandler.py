@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import random
-from .dataSetHandler import DataHandler
+from Description_Generator.dataSetHandler import DataHandler
 
 '''
 This class handles preprocessed data of the DataHandler and provide into 
@@ -140,8 +140,3 @@ class PreprocessDataHandler():
         return [{'text': one_hot_caption,
                 'image': image_features},
                 {'output': one_hot_target}]
-        
-    
-        
-    
-        

@@ -1,11 +1,11 @@
 from keras.callbacks import ModelCheckpoint, History
 from keras.callbacks import ReduceLROnPlateau
 import matplotlib.pyplot as plt
-from .descriptionGeneratorModel import DscGenModel
-from .dataSetHandler import DataHandler
-from .preprocessedDataHandler import PreprocessDataHandler
-from .models import DscGenModel
-from .descriptionGenerator import Generator
+from Description_Generator.descriptionGeneratorModel import DscGenModel
+from Description_Generator.dataSetHandler import DataHandler
+from Description_Generator.preprocessedDataHandler import PreprocessDataHandler
+from Description_Generator.models import DscGenModel
+from Description_Generator.descriptionGenerator import Generator
 
 num_epochs = 200
 batch_size = 64

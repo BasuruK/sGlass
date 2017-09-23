@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 import h5py
-from .dataSetHandler import DataHandler
+from Description_Generator.dataSetHandler import DataHandler
 
 class Generator(object):
     
@@ -81,7 +81,7 @@ class Generator(object):
         from keras.models import Model
         from keras.applications.vgg19 import preprocess_input
         from keras.applications import VGG19
-        from CNNModel import CNNModel
+        from Description_Generator.CNNModel import CNNModel
 
         if self.CNN_Name == 'basuru':
             cnn_model = CNNModel.load_cnn_model()

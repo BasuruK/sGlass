@@ -1,7 +1,7 @@
 from wit import Wit
 import requests
 import json
-from .audio_recorder import RecordAudio
+from Dialogue_Manager.audio_recorder import RecordAudio
 
 
 class RecognizeSpeech:
