@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97624668-4051-4241-a5aa-c7532c62a9f5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/Basuru_Kusal.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sGlass.iml" afterPath="$PROJECT_DIR$/.idea/sGlass.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dialogue_Manager/speech_recognition.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Dialogue_Manager/ReadMe.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Description_Generator/descriptionGenerator.py" afterPath="$PROJECT_DIR$/Description_Generator/descriptionGenerator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Description_Generator/generate_description.py" afterPath="$PROJECT_DIR$/Description_Generator/generate_description.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Description_Generator/preprocessedDataHandler.py" afterPath="$PROJECT_DIR$/Description_Generator/preprocessedDataHandler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Description_Generator/process_executor.py" afterPath="$PROJECT_DIR$/Description_Generator/process_executor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Description_Generator/train.py" afterPath="$PROJECT_DIR$/Description_Generator/train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports.py" afterPath="$PROJECT_DIR$/imports.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,7 +17,39 @@
     <SUITE FILE_PATH="coverage/sGlass$main.coverage" NAME="main Coverage Results" MODIFIED="1506190089737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="speech_recognition.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Dialogue_Manager/speech_recognition.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="346">
+              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="audio_recorder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dialogue_Manager/audio_recorder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-323">
+              <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,6 +64,9 @@
         <option value="$PROJECT_DIR$/Description_Generator/preprocessedDataHandler.py" />
         <option value="$PROJECT_DIR$/Description_Generator/process_executor.py" />
         <option value="$PROJECT_DIR$/Description_Generator/train.py" />
+        <option value="$PROJECT_DIR$/Dialogue_Manager/record_audio.py" />
+        <option value="$PROJECT_DIR$/Dialogue_Manager/audio_recorder.py" />
+        <option value="$PROJECT_DIR$/Dialogue_Manager/speech_recognition.py" />
       </list>
     </option>
   </component>
@@ -77,6 +103,11 @@
             <path>
               <item name="sGlass" type="b2602c69:ProjectViewProjectNode" />
               <item name="sGlass" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sGlass" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sGlass" type="462c0819:PsiDirectoryNode" />
+              <item name="Dialogue_Manager" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sGlass" type="b2602c69:ProjectViewProjectNode" />
@@ -175,7 +206,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -205,7 +238,7 @@
         <state relative-caret-position="363">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
-            <element signature="e#98#130#0" expanded="true" />
+            <element signature="e#98#130#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -215,7 +248,7 @@
         <state relative-caret-position="850">
           <caret line="50" column="29" lean-forward="false" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="29" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -225,7 +258,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -235,7 +268,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -253,7 +286,7 @@
         <state relative-caret-position="136">
           <caret line="8" column="43" lean-forward="true" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -271,6 +304,26 @@
         <state relative-caret-position="-844">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dialogue_Manager/audio_recorder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-323">
+          <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dialogue_Manager/speech_recognition.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
