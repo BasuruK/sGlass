@@ -63,21 +63,18 @@ class Generator(object):
         generated_caption = []
         for word_counter in range(self.maximum_token_length + 1):
             predictions = self.model.predict([text, image_features])
-            #print('PREDICTIONS = ', len(predictions))
             word_id = np.argmax(predictions[0, word_counter, :])
             next_word_counter = word_counter + 1
             text[0, next_word_counter, word_id] = 1
             word = self.index_to_word[word_id]
-            #print(word)
+
             if word == self.SENTENCE_END:
                 generated_caption.append('.')
                 break
             else:
                 generated_caption.append(word)
                 
-        print(' '.join(generated_caption))
-        #plt.imshow(plt.imread(self.images_path + image_name))
-        #plt.show()
+        return ' '.join(generated_caption)
         
     def get_image_features_to_evaluate(self, image_path):
         from keras.preprocessing import image
