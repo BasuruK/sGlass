@@ -9,7 +9,7 @@ class RecordAudio:
     rate = None
     chunk = None
 
-    def __init__(self, format=pyaudio.paInt16, channels=2, rate=16000, chunk=1024):
+    def __init__(self, format=pyaudio.paInt16, channels=1, rate=16000, chunk=1024):
         self.format = format
         self.channels = channels
         self.rate = rate

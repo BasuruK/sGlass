@@ -1,7 +1,8 @@
 """
 Outputs the text received in voice format
 """
-
+from gtts import gTTS
+import os
 
 class TextToSpeech:
 
@@ -30,3 +31,9 @@ class TextToSpeech:
 
         self.IMPORT_MANAGER.os.system("mpg321 speak.mp3")
 
+
+def error(sentence):
+
+    tts = gTTS(text=sentence, lang='en', slow=False)
+    tts.save("speak.mp3")
+    os.system("mpg321 speak.mp3")

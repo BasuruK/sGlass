@@ -3,6 +3,8 @@ import requests
 import json
 import threading
 from Dialogue_Manager.audio_recorder import RecordAudio
+from Dialogue_Manager.text_to_speech_processesor import error
+lock = threading.Lock()
 
 
 class RecognizeSpeech:
@@ -61,5 +63,24 @@ class RecognizeSpeech:
 
 # This function is responsible for coordinating activities between the hand track module and main app
 def speech_coordinator_worker():
-    print("BS")
-    print(threading.current_thread().getName())
+    lock.acquire()
+    print("Locked Worker")
+
+    print(threading.current_thread().getName() + "Started in the background, will start to read commands")
+    try:
+        audio_rec = RecognizeSpeech("speech_input.wav", 4)
+        command = audio_rec.recognize()
+
+        print(command)
+        if command is "":
+            command = "None"
+
+        f = open("Dialogue_Manager/command_temp.txt", "w")
+        f.write(command)
+        f.close()
+        print("Unlocking Worker")
+    except KeyError:
+        error("Command Not Recognized")
+        print("Command Not Recognized")
+
+    lock.release()
