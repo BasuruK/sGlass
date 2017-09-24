@@ -1,0 +1,4 @@
+SENTENCE_BEGIN: <S> 
+SENTENCE_END: <E> 
+image_features: 4096 
+maximum_caption_length: 50 

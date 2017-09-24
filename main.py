@@ -7,6 +7,7 @@ import imports as IMPORT_MANAGER
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
+from Description_Generator.generate_description import DescriptionGenerator
 
 
 # Initiate Outdoor Object Recognition Module & Hand Tracking Module
@@ -62,5 +63,9 @@ for prediction, image_coordinates in prediction_and_selected_box:
 
 IMPORT_MANAGER.plt.show()
 
+# Generate the description for the identified object
+Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
+generated_description = Description_Generator.show_description(image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
+print(generated_description)
 
 
