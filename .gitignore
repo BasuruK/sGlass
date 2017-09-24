@@ -105,6 +105,15 @@ Outdoor_Object_Recognition_Engine/dataset
 Outdoor_Object_Recognition_Engine/custom_test
 
 # Description Generator
-
+Description_Generator/Data/pretrainedmodel/*
+Description_Generator/Data/Captions/vgg19_extracted_features.h5
 
 .idea/workspace.xml
+
+speak\.mp3
+
+command\.mp3
+
+Outdoor_Object_Recognition_Engine/edited\.jpg
+
+Dialogue_Manager/speech_input\.wav
