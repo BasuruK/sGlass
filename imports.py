@@ -15,6 +15,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # '2' - Turn off Warnings, '3' - Turn 
 import time
 start_time = time.time()
 import cv2
+from gtts import gTTS
 from PIL import Image
 import math
 import random
@@ -31,9 +32,10 @@ from keras.models import load_model
 # Load Outdoor Object Recognition Model
 print("Loading AI Models")
 outdoor_objects_classifier = load_model('Outdoor_Object_Recognition_Engine/prediction_model.h5')
-description_generator_model = load_model('Description_Generator/PreTrainedModel/descGenrator.30-2.19.hdf5')
+
 
 # Load Description Generator Model
+description_generator_model = load_model('Description_Generator/Data/pretrainedmodel/descgenrator.30-2.19.hdf5')
 
 print("All Modules Loaded within: ", time.time() - start_time)
 print("Application Started")

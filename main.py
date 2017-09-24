@@ -8,10 +8,12 @@ from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import G
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Description_Generator.generate_description import DescriptionGenerator
+from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 
+# Initiate Dialogue Manager
+Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
 
 # Initiate Outdoor Object Recognition Module & Hand Tracking Module
-# Grid_based_probability_detection = GBPD(IMPORT_MANAGER, IMPORT_MANAGER.outdoor_objects_classifier, (256, 256))
 Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
 Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPORT_MANAGER.outdoor_objects_classifier,
                                         window_size=(256, 256))
@@ -55,6 +57,8 @@ ax.imshow(read_image)
 
 for prediction, image_coordinates in prediction_and_selected_box:
     print(prediction, image_coordinates)
+    string = "You pointed at a "
+    Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
     x, y, w, h = image_coordinates
     color = IMPORT_MANAGER.randomize_color()
     rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
@@ -63,9 +67,12 @@ for prediction, image_coordinates in prediction_and_selected_box:
 
 IMPORT_MANAGER.plt.show()
 
+# Initiate Description Generator Module
+
 # Generate the description for the identified object
 Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
 generated_description = Description_Generator.show_description(image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
 print(generated_description)
+Text_To_Speech.speak(generated_description)
 
 
