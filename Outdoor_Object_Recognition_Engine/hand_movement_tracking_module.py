@@ -12,6 +12,9 @@ TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
 
 import cv2
 import numpy as np
+import threading
+import os
+from Dialogue_Manager.speech_recognition import speech_coordinator_worker
 
 
 class TrackHand:
@@ -23,6 +26,7 @@ class TrackHand:
     camera = None
     cameraController = None
     furthestPoint = None
+    workerCount = 0
 
     # Temporary Property
     objectHistogram = None
@@ -37,6 +41,9 @@ class TrackHand:
         # Set the Resolution of the Camera to 1024 x 768
         self.cameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
         self.cameraController.set(cv2.CAP_PROP_FRAME_WIDTH, 1150)
+
+        # Clear the command queue to remove any previous commands stored
+        self.clear_command_queue()
 
     def __del__(self):
         del self.frame
@@ -117,7 +124,16 @@ class TrackHand:
                 # cv2.resizeWindow('Frame', 1024, 768)
                 cv2.imshow("Frame", self.frame)
                 cv2.imshow("Thresh", located_object)
-                if cv2.waitKey(20) & 0xFF == 10: # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
+
+                waitkey = cv2.waitKey(20) & 0xFF
+                if waitkey == 108:  # key L
+                    # Clear command queue
+                    self.clear_command_queue()
+                    # Start Voice Command Listening background worker
+                    background_worker = threading.Thread(target=speech_coordinator_worker, name="coordinator")
+                    background_worker.start()
+
+                if waitkey == 10 or (self.check_command_queue() == 'wit_capture_image'): # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
                     # Return the frame and the furthest point
                     cv2.destroyAllWindows()
                     self.cameraController.release()
@@ -215,3 +231,22 @@ class TrackHand:
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
         print(frame_returned.shape)
         return frame_returned, finger_pointed
+
+    # Dialogue Manager Command Queue Methods
+    @staticmethod
+    def clear_command_queue():
+        f = open("Dialogue_Manager/command_temp.txt", "w")
+        f.write("")
+        f.close()
+
+    @staticmethod
+    def check_command_queue():
+        file_content = os.stat("Dialogue_Manager/command_temp.txt").st_size
+
+        if file_content != 0:
+            # Command is in the queue, read
+            f = open("Dialogue_Manager/command_temp.txt", 'r')
+            command = f.read()
+            return command
+        else:
+            return False

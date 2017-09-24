@@ -9,11 +9,17 @@ class RecordAudio:
     rate = None
     chunk = None
 
-    def __init__(self, format=pyaudio.paInt16, channels=2, rate=44100, chunk=1024):
+    def __init__(self, format=pyaudio.paInt16, channels=1, rate=16000, chunk=1024):
         self.format = format
         self.channels = channels
         self.rate = rate
         self.chunk = chunk
+
+    def __del__(self):
+        del self.format
+        del self.channels
+        del self.rate
+        del self.chunk
 
     def record_audio(self, seconds_to, output_file_name):
         # Create pyaudio object
@@ -50,10 +56,9 @@ class RecordAudio:
         wave_file.close()
 
     # Read audio file
+    #@staticmethod
     def read_audio(self, wave_filename):
         with open(wave_filename, 'rb') as f:
             audio = f.read()
         return audio
-
-
 
