@@ -31,6 +31,7 @@ from keras.models import load_model
 # Load Outdoor Object Recognition Model
 print("Loading AI Models")
 outdoor_objects_classifier = load_model('Outdoor_Object_Recognition_Engine/prediction_model.h5')
+description_generator_model = load_model('Description_Generator/PreTrainedModel/descGenrator.30-2.19.hdf5')
 
 # Load Description Generator Model
 
