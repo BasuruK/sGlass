@@ -20,6 +20,13 @@ class RecognizeSpeech:
         # Create an object from RecordAudio
         self.recordAudio = RecordAudio()
 
+    def __del__(self):
+        del self.file_name
+        del self.num_seconds
+        del self.recordAudio
+        del self.api_endpoint
+        del self.access_token
+        # del self.recordAudio
 
     def recognize(self):
         # Connect to Wit by using private server access token
@@ -30,17 +37,21 @@ class RecognizeSpeech:
         # Read audio file created
         audio_loaded = self.recordAudio.read_audio(self.file_name)
 
-        headers = {'authorization' : 'Bearer ' + self.access_token,
+        headers = {'authorization': 'Bearer ' + self.access_token,
                    'Content-Type': 'audio/wav'}
 
         # Make the HTTP post request to wit servers
         response = requests.post(self.api_endpoint, headers=headers, data=audio_loaded)
-
         # Convert to Json
-        converted_data = json.loads(response.content)
+        decoded = response.content.decode()
+        converted_data = json.loads(decoded)
         reply_phrase = converted_data['_text']
 
         return reply_phrase
 
 
+r = RecognizeSpeech("test.wav", 3)
+command = r.recognize()
+
+print(command)
 
