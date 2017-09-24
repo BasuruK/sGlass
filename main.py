@@ -2,16 +2,21 @@
 Main.py handles the main functions of the Application.
 NO UNAUTHORIZED EDITS ARE ALLOWED
 """
-
+import threading
 import imports as IMPORT_MANAGER
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Description_Generator.generate_description import DescriptionGenerator
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
+from Dialogue_Manager.speech_recognition import RecognizeSpeech, speech_coordinator_worker
+
 
 # Initiate Dialogue Manager
+Speech_Recognition_Engine = RecognizeSpeech("speech_in.wav", 4)
 Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
+background_worker = threading.Thread(target=speech_coordinator_worker, name="coordinator")
+background_worker.start()
 
 # Initiate Outdoor Object Recognition Module & Hand Tracking Module
 Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
@@ -49,6 +54,7 @@ prediction_and_selected_box = Pointer_To_Location.main()
 print("Predicted : {}".format(prediction_and_selected_box))
 if len(prediction_and_selected_box) is 0:
     print("The Object user is pointing cannot be identified")
+    Text_To_Speech.speak("The Object user is pointing cannot be identified")
 
 read_image = IMPORT_MANAGER.imutils.imread("Outdoor_Object_Recognition_Engine/edited.jpg")
 

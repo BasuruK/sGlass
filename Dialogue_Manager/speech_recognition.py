@@ -1,6 +1,7 @@
 from wit import Wit
 import requests
 import json
+import threading
 from Dialogue_Manager.audio_recorder import RecordAudio
 
 
@@ -44,14 +45,21 @@ class RecognizeSpeech:
         response = requests.post(self.api_endpoint, headers=headers, data=audio_loaded)
         # Convert to Json
         decoded = response.content.decode()
+        print(decoded)
+
+        # Extract the command from the speech input
         converted_data = json.loads(decoded)
-        reply_phrase = converted_data['_text']
+        reply_phrase = converted_data['entities']
 
-        return reply_phrase
+        # Extract the command from entities
+        command_return = None
+        for i in reply_phrase.keys():
+            command_return = i
+
+        return command_return
 
 
-r = RecognizeSpeech("test.wav", 3)
-command = r.recognize()
-
-print(command)
-
+# This function is responsible for coordinating activities between the hand track module and main app
+def speech_coordinator_worker():
+    print("BS")
+    print(threading.current_thread().getName())
