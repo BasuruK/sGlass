@@ -72,8 +72,8 @@ def speech_coordinator_worker():
         command = audio_rec.recognize()
 
         print(command)
-        if command is "":
-            command = "None"
+        if command is "" or command is None:
+            command = "no_command"
 
         f = open("Dialogue_Manager/command_temp.txt", "w")
         f.write(command)
