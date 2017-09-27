@@ -5,6 +5,7 @@ import threading
 from Dialogue_Manager.audio_recorder import RecordAudio
 from Dialogue_Manager.text_to_speech_processesor import error
 lock = threading.Lock()
+import apiai
 
 
 class RecognizeSpeech:
@@ -45,6 +46,7 @@ class RecognizeSpeech:
 
         # Make the HTTP post request to wit servers
         response = requests.post(self.api_endpoint, headers=headers, data=audio_loaded)
+
         # Convert to Json
         decoded = response.content.decode()
         print(decoded)
@@ -84,3 +86,4 @@ def speech_coordinator_worker():
         print("Command Not Recognized")
 
     lock.release()
+
