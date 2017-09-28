@@ -2,8 +2,12 @@ from wit import Wit
 import requests
 import json
 import threading
+from google.cloud import speech
+from google.cloud.speech import enums
+from google.cloud.speech import types
 from Dialogue_Manager.audio_recorder import RecordAudio
 from Dialogue_Manager.text_to_speech_processesor import error
+
 lock = threading.Lock()
 import apiai
 

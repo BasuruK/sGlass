@@ -1,6 +1,9 @@
 """
 Main.py handles the main functions of the Application.
 NO UNAUTHORIZED EDITS ARE ALLOWED
+
+TODO: 1. Change the Outdoor object recognition module to recognize one object at a time.
+2. Hide the Hand Track and GBPD algorithm, add keypress event to activate them when required.
 """
 
 import imports as IMPORT_MANAGER
