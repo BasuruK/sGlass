@@ -5,11 +5,11 @@ import threading
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+import apiai
 from Dialogue_Manager.audio_recorder import RecordAudio
 from Dialogue_Manager.text_to_speech_processesor import error
 
 lock = threading.Lock()
-import apiai
 
 
 class RecognizeSpeech:
@@ -71,7 +71,8 @@ class RecognizeSpeech:
 def speech_coordinator_worker():
     lock.acquire()
     print("Locked Worker")
-
+    import time
+    start_time = time.time()
     print(threading.current_thread().getName() + "Started in the background, will start to read commands")
     try:
         audio_rec = RecognizeSpeech("speech_input.wav", 4)
@@ -90,4 +91,4 @@ def speech_coordinator_worker():
         print("Command Not Recognized")
 
     lock.release()
-
+    print("Wit Time {}".format(time.time() - start_time))

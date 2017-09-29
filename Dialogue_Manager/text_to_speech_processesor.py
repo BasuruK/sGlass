@@ -4,6 +4,7 @@ Outputs the text received in voice format
 from gtts import gTTS
 import os
 
+
 class TextToSpeech:
 
     IMPORT_MANAGER = None

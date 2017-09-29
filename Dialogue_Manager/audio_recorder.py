@@ -32,7 +32,7 @@ class RecordAudio:
 
         frames = []
 
-        for i in range(int(self.rate/ self.chunk * seconds_to)):
+        for i in range(int(self.rate / self.chunk * seconds_to)):
             # Read from microphone
             data = stream.read(self.chunk)
             frames.append(data)
@@ -56,7 +56,7 @@ class RecordAudio:
         wave_file.close()
 
     # Read audio file
-    #@staticmethod
+    @staticmethod
     def read_audio(self, wave_filename):
         with open(wave_filename, 'rb') as f:
             audio = f.read()
