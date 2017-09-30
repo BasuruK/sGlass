@@ -1,6 +1,9 @@
 import pyaudio
 import wave
 
+"""
+Google API uses 16000Hz Mono Audio.
+"""
 
 class RecordAudio:
 

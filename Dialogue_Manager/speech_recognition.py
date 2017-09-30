@@ -1,3 +1,7 @@
+"""
+TODO: Use GOOGLE SPEECH API and API.AI which is yield much faster responses
+"""
+
 from wit import Wit
 import requests
 import json
