@@ -5,6 +5,7 @@ NO UNAUTHORIZED EDITS ARE ALLOWED
 TODO: 1. Change the Outdoor object recognition module to recognize one object at a time.
 2. Hide the Hand Track and GBPD algorithm, add keypress event to activate them when required.
 3. Integrate Indoor Object Recognition Module to work with voice commands as well as shortcut key.
+4. Put the program in a infinite loop with a break condition to make sure the program runs every time.
 """
 
 import imports as IMPORT_MANAGER
