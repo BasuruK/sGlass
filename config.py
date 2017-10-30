@@ -9,17 +9,24 @@ This file is acting as the settings file for the program which corresponds to Ou
 class Configurations:
 
     """
-     __PLATFORM_MODE:-
+    ENVIRONMENT MODE:-
+        1 => Indoor Object Detection (default)
+        2 => Outdoor Object Detection
+    """
+    ENVIRONMENT_MODE = 2
+
+    """
+     PLATFORM_MODE:-
         1 => Single Object Detection Mode (default)
         2 => Multiple Object Detection Mode
     """
-    __PLATFORM_MODE = 1
+    PLATFORM_MODE = 2
 
     """
-    __HAND_TRACKER:-
+    HAND_TRACKER:-
         1 => On
         0 => Off
         
         * If Hand Tracker is on The GBPD is on by default
     """
-    __HAND_TRACKER = 1
+    HAND_TRACKER = 1
