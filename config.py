@@ -20,7 +20,7 @@ class Configurations:
         1 => Single Object Detection Mode (default)
         2 => Multiple Object Detection Mode
     """
-    PLATFORM_MODE = 2
+    PLATFORM_MODE = 1
 
     """
     HAND_TRACKER:-

@@ -13,6 +13,7 @@ import config
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
+from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
 from Description_Generator.generate_description import DescriptionGenerator
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 
@@ -20,6 +21,11 @@ from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 # Initiate Dialogue Manager
 Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
 
+"""
+##############################
+REGION MULTIPLE OBJECT DETECTION
+##############################
+"""
 # Check if its Multiple Object Detection Platform
 if config.Configurations.PLATFORM_MODE == 2:
     # Initiate Outdoor Object Recognition Module & Hand Tracking Module
@@ -76,10 +82,29 @@ if config.Configurations.PLATFORM_MODE == 2:
         ax.add_patch(rect)
 
     IMPORT_MANAGER.plt.show()
+"""
+##############################
+END REGION MULTIPLE OBJECT DETECTION
+##############################
+"""
 
+"""
+##############################
+REGION SINGLE OBJECT DETECTION
+##############################
+"""
 # Check if its Single Object Detection Platform
-elif config.Configurations.PLATFORM_MODE == 1:
+if config.Configurations.PLATFORM_MODE == 1:
     print("Single Detection")
+
+    ftry = SingleDetection(IMPORT_MANAGER, camera_id=0)
+    ftry.track_object()
+
+"""
+##############################
+END REGION SINGLE OBJECT DETECTION
+##############################
+"""
 
 # Initiate Description Generator Module
 

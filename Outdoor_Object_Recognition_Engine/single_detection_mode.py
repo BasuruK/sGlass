@@ -4,8 +4,8 @@ Author : Balasuriya B.K | IT14020254
 Single Detection Mode class is a submodule which only uses the pre-trained CNN
 to give out predictions to a single image.
 """
-import imports as IMPORT_MANAGER
 import cv2
+
 
 class SingleDetection:
 
@@ -25,7 +25,31 @@ class SingleDetection:
         self.CameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
         self.CameraController.set(cv2.CAP_PROP_FRAME_WIDTH, 1150)
 
+    def __del__(self):
+        del self.IMPORT_MANAGER
+#        del self.Prediction
+        del self.Frame
+        del self.CameraController
+        del self.CameraID
+
     def track_object(self):
+        while True:
+            _, self.Frame = self.CameraController.read()
+            self.Frame = cv2.flip(self.Frame, 1)
+
+            cv2.imshow("Frame", self.Frame)
+            wait_key = cv2.waitKey(20) & 0xFF
+            if wait_key == 10:
+                # self.detect(self.Frame)
+                cv2.destroyAllWindows()
+                self.CameraController.release()
+                print("System Exiting")
+                break
+
+            if wait_key == 108 or (self.check_command_queue() == 'wit_capture_image'):
+                print("Capture")
+                cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", self.Frame)
+                self.clear_command_queue()
 
 
 
@@ -57,6 +81,20 @@ class SingleDetection:
 
         return processed_image
 
+    # Dialogue Manager Command Queue Methods
+    @staticmethod
+    def clear_command_queue():
+        f = open("Dialogue_Manager/command_temp.txt", "w")
+        f.write("")
+        f.close()
 
+    def check_command_queue(self):
+        file_content = self.IMPORT_MANAGER.os.stat("Dialogue_Manager/command_temp.txt").st_size
 
-ftry = SingleDetection(IMPORT_MANAGER)
+        if file_content != 0:
+            # Command is in the queue, read
+            f = open("Dialogue_Manager/command_temp.txt", 'r')
+            command = f.read()
+            return command
+        else:
+            return False
