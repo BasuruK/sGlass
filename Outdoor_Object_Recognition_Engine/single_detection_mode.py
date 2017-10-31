@@ -15,10 +15,12 @@ class SingleDetection:
     Frame = None
     CameraController = None
     CameraID = None
+    Classifier = None
 
-    def __init__(self, import_manager, camera_id):
+    def __init__(self, import_manager, camera_id, classifier):
         self.CameraID = camera_id
         self.IMPORT_MANAGER = import_manager
+        self.Classifier = classifier
         self.CameraController = cv2.VideoCapture(self.CameraID)
 
         # Set the Resolution of the Camera to 1024 x 768
@@ -44,14 +46,17 @@ class SingleDetection:
                 cv2.destroyAllWindows()
                 self.CameraController.release()
                 print("System Exiting")
-                break
+                quit(0)
 
             if wait_key == 108 or (self.check_command_queue() == 'wit_capture_image'):
                 print("Capture")
                 cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", self.Frame)
                 self.clear_command_queue()
 
-
+                # print("Prediction : ", self.detect(self.Frame))
+                cv2.destroyAllWindows()
+                self.CameraController.release()
+                return self.detect(self.Frame)
 
     def detect(self, unprocessed_image):
         self.Image = self.preprocessed_image(unprocessed_image)
@@ -68,8 +73,10 @@ class SingleDetection:
     def predict_for_single_image(self, image):
         # label the images according the folder structure
         labels = self.get_labels_for_classes()
-        out = self.classifier.predict(image, verbose=0)[0]
-
+        out = self.Classifier.predict(image, verbose=0)[0]
+        index = self.Classifier.predict_classes(image, verbose=0)
+        out = [(format(x * 100, '.2f') + "%") for x in out]
+        out = ' '.join(list(zip(labels, out))[index[0]])
         return out
 
     # Pre-process the image as for classifier requirements

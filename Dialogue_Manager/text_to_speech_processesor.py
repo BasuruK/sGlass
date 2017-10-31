@@ -25,6 +25,15 @@ class TextToSpeech:
 
         self.IMPORT_MANAGER.os.system("mpg321 command.mp3")
 
+    def single_object_speech(self, sentence="The Object is a ", prediction="Cannot Identify"):
+        processed_sentence = sentence + prediction
+        print("Processed Sentence => {}".format(processed_sentence))
+
+        tts = self.IMPORT_MANAGER.gTTS(text=processed_sentence, lang='en', slow=False)
+        tts.save("command.mp3")
+
+        self.IMPORT_MANAGER.os.system("mpg321 command.mp3")
+
     def speak(self, sentence):
 
         tts = self.IMPORT_MANAGER.gTTS(text=sentence, lang='en', slow=False)
