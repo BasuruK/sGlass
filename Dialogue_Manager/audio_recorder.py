@@ -60,7 +60,7 @@ class RecordAudio:
 
     # Read audio file
     @staticmethod
-    def read_audio(self, wave_filename):
+    def read_audio(wave_filename):
         with open(wave_filename, 'rb') as f:
             audio = f.read()
         return audio

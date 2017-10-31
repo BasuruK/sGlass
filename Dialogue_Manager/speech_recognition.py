@@ -2,10 +2,8 @@
 TODO: Use GOOGLE SPEECH API and API.AI which is yield much faster responses
 """
 
-from wit import Wit
-import requests
-import json
 import threading
+import os
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -21,54 +19,52 @@ class RecognizeSpeech:
     file_name = None
     num_seconds = None
     recordAudio = None
-    api_endpoint = None
-    access_token = None
+    devAccessToken = None
+    cliAccessToken = None
 
     def __init__(self, filename, num_seconds):
+        # Create an object from RecordAudio
         self.file_name = filename
         self.num_seconds = num_seconds
-        self.api_endpoint = 'https://api.wit.ai/speech'
-        self.access_token = "GNC4JAHOTTVJ54MJHGSU62BHZLOOAMWI"
-        # Create an object from RecordAudio
         self.recordAudio = RecordAudio()
+        self.devAccessToken = "3d8efcd4dfb9463f9c6374b39c08fefb"
+        self.cliAccessToken = "1935fb3412a84fdfae962c4e7ca47583"
+
+        # export google authentication to environment
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "Dialogue_Manager_59010a9be645.json"
 
     def __del__(self):
         del self.file_name
         del self.num_seconds
         del self.recordAudio
-        del self.api_endpoint
-        del self.access_token
-        # del self.recordAudio
+        del self.cliAccessToken
+        del self.devAccessToken
 
     def recognize(self):
-        # Connect to Wit by using private server access token
-        client = Wit(access_token=self.access_token)
+        # Connect to Google Speech API by using Service Account access token
+        # Instantiates a client
+        client = speech.SpeechClient()
 
         # Start recording audio
         self.recordAudio.record_audio(self.num_seconds, self.file_name)
+
         # Read audio file created
         audio_loaded = self.recordAudio.read_audio(self.file_name)
 
-        headers = {'authorization': 'Bearer ' + self.access_token,
-                   'Content-Type': 'audio/wav'}
+        audio = types.RecognitionAudio(content=audio_loaded)
 
-        # Make the HTTP post request to wit servers
-        response = requests.post(self.api_endpoint, headers=headers, data=audio_loaded)
+        config = types.RecognitionConfig(
+            encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=16000,
+            language_code='en-US')
 
-        # Convert to Json
-        decoded = response.content.decode()
-        print(decoded)
+        # Detects speech in the audio file
+        response = client.recognize(config, audio)
 
-        # Extract the command from the speech input
-        converted_data = json.loads(decoded)
-        reply_phrase = converted_data['entities']
+        for result in response.results:
+            print('Transcript: {}'.format(result.alternatives[0].transcript))
 
-        # Extract the command from entities
-        command_return = None
-        for i in reply_phrase.keys():
-            command_return = i
-
-        return command_return
+        return format(result.alternatives[0].transcript)
 
 
 # This function is responsible for coordinating activities between the hand track module and main app
@@ -96,3 +92,7 @@ def speech_coordinator_worker():
 
     lock.release()
     print("Wit Time {}".format(time.time() - start_time))
+
+
+l = RecognizeSpeech("speech_input.wav", 4)
+l.recognize()
