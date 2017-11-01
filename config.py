@@ -14,13 +14,16 @@ class Configurations:
         1 => Indoor Object Detection (default)
         2 => Outdoor Object Detection
     """
-    ENVIRONMENT_MODE = 2
+    ENVIRONMENT_MODE = 1
 
     def get_environment_mode(self):
         return self.ENVIRONMENT_MODE
 
-    def set_environment_mode(self, env_mode):
-        self.ENVIRONMENT_MODE = env_mode
+    def set_environment_mode(self):
+        if self.is_indoor_mode():
+            self.set_environment_mode_outdoor()
+        elif self.is_outdoor_mode():
+            self.set_environment_mode_indoor()
 
     def set_environment_mode_indoor(self):
         self.ENVIRONMENT_MODE = 1

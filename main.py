@@ -15,17 +15,27 @@ from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import Trac
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
 from Description_Generator.generate_description import DescriptionGenerator
+from Dialogue_Manager.settings_manager import SettingsManager
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
+from Dialogue_Manager.keyboard_listener import listen_to_keypress
 
 # Initiate Dialogue Manager
 Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
 # Get Configurations Handler
 Configurations = ConfigManager()
+# Get Settings Handler
+Settings = SettingsManager()
+# Start Keyboard Listener
+keyboard_listener = IMPORT_MANAGER.threading.Thread(target=listen_to_keypress, name="listen_to_keypress")
+keyboard_listener.start()
 
 while True:
+
     # Initiate Checking for Indoor or Outdoor Mode
     if Configurations.is_indoor_mode():
-        print("Indoor Mode")
+        #print("Indoor Mode")
+        #print(keyboard_listener.getName())
+        x = 2
 
     if Configurations.is_outdoor_mode():
 
