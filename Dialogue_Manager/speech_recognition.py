@@ -92,7 +92,3 @@ def speech_coordinator_worker():
 
     lock.release()
     print("Wit Time {}".format(time.time() - start_time))
-
-
-l = RecognizeSpeech("speech_input.wav", 4)
-l.recognize()

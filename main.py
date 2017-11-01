@@ -9,7 +9,7 @@ TODO: 1. Change the Outdoor object recognition module to recognize one object at
 """
 
 import imports as IMPORT_MANAGER
-from config import Configurations
+from config import Configurations as ConfigManager
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
@@ -19,13 +19,15 @@ from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 
 # Initiate Dialogue Manager
 Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
+# Get Configurations Handler
+Configurations = ConfigManager()
 
 while True:
     # Initiate Checking for Indoor or Outdoor Mode
-    if Configurations.ENVIRONMENT_MODE == 1:
+    if Configurations.is_indoor_mode():
         print("Indoor Mode")
 
-    if Configurations.ENVIRONMENT_MODE == 2:
+    if Configurations.is_outdoor_mode():
 
         """
         ##############################
@@ -33,7 +35,7 @@ while True:
         ##############################
         """
         # Check if its Multiple Object Detection Platform
-        if Configurations.PLATFORM_MODE == 2:
+        if Configurations.is_multiple_object_detection_mode():
             # Initiate Outdoor Object Recognition Module & Hand Tracking Module
             Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
             Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPORT_MANAGER.outdoor_objects_classifier,
@@ -44,7 +46,7 @@ while True:
 
             # Calculate the time for GBPD execution time
             start_time = IMPORT_MANAGER.time.time()
-            # image_stream = IMPORT_MANAGER.Image.open('Outdoor_Object_Recognition_Engine/custom_test/dog.6.jpg')
+
             captured_frame = IMPORT_MANAGER.Image.fromarray(captured_frame, mode="RGB")
             image_coordinates_with_predictions = Grid_Based_Probability_Detection.main(captured_frame)
             print("GBPD algorithm Execution Time: ", IMPORT_MANAGER.time.time() - start_time)
@@ -100,7 +102,7 @@ while True:
         ##############################
         """
         # Check if its Single Object Detection Platform
-        if Configurations.PLATFORM_MODE == 1:
+        if Configurations.is_single_object_detection_mode():
             print("Single Detection")
 
             ftry = SingleDetection(IMPORT_MANAGER, camera_id=0, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
