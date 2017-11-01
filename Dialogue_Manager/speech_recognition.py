@@ -27,8 +27,8 @@ class RecognizeSpeech:
         self.file_name = filename
         self.num_seconds = num_seconds
         self.recordAudio = RecordAudio()
-        self.devAccessToken = "3d8efcd4dfb9463f9c6374b39c08fefb"
-        self.cliAccessToken = "1935fb3412a84fdfae962c4e7ca47583"
+        self.apiai_devAccessToken = "3d8efcd4dfb9463f9c6374b39c08fefb"
+        self.apiai_cliAccessToken = "1935fb3412a84fdfae962c4efac7ca47583"
 
         # export google authentication to environment
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "Dialogue_Manager_59010a9be645.json"
@@ -37,8 +37,8 @@ class RecognizeSpeech:
         del self.file_name
         del self.num_seconds
         del self.recordAudio
-        del self.cliAccessToken
-        del self.devAccessToken
+        del self.apiai_devAccessToken
+        del self.apiai_cliAccessToken
 
     def recognize(self):
         # Connect to Google Speech API by using Service Account access token
