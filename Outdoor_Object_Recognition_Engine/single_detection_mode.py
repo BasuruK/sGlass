@@ -55,7 +55,7 @@ class SingleDetection:
                 # self.detect(self.Frame)
                 cv2.destroyAllWindows()
                 self.CameraController.release()
-                print("System Exiting")
+                print("Single Object Detection System Exiting")
                 break
 
             if wait_key == 99 or (self.check_command_queue() == 'wit_capture_image'):
