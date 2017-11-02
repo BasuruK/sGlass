@@ -10,11 +10,14 @@ TODO: 1. Change the Outdoor object recognition module to recognize one object at
 
 import imports as IMPORT_MANAGER
 from config import Configurations as ConfigManager
+
 from Outdoor_Object_Recognition_Engine.grid_based_probability_detection import GBPD
 from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import TrackHand
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
+
 from Description_Generator.generate_description import DescriptionGenerator
+
 from Dialogue_Manager.settings_manager import SettingsManager
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 from Dialogue_Manager.keyboard_listener import listen_to_keypress
@@ -80,7 +83,7 @@ while True:
                     print(prediction, image_coordinates)
                     x, y, w, h = image_coordinates
                     color = IMPORT_MANAGER.randomize_color()
-                    rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor='none', )
+                    rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor='none')
                     IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
                     ax.add_patch(rect)
 

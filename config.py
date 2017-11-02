@@ -226,3 +226,34 @@ class Configurations(object):
         :return: True if Disabled
         """
         return self.POINTER_LOC_DISPLAY == 0
+
+    """
+    Available User Commands are Listed below. The commands are sent as a reference point to other classes
+    """
+    change_environment = "wit_cng_env"
+
+    change_environment_indoor = "wit_cng_env_in"
+
+    change_environment_outdoor = "wit_cng_env_out"
+
+    change_platform = "wit_cng_plt"
+
+    change_platform_single_detection = "wit_cng_plt_sig"
+
+    change_platform_multiple_detection = "wit_cng_plt_mul"
+
+    enable_description = "wit_enb_desc"
+
+    disable_description = "wit_dis_desc"
+
+    current_environment = "wit_cur_env"
+
+    enable_gbpd_display_output = "wit_gbpd_dis_enb"
+
+    disable_gbpd_display_output = "wit_gbpd_dis_dis"
+
+    enable_finger_loc_display_output = "wit_fin_loc_enb"
+
+    disable_finger_loc_display_output = "wit_fin_loc_dis"
+
+    quit = "wit_quit"
