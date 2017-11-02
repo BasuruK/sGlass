@@ -30,33 +30,46 @@ class SettingsManager:
             self.CommandQueueFile.close()
 
             # Change the current environment
-            if command == "wit_cng_env":
+            if command == self.Configurations.change_environment:
                 self.Configurations.set_environment_mode()
-            elif command == "wit_cng_env_in":
+
+            elif command == self.Configurations.change_environment_indoor:
                 self.Configurations.set_environment_mode_indoor()
-            elif command == "wit_cng_env_out":
+
+            elif command == self.Configurations.change_environment_outdoor:
                 self.Configurations.set_environment_mode_outdoor()
-            elif command == "wit_cng_plt":
+
+            elif command == self.Configurations.change_platform:
                 self.Configurations.set_platform_mode()
-            elif command == "wit_cng_plt_sig":
+
+            elif command == self.Configurations.change_platform_single_detection:
                 self.Configurations.set_platform_mode_single_detection()
-            elif command == "wit_cng_plt_mul":
+
+            elif command == self.Configurations.change_platform_multiple_detection:
                 self.Configurations.set_platform_mode_multiple_detection()
-            elif command == "wit_enb_desc":
+
+            elif command == self.Configurations.enable_description:
                 self.Configurations.enable_description_generator()
-            elif command == "wit_dis_desc":
+
+            elif command == self.Configurations.disable_description:
                 self.Configurations.disable_description_generator()
-            elif command == "wit_cur_env":
+
+            elif command == self.Configurations.current_environment:
                 self.Configurations.get_current_environment_mode_name()
-            elif command == "wit_gbpd_dis_enb":
+
+            elif command == self.Configurations.enable_gbpd_display_output:
                 self.Configurations.enable_gbpd_display()
-            elif command == "wit_gbpd_dis_dis":
+
+            elif command == self.Configurations.disable_gbpd_display_output:
                 self.Configurations.disable_gbpd_display()
-            elif command == "wit_fin_loc_enb":
+
+            elif command == self.Configurations.enable_finger_loc_display_output:
                 self.Configurations.enable_pointer_loc_display()
-            elif command == "wit_fin_loc_dis":
+
+            elif command == self.Configurations.disable_finger_loc_display_output:
                 self.Configurations.disable_pointer_loc_display()
-            elif command == "wit_quit":
+
+            elif command == self.Configurations.quit:
                 self.clear_command_queue()
                 exit(0)
 
