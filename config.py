@@ -50,7 +50,6 @@ class Configurations(object):
     def set_environment_mode(self):
         """
         Changes the environment to next one
-        :return: next ENVIRONMENT_MODE
         """
         if self.is_indoor_mode():
             self.set_environment_mode_outdoor()
@@ -96,13 +95,14 @@ class Configurations(object):
         """
         return self.PLATFORM_MODE
 
-    def set_platform_mode(self, plt_mode):
+    def set_platform_mode(self):
         """
-        Set the platform mode to the given mode
-        :param plt_mode: platform mode [single/multiple]
-        :return:
+        Set the platform mode to the next mode
         """
-        self.PLATFORM_MODE = plt_mode
+        if self.is_single_object_detection_mode():
+            self.set_platform_mode_multiple_detection()
+        elif self.is_multiple_object_detection_mode():
+            self.set_platform_mode_single_detection()
 
     def set_platform_mode_single_detection(self):
         """
@@ -164,3 +164,65 @@ class Configurations(object):
         :return: True if Disabled
         """
         return self.DESCRIPTION_GENERATOR == 0
+
+    """
+    GBPD_OUT_DISPLAY:-
+        1 => Enabled
+        0 => Disabled
+    """
+    GBPD_OUT_DISPLAY = 1
+
+    def enable_gbpd_display(self):
+        """
+        Enable GBPD output Display
+        """
+        self.GBPD_OUT_DISPLAY = 1
+
+    def disable_gbpd_display(self):
+        """
+        Disable GBPD output Display
+        """
+        self.GBPD_OUT_DISPLAY = 0
+
+    def is_gbpd_enabled(self):
+        """
+        :return: True if Enabled
+        """
+        return self.GBPD_OUT_DISPLAY == 1
+
+    def is_gbpd_disabled(self):
+        """
+        :return: True if Disabled
+        """
+        return self.GBPD_OUT_DISPLAY == 0
+
+    """
+    POINTER_LOC_DISPLAY:-
+        1 => Enabled
+        0 => Disabled
+    """
+    POINTER_LOC_DISPLAY = 1
+
+    def enable_pointer_loc_display(self):
+        """
+        Enable GBPD output Display
+        """
+        self.POINTER_LOC_DISPLAY = 1
+
+    def disable_pointer_loc_display(self):
+        """
+        Disable GBPD output Display
+        """
+        self.POINTER_LOC_DISPLAY = 0
+
+    def is_pointer_loc_enabled(self):
+        """
+        :return: True if Enabled
+        """
+        return self.POINTER_LOC_DISPLAY == 1
+
+    def is_pointer_loc_disabled(self):
+        """
+        :return: True if Disabled
+        """
+        return self.POINTER_LOC_DISPLAY == 0
