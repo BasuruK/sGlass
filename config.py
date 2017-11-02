@@ -87,7 +87,7 @@ class Configurations(object):
         
     Used in Outdoor Object detection only
     """
-    PLATFORM_MODE = 1
+    PLATFORM_MODE = 2
 
     def get_platform_mode(self):
         """
