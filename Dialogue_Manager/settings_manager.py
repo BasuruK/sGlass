@@ -3,6 +3,7 @@ This file is responsible for changing settings of the application. the command q
 command the application receives
 """
 import os
+import threading
 from config import Configurations as ConfigManager
 
 
@@ -48,8 +49,11 @@ class SettingsManager:
                 self.Configurations.enable_description_generator()
             elif command == "wit_dis_desc":
                 self.Configurations.disable_description_generator()
+            elif command == "wit_cur_env":
+                self.Configurations.get_current_environment_mode_name()
             elif command == "wit_quit":
-                quit(0)
+                print("Exitting")
+                os._exit(0)
 
             self.clear_command_queue()
 
@@ -92,3 +96,10 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         change = self.is_environment_change_command_issued()
         return command == change
+
+    # Issue a signal when quit command is issued
+    def signal_recognition_engines_to_quit_when_system_quits(self):
+        self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
+        command = self.CommandQueueFile.read()
+        quit_command = "wit_quit"
+        return command == quit_command

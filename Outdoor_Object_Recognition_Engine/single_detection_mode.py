@@ -48,7 +48,10 @@ class SingleDetection:
             cv2.imshow("Frame", self.Frame)
 
             wait_key = cv2.waitKey(20) & 0xFF
-            if wait_key == 10 or self.SettingsController.signal_recognition_engines_to_quit():
+            if (wait_key == 10 or
+                    self.SettingsController.signal_recognition_engines_to_quit() or
+                    self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
+
                 # self.detect(self.Frame)
                 cv2.destroyAllWindows()
                 self.CameraController.release()
