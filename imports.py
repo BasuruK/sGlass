@@ -36,7 +36,7 @@ outdoor_objects_classifier = load_model('Outdoor_Object_Recognition_Engine/predi
 
 
 # Load Description Generator Model
-description_generator_model = load_model('Description_Generator/Data/pretrainedmodel/descgenrator.30-2.19.hdf5')
+# description_generator_model = load_model('Description_Generator/Data/pretrainedmodel/descgenrator.30-2.19.hdf5')
 
 print("All Modules Loaded within: ", time.time() - start_time)
 print("Application Started")
