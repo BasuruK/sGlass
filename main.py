@@ -63,19 +63,20 @@ while True:
             image_coordinates_with_predictions = Grid_Based_Probability_Detection.main(captured_frame)
             print("GBPD algorithm Execution Time: ", IMPORT_MANAGER.time.time() - start_time)
 
-            fig, ax = IMPORT_MANAGER.plt.subplots(1)
-            ax.imshow(captured_frame)
+            if Configurations.is_gbpd_enabled():
+                fig, ax = IMPORT_MANAGER.plt.subplots(1)
+                ax.imshow(captured_frame)
 
-            # Extract the Regions // Ignore the index 0
-            for prediction, image_coordinates in image_coordinates_with_predictions[1:]:
-                print(prediction, image_coordinates)
-                x, y, w, h = image_coordinates
-                color = IMPORT_MANAGER.randomize_color()
-                rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor='none', )
-                IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
-                ax.add_patch(rect)
+                # Extract the Regions // Ignore the index 0
+                for prediction, image_coordinates in image_coordinates_with_predictions[1:]:
+                    print(prediction, image_coordinates)
+                    x, y, w, h = image_coordinates
+                    color = IMPORT_MANAGER.randomize_color()
+                    rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor='none', )
+                    IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
+                    ax.add_patch(rect)
 
-            IMPORT_MANAGER.plt.show()
+                IMPORT_MANAGER.plt.show()
 
             # Initiate Finger to GBPD Mapper
             Pointer_To_Location = PointToFingerMapper(image_coordinates_with_predictions[1:], finger_location)
@@ -88,20 +89,21 @@ while True:
 
             read_image = IMPORT_MANAGER.imutils.imread("Outdoor_Object_Recognition_Engine/edited.jpg")
 
-            fig, ax = IMPORT_MANAGER.plt.subplots(1)
-            ax.imshow(read_image)
+            if Configurations.is_pointer_loc_enabled():
+                fig, ax = IMPORT_MANAGER.plt.subplots(1)
+                ax.imshow(read_image)
 
-            for prediction, image_coordinates in prediction_and_selected_box:
-                print(prediction, image_coordinates)
-                string = "You pointed at a "
-                Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
-                x, y, w, h = image_coordinates
-                color = IMPORT_MANAGER.randomize_color()
-                rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
-                IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
-                ax.add_patch(rect)
+                for prediction, image_coordinates in prediction_and_selected_box:
+                    print(prediction, image_coordinates)
+                    string = "You pointed at a "
+                    Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
+                    x, y, w, h = image_coordinates
+                    color = IMPORT_MANAGER.randomize_color()
+                    rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
+                    IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
+                    ax.add_patch(rect)
 
-            IMPORT_MANAGER.plt.show()
+                IMPORT_MANAGER.plt.show()
         """
         ##############################
         END REGION MULTIPLE OBJECT DETECTION

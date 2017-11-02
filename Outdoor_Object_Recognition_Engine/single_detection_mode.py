@@ -9,7 +9,6 @@ from Dialogue_Manager.settings_manager import SettingsManager
 
 
 class SingleDetection:
-
     IMPORT_MANAGER = None
     Image = None
     Prediction = None
@@ -50,6 +49,7 @@ class SingleDetection:
             wait_key = cv2.waitKey(20) & 0xFF
             if (wait_key == 10 or
                     self.SettingsController.signal_recognition_engines_to_quit() or
+                    self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or
                     self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
 
                 # self.detect(self.Frame)
