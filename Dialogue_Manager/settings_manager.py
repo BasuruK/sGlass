@@ -3,7 +3,6 @@ This file is responsible for changing settings of the application. the command q
 command the application receives
 """
 import os
-import threading
 from config import Configurations as ConfigManager
 
 
@@ -37,23 +36,29 @@ class SettingsManager:
                 self.Configurations.set_environment_mode_indoor()
             elif command == "wit_cng_env_out":
                 self.Configurations.set_environment_mode_outdoor()
+            elif command == "wit_cng_plt":
+                self.Configurations.set_platform_mode()
             elif command == "wit_cng_plt_sig":
                 self.Configurations.set_platform_mode_single_detection()
             elif command == "wit_cng_plt_mul":
                 self.Configurations.set_platform_mode_multiple_detection()
-            elif command == "wit_enb_hndtrc":
-                self.Configurations.enable_hand_tracker()
-            elif command == "wit_dis_hndtrc":
-                self.Configurations.disable_hand_tracker()
             elif command == "wit_enb_desc":
                 self.Configurations.enable_description_generator()
             elif command == "wit_dis_desc":
                 self.Configurations.disable_description_generator()
             elif command == "wit_cur_env":
                 self.Configurations.get_current_environment_mode_name()
+            elif command == "wit_gbpd_dis_enb":
+                self.Configurations.enable_gbpd_display()
+            elif command == "wit_gbpd_dis_dis":
+                self.Configurations.disable_gbpd_display()
+            elif command == "wit_fin_loc_enb":
+                self.Configurations.enable_pointer_loc_display()
+            elif command == "wit_fin_loc_dis":
+                self.Configurations.disable_pointer_loc_display()
             elif command == "wit_quit":
-                print("Exitting")
-                os._exit(0)
+                self.clear_command_queue()
+                exit(0)
 
             self.clear_command_queue()
 
@@ -83,6 +88,7 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         output = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
+
         if output == "wit_cng_env":
             return "wit_cng_env"
         elif output == "wit_cng_env_in":
@@ -94,12 +100,37 @@ class SettingsManager:
     def signal_recognition_engines_to_quit(self):
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
+        self.CommandQueueFile.close()
         change = self.is_environment_change_command_issued()
+
+        return command == change
+
+    # Check weather command queue possesses a command to change platform
+    def is_platform_change_command_issued(self):
+        self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
+        output = self.CommandQueueFile.read()
+        self.CommandQueueFile.close()
+
+        if output == "wit_cng_plt":
+            return "wit_cng_plt"
+        elif output == "wit_cng_plt_sig":
+            return "wit_cng_plt_sig"
+        elif output == "wit_cng_plt_mul":
+            return "wit_cng_plt_mul"
+
+    def signal_recognition_engines_to_quit_on_platform_change(self):
+        self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
+        command = self.CommandQueueFile.read()
+        self.CommandQueueFile.close()
+        change = self.is_platform_change_command_issued()
+
         return command == change
 
     # Issue a signal when quit command is issued
     def signal_recognition_engines_to_quit_when_system_quits(self):
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
+        self.CommandQueueFile.close()
         quit_command = "wit_quit"
+
         return command == quit_command
