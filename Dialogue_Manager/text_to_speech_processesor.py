@@ -43,7 +43,12 @@ class TextToSpeech:
 
 
 def error(sentence):
+    tts = gTTS(text=sentence, lang='en', slow=False)
+    tts.save("speak.mp3")
+    os.system("mpg321 speak.mp3")
 
+
+def speak(sentence):
     tts = gTTS(text=sentence, lang='en', slow=False)
     tts.save("speak.mp3")
     os.system("mpg321 speak.mp3")
