@@ -7,7 +7,6 @@ from config import Configurations as ConfigManager
 
 
 class SettingsManager:
-
     CommandQueueFile = None
     Configurations = None
 
@@ -21,7 +20,7 @@ class SettingsManager:
         del self.Configurations
 
     # Change Settings according to the commands present in Command Queue
-    def queue_manager(self):
+    def queue_manager(self, immediate_query=False):
         if not self.is_command_queue_empty():
             self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
             # Read the contents
@@ -48,32 +47,46 @@ class SettingsManager:
             elif command == self.Configurations.change_platform_multiple_detection:
                 self.Configurations.set_platform_mode_multiple_detection()
 
-            elif command == self.Configurations.enable_description:
-                self.Configurations.enable_description_generator()
-
-            elif command == self.Configurations.disable_description:
-                self.Configurations.disable_description_generator()
-
             elif command == self.Configurations.current_environment:
                 self.Configurations.get_current_environment_mode_name()
-
-            elif command == self.Configurations.enable_gbpd_display_output:
-                self.Configurations.enable_gbpd_display()
-
-            elif command == self.Configurations.disable_gbpd_display_output:
-                self.Configurations.disable_gbpd_display()
-
-            elif command == self.Configurations.enable_finger_loc_display_output:
-                self.Configurations.enable_pointer_loc_display()
-
-            elif command == self.Configurations.disable_finger_loc_display_output:
-                self.Configurations.disable_pointer_loc_display()
 
             elif command == self.Configurations.quit:
                 self.clear_command_queue()
                 exit(0)
 
             self.clear_command_queue()
+
+    def immediate_queue(self):
+        # Run only for Immediate Queries
+        self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
+        # Read the contents
+        command = self.CommandQueueFile.read()
+        # Close the file pointer and clear
+        self.CommandQueueFile.close()
+
+        if command == self.Configurations.enable_description:
+            self.Configurations.enable_description_generator()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.disable_description:
+            self.Configurations.disable_description_generator()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.enable_gbpd_display_output:
+            self.Configurations.enable_gbpd_display()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.disable_gbpd_display_output:
+            self.Configurations.disable_gbpd_display()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.enable_finger_loc_display_output:
+            self.Configurations.enable_pointer_loc_display()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.disable_finger_loc_display_output:
+            self.Configurations.disable_pointer_loc_display()
+        self.clear_command_queue()
 
     # Clear Command Queue
     @staticmethod

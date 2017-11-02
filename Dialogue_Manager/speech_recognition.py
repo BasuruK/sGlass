@@ -106,6 +106,14 @@ def speech_coordinator_worker():
         print(action)
         settings_controller.push_to_queue(action)
 
+        # Run the immediate queries
+        """
+        Immediate Queries:-
+            1. Enable/ Disable Description
+            2. Enable/ Disable GBPD display output
+            3. Enable/ Disable Finger Location Output
+        """
+
         print("Unlocking Worker")
     except KeyError:
         error("Command Not Recognized")
