@@ -6,6 +6,7 @@ This file is acting as the settings file for the program which corresponds to Ou
 Engine.
 """
 import threading
+from Dialogue_Manager.text_to_speech_processesor import speak
 
 
 class Configurations(object):
@@ -16,6 +17,7 @@ class Configurations(object):
     # Use a Singleton Object to initiate Thread safe Configurations Instance
     def __new__(cls, *args, **kwargs):
         """
+        Singleton Configuration Object
         :return: Single object of Configuration class
         """
         with Configurations._lock:
@@ -29,6 +31,15 @@ class Configurations(object):
         2 => Outdoor Object Detection
     """
     ENVIRONMENT_MODE = 2
+
+    def get_current_environment_mode_name(self):
+        """
+        :return: current ENVIRONMENT_NAME
+        """
+        if self.is_indoor_mode():
+            return "Indoor Mode"
+        elif self.is_outdoor_mode():
+            speak("Outdoor Mode")
 
     def get_environment_mode(self):
         """
@@ -118,30 +129,6 @@ class Configurations(object):
         return self.PLATFORM_MODE == 2
 
     """
-    HAND_TRACKER:-
-        1 => On
-        0 => Off
-        
-        * If Hand Tracker is on The GBPD is on by default
-    """
-    HAND_TRACKER = 1
-
-    def get_hand_tracker(self):
-        return self.HAND_TRACKER
-
-    def enable_hand_tracker(self):
-        self.HAND_TRACKER = 1
-
-    def disable_hand_tracker(self):
-        self.HAND_TRACKER = 0
-
-    def is_hand_tracker_enabled(self):
-        return self.HAND_TRACKER == 1
-
-    def is_hand_tracker_disabled(self):
-        return self.HAND_TRACKER == 0
-
-    """
     DESCRIPTION_GENERATOR:-
         1 => Enable (default)
         0 => Disable
@@ -149,16 +136,31 @@ class Configurations(object):
     DESCRIPTION_GENERATOR = 1
 
     def get_description_generator(self):
+        """
+        :return: current DESCRIPTION_GENERATOR value
+        """
         return self.DESCRIPTION_GENERATOR
 
     def enable_description_generator(self):
+        """
+        Enable Description Generation
+        """
         self.DESCRIPTION_GENERATOR = 1
 
     def disable_description_generator(self):
+        """
+        Disable Description Generation
+        """
         self.DESCRIPTION_GENERATOR = 0
 
     def is_description_generator_enabled(self):
+        """
+        :return: True if Enabled
+        """
         return self.DESCRIPTION_GENERATOR == 1
 
     def is_description_generator_disabled(self):
+        """
+        :return: True if Disabled
+        """
         return self.DESCRIPTION_GENERATOR == 0

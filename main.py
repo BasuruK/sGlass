@@ -120,7 +120,7 @@ while True:
             single_detection = SingleDetection(IMPORT_MANAGER, camera_id=0, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
             prediction = single_detection.track_object()
 
-            if type(prediction) == "str" and prediction is not None:
+            if prediction is not None:
                 print("Prediction :", prediction)
                 Text_To_Speech.single_object_speech(prediction=prediction)
 
