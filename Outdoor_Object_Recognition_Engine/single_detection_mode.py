@@ -5,6 +5,7 @@ Single Detection Mode class is a submodule which only uses the pre-trained CNN
 to give out predictions to a single image.
 """
 import cv2
+from Dialogue_Manager.settings_manager import SettingsManager
 
 
 class SingleDetection:
@@ -16,12 +17,14 @@ class SingleDetection:
     CameraController = None
     CameraID = None
     Classifier = None
+    SettingsController = None
 
     def __init__(self, import_manager, camera_id, classifier):
         self.CameraID = camera_id
         self.IMPORT_MANAGER = import_manager
         self.Classifier = classifier
         self.CameraController = cv2.VideoCapture(self.CameraID)
+        self.SettingsController = SettingsManager()
 
         # Set the Resolution of the Camera to 1024 x 768
         self.CameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
@@ -29,10 +32,13 @@ class SingleDetection:
 
     def __del__(self):
         del self.IMPORT_MANAGER
-#        del self.Prediction
-        del self.Frame
+        # del self.Prediction
+        # del self.Frame
+        self.CameraController.release()
+        cv2.destroyAllWindows()
         del self.CameraController
         del self.CameraID
+        del self.SettingsController
 
     def track_object(self):
         while True:
@@ -40,18 +46,18 @@ class SingleDetection:
             self.Frame = cv2.flip(self.Frame, 1)
 
             cv2.imshow("Frame", self.Frame)
+
             wait_key = cv2.waitKey(20) & 0xFF
-            if wait_key == 10:
+            if wait_key == 10 or self.SettingsController.signal_recognition_engines_to_quit():
                 # self.detect(self.Frame)
                 cv2.destroyAllWindows()
                 self.CameraController.release()
                 print("System Exiting")
-                quit(0)
+                break
 
-            if wait_key == 108 or (self.check_command_queue() == 'wit_capture_image'):
+            if wait_key == 99 or (self.check_command_queue() == 'wit_capture_image'):
                 print("Capture")
                 cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", self.Frame)
-                self.clear_command_queue()
 
                 # print("Prediction : ", self.detect(self.Frame))
                 cv2.destroyAllWindows()
@@ -87,13 +93,6 @@ class SingleDetection:
         processed_image = self.IMPORT_MANAGER.np.expand_dims(processed_image, axis=0)
 
         return processed_image
-
-    # Dialogue Manager Command Queue Methods
-    @staticmethod
-    def clear_command_queue():
-        f = open("Dialogue_Manager/command_temp.txt", "w")
-        f.write("")
-        f.close()
 
     def check_command_queue(self):
         file_content = self.IMPORT_MANAGER.os.stat("Dialogue_Manager/command_temp.txt").st_size
