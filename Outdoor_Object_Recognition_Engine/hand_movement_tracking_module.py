@@ -9,12 +9,10 @@ operate the system at a particular time, and only able to detect single hand.
 
 TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
 """
-
 import cv2
 import numpy as np
-import threading
 import os
-from Dialogue_Manager.speech_recognition import speech_coordinator_worker
+from Dialogue_Manager.settings_manager import SettingsManager
 
 
 class TrackHand:
@@ -27,6 +25,7 @@ class TrackHand:
     cameraController = None
     furthestPoint = None
     workerCount = 0
+    SettingsController = None
 
     # Temporary Property
     objectHistogram = None
@@ -37,6 +36,7 @@ class TrackHand:
         self.camera = camera
         self.blurValue = blur_value
         self.cameraController = cv2.VideoCapture(self.camera)
+        self.SettingsController = SettingsManager()
 
         # Set the Resolution of the Camera to 1024 x 768
         self.cameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
@@ -46,14 +46,18 @@ class TrackHand:
         self.clear_command_queue()
 
     def __del__(self):
-        del self.frame
-        del self.blurValue
-        del self.threshold
-        del self.objectColor
-        del self.camera
-        del self.cameraController
-        del self.objectHistogram
-        del self.furthestPoint
+        try:
+            del self.frame
+            del self.blurValue
+            del self.threshold
+            del self.objectColor
+            del self.camera
+            del self.cameraController
+            del self.objectHistogram
+            del self.furthestPoint
+            del self.SettingsController
+        except AttributeError:
+            pass
 
     def track_hand(self):
 
@@ -62,6 +66,9 @@ class TrackHand:
             if self.objectColor is None:
                 # Checking if the color profile is already saved
                 self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
+
+                if self.objectColor is None and self.objectHistogram is None:
+                    break  # Platform change or quit issued
 
             elif self.objectColor is not None:
 
@@ -99,7 +106,7 @@ class TrackHand:
                     # cv2.drawContours(frame, [max_contours], 0, (255,150,0) ,3)
                     # cv2.drawContours(self.frame, [hull], 0, (255, 150, 0), 3)
 
-                    if defects is not None and defects.shape[0]is not None:  # To ensure the camera accidentally does not pick up empty object
+                    if defects is not None and defects.shape[0] is not None:  # To ensure the camera accidentally does not pick up empty object
                         for i in range(defects.shape[0]):
                             s, e, f, d = defects[i, 0]
                             start = tuple(max_contours[s][0])
@@ -126,14 +133,19 @@ class TrackHand:
                 cv2.imshow("Thresh", located_object)
 
                 waitkey = cv2.waitKey(20) & 0xFF
-                if waitkey == 108:  # key L
-                    # Clear command queue
-                    self.clear_command_queue()
-                    # Start Voice Command Listening background worker
-                    background_worker = threading.Thread(target=speech_coordinator_worker, name="coordinator")
-                    background_worker.start()
+                # Platform change configurations
+                if (waitkey == 10 or
+                        self.SettingsController.signal_recognition_engines_to_quit() or
+                        self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or
+                        self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
 
-                if waitkey == 10 or (self.check_command_queue() == 'wit_capture_image'): # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
+                    cv2.destroyAllWindows()
+                    self.cameraController.release()
+                    print("Multiple Object Detection System Exiting")
+                    break
+
+                # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
+                if waitkey == 99 or (self.check_command_queue() == 'wit_capture_image'):
                     # Return the frame and the furthest point
                     cv2.destroyAllWindows()
                     self.cameraController.release()
@@ -151,7 +163,21 @@ class TrackHand:
             # cv2.resizeWindow('frame', 1024, 768)
             cv2.imshow("frame", frame)
 
-            if cv2.waitKey(20) & 0xFF == 10:  # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
+            # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
+            waitkey = cv2.waitKey(20) & 0xFF
+            # Platform change configurations
+            if (waitkey == 10 or
+                    self.SettingsController.signal_recognition_engines_to_quit() or
+                    self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or
+                    self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
+
+                cv2.destroyAllWindows()
+                self.cameraController.release()
+                print("Multiple Object Detection System Exiting")
+                return None, None
+
+            # C Key Pressed
+            if waitkey == 99:
                 object_color = frame[300:500, 300:500]
                 cv2.destroyAllWindows()
                 # Convert object color in to HSV range
@@ -230,6 +256,8 @@ class TrackHand:
         cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", frame_returned)
         frame_returned = cv2.cvtColor(frame_returned, cv2.COLOR_BGR2RGB)
         print(frame_returned.shape)
+        if frame_returned is None and finger_pointed is None:
+            return None, None
         return frame_returned, finger_pointed
 
     # Dialogue Manager Command Queue Methods

@@ -23,11 +23,14 @@ class GBPD:
         print("Imports Loaded Successfully")
 
     def __del__(self):
-        del self.IMPORT_MANAGER
-        del self.new_image
-        del self.classifier
-        del self.output_bounding_boxes
-        del self.window_size
+        try:
+            del self.IMPORT_MANAGER
+            del self.new_image
+            del self.classifier
+            del self.output_bounding_boxes
+            del self.window_size
+        except AttributeError:
+            pass
 
     # Execute Main Functionality
     def main(self, image_stream):
