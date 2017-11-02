@@ -27,18 +27,20 @@ Configurations = ConfigManager()
 Settings = SettingsManager()
 # Start Keyboard Listener
 keyboard_listener = IMPORT_MANAGER.threading.Thread(target=listen_to_keypress, name="listen_to_keypress")
+keyboard_listener.daemon = True
 keyboard_listener.start()
+
 
 while True:
 
+    # Check for settings changes
+    Settings.queue_manager()
+
     # Initiate Checking for Indoor or Outdoor Mode
     if Configurations.is_indoor_mode():
-        #print("Indoor Mode")
-        #print(keyboard_listener.getName())
-        x = 2
+        print("Indoor Mode")
 
     if Configurations.is_outdoor_mode():
-
         """
         ##############################
         REGION MULTIPLE OBJECT DETECTION
@@ -115,11 +117,12 @@ while True:
         if Configurations.is_single_object_detection_mode():
             print("Single Detection")
 
-            ftry = SingleDetection(IMPORT_MANAGER, camera_id=0, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
-            prediction = ftry.track_object()
+            single_detection = SingleDetection(IMPORT_MANAGER, camera_id=0, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
+            prediction = single_detection.track_object()
 
-            print("Prediction :", prediction)
-            Text_To_Speech.single_object_speech(prediction=prediction)
+            if type(prediction) == "str" and prediction is not None:
+                print("Prediction :", prediction)
+                Text_To_Speech.single_object_speech(prediction=prediction)
 
         """
         ##############################
