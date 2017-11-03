@@ -54,6 +54,18 @@ class SingleDetection:
             cv2.imshow("Frame", self.Frame)
 
             wait_key = cv2.waitKey(20) & 0xFF
+
+            # Change Platform mode to Multiple detection
+            if wait_key == 112:
+                self.Configurations_Controller.set_platform_mode_multiple_detection()
+                print("Platform Changing")
+                wait_key = 10
+            # Change environment to indoor
+            if wait_key == 101:
+                self.Configurations_Controller.set_environment_mode_outdoor()
+                print("Environment Changing")
+                wait_key = 10
+
             if (wait_key == 10 or
                     self.SettingsController.signal_recognition_engines_to_quit() or
                     self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or

@@ -6,8 +6,6 @@ applying color detection + skin detection algorithms to extract out the hand.
 
 @DRAWBACKS :- The detection algorithm changes its values based on the skin color, only one type of skin color can
 operate the system at a particular time, and only able to detect single hand.
-
-TODO: OPTIMIZE TO IDENTIFY THE OPPOSITE SIDE OF THE HAND
 """
 import cv2
 import numpy as np
@@ -49,7 +47,7 @@ class TrackHand:
         # Clear the command queue to remove any previous commands stored
         self.clear_command_queue()
 
-        speak_secondary("Multiple Object Detection Mode.. Please Note Hand Tracking is enabled")
+        speak_secondary("Multiple Object Detection Mode.")
 
     def __del__(self):
         try:
@@ -71,7 +69,13 @@ class TrackHand:
         while True:
 
             if self.objectColor is None:
-                # Checking if the color profile is already saved
+                # # Checking if the color profile is already saved
+                # if self.is_object_color_and_hsv_files_empty():
+                #     self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
+                #     self.save_object_color_and_hsv_frame()
+                # else:
+                #     self.objectColor, self.objectHistogram = self.load_object_color_and_hsv_from_file()
+
                 self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
 
                 if self.objectColor is None and self.objectHistogram is None:
@@ -140,6 +144,26 @@ class TrackHand:
                 cv2.imshow("Thresh", located_object)
 
                 waitkey = cv2.waitKey(20) & 0xFF
+
+                # Disable Grid Output window DEV OPT
+                if waitkey == 103:
+                    self.Configurations_Controller.disable_gbpd_display()
+                    print("Grid Display Output disabled")
+                # Disable Finger Location Output window DEV OPT
+                if waitkey == 102:
+                    self.Configurations_Controller.disable_pointer_loc_display()
+                    print("Finger Location Output Display disabled")
+                # Change Platform mode to single detection
+                if waitkey == 112:
+                    self.Configurations_Controller.set_platform_mode_single_detection()
+                    print("Platform Changing")
+                    waitkey = 10
+                # Change environment to indoor
+                if waitkey == 101:
+                    self.Configurations_Controller.set_environment_mode_indoor()
+                    print("Environment Changing")
+                    waitkey = 10
+
                 # Platform change configurations
                 if (waitkey == 10 or
                         self.SettingsController.signal_recognition_engines_to_quit() or
@@ -285,3 +309,64 @@ class TrackHand:
             return command
         else:
             return False
+
+    # Save Object color and HSV Frames to a file
+    def save_object_color_and_hsv_frame(self):
+        """
+        Save the Object color and HSV Frame to a txt file enabling single time detection for a single profile
+        """
+        try:
+
+            object_color_file = open(os.getcwd() + "/Outdoor_Object_Recognition_Engine/object_color.txt", "r+")
+            object_hsv_file = open(os.getcwd() + "/Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
+
+            object_color_file.write(str(self.objectColor))
+            object_hsv_file.write(str(self.objectHistogram))
+
+            print(self.objectColor)
+            print(self.objectHistogram)
+
+            object_color_file.close()
+            object_hsv_file.close()
+
+            return True
+
+        except FileNotFoundError:
+            print("Object Color or Object Histogram save files not found, will be created now")
+            open("Outdoor_Object_Recognition_Engine/object_color.txt", "w+").close()
+            open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "w+").close()
+
+    # Check weather Object color and HSV files are empty
+    @staticmethod
+    def is_object_color_and_hsv_files_empty():
+        object_color_file = os.stat("Outdoor_Object_Recognition_Engine/object_color.txt").st_size
+        object_hsv_file = os.stat("Outdoor_Object_Recognition_Engine/object_histogram.txt").st_size
+        return object_color_file == 0 and object_hsv_file == 0
+
+    # Load Color profile and HSV profile from the test file
+    @staticmethod
+    def load_object_color_and_hsv_from_file():
+        object_color_file = open("Outdoor_Object_Recognition_Engine/object_color.txt", "r+")
+        object_hsv_file = open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
+
+        object_c, object_hsv = object_color_file.read(), object_hsv_file.read()
+
+        print(object_c)
+        print(object_hsv)
+
+        object_color_file.close()
+        object_hsv_file.close()
+
+        return object_c, object_hsv
+
+
+# import os
+#
+# print(os.getcwd())
+#
+# object_color_file = open(os.getcwd() + "/object_color.txt", "r+")
+#
+# #object_hsv_file = open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
+#
+# object_color_file.write("Sad")
+# object_color_file.close()
