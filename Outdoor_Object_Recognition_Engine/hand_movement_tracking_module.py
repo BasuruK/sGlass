@@ -13,6 +13,8 @@ import cv2
 import numpy as np
 import os
 from Dialogue_Manager.settings_manager import SettingsManager
+from config import Configurations
+from Dialogue_Manager.text_to_speech_processesor import speak_secondary
 
 
 class TrackHand:
@@ -26,6 +28,7 @@ class TrackHand:
     furthestPoint = None
     workerCount = 0
     SettingsController = None
+    Configurations_Controller = None
 
     # Temporary Property
     objectHistogram = None
@@ -37,6 +40,7 @@ class TrackHand:
         self.blurValue = blur_value
         self.cameraController = cv2.VideoCapture(self.camera)
         self.SettingsController = SettingsManager()
+        self.Configurations_Controller = Configurations()
 
         # Set the Resolution of the Camera to 1024 x 768
         self.cameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
@@ -44,6 +48,8 @@ class TrackHand:
 
         # Clear the command queue to remove any previous commands stored
         self.clear_command_queue()
+
+        speak_secondary("Multiple Object Detection Mode.. Please Note Hand Tracking is enabled")
 
     def __del__(self):
         try:
@@ -56,6 +62,7 @@ class TrackHand:
             del self.objectHistogram
             del self.furthestPoint
             del self.SettingsController
+            del self.Configurations_Controller
         except AttributeError:
             pass
 
@@ -145,7 +152,7 @@ class TrackHand:
                     break
 
                 # key == 13 works on windows, for linux change the code to cv2.waitKey(20) & 0xFF == 10
-                if waitkey == 99 or (self.check_command_queue() == 'wit_capture_image'):
+                if waitkey == 99 or (self.check_command_queue() == self.Configurations_Controller.capture_image):
                     # Return the frame and the furthest point
                     cv2.destroyAllWindows()
                     self.cameraController.release()

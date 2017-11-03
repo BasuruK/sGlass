@@ -6,6 +6,8 @@ to give out predictions to a single image.
 """
 import cv2
 from Dialogue_Manager.settings_manager import SettingsManager
+from Dialogue_Manager.text_to_speech_processesor import speak_secondary
+from config import Configurations
 
 
 class SingleDetection:
@@ -17,6 +19,7 @@ class SingleDetection:
     CameraID = None
     Classifier = None
     SettingsController = None
+    Configurations_Controller = None
 
     def __init__(self, import_manager, camera_id, classifier):
         self.CameraID = camera_id
@@ -24,10 +27,13 @@ class SingleDetection:
         self.Classifier = classifier
         self.CameraController = cv2.VideoCapture(self.CameraID)
         self.SettingsController = SettingsManager()
+        self.Configurations_Controller = Configurations()
 
         # Set the Resolution of the Camera to 1024 x 768
         self.CameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
         self.CameraController.set(cv2.CAP_PROP_FRAME_WIDTH, 1150)
+
+        speak_secondary("Single Detection Mode")
 
     def __del__(self):
         del self.IMPORT_MANAGER
@@ -38,6 +44,7 @@ class SingleDetection:
         del self.CameraController
         del self.CameraID
         del self.SettingsController
+        del self.Configurations_Controller
 
     def track_object(self):
         while True:
@@ -58,7 +65,7 @@ class SingleDetection:
                 print("Single Object Detection System Exiting")
                 break
 
-            if wait_key == 99 or (self.check_command_queue() == 'wit_capture_image'):
+            if wait_key == 99 or (self.check_command_queue() == self.Configurations_Controller.capture_image):
                 print("Capture")
                 cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", self.Frame)
 
@@ -84,7 +91,7 @@ class SingleDetection:
         labels = self.get_labels_for_classes()
         out = self.Classifier.predict(image, verbose=0)[0]
         index = self.Classifier.predict_classes(image, verbose=0)
-        out = [(format(x * 100, '.2f') + "%") for x in out]
+        out = [(format(x * 100, '.0f') + "%") for x in out]
         out = ' '.join(list(zip(labels, out))[index[0]])
         return out
 

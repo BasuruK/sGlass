@@ -33,7 +33,7 @@ keyboard_listener = IMPORT_MANAGER.threading.Thread(target=listen_to_keypress, n
 keyboard_listener.daemon = True
 keyboard_listener.start()
 
-
+i = 1
 while True:
 
     # Check for settings changes
@@ -41,7 +41,10 @@ while True:
 
     # Initiate Checking for Indoor or Outdoor Mode
     if Configurations.is_indoor_mode():
-        print("Indoor Mode")
+
+        while i < 2:
+            print("Indoor Mode")
+            i += 1
 
     if Configurations.is_outdoor_mode():
         """
