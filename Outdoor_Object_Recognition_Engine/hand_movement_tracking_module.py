@@ -10,6 +10,7 @@ operate the system at a particular time, and only able to detect single hand.
 import cv2
 import numpy as np
 import os
+import _pickle as cPickle
 from Dialogue_Manager.settings_manager import SettingsManager
 from config import Configurations
 from Dialogue_Manager.text_to_speech_processesor import speak_secondary
@@ -69,14 +70,10 @@ class TrackHand:
         while True:
 
             if self.objectColor is None:
-                # # Checking if the color profile is already saved
-                # if self.is_object_color_and_hsv_files_empty():
-                #     self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
-                #     self.save_object_color_and_hsv_frame()
-                # else:
-                #     self.objectColor, self.objectHistogram = self.load_object_color_and_hsv_from_file()
+                # Checking if the color profile is already saved
 
                 self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
+                # self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
 
                 if self.objectColor is None and self.objectHistogram is None:
                     break  # Platform change or quit issued
@@ -184,6 +181,9 @@ class TrackHand:
 
     # Returns an HSV color information captured of the hand
     def get_hsv_of_hand(self):
+        if self.is_object_color_and_hsv_files_empty() is False:
+            return self.load_object_color_and_hsv_from_file()
+
         while True:
             _, frame = self.cameraController.read()
             frame = cv2.flip(frame, 1)
@@ -311,27 +311,31 @@ class TrackHand:
             return False
 
     # Save Object color and HSV Frames to a file
-    def save_object_color_and_hsv_frame(self):
+    @staticmethod
+    def save_object_color_and_hsv_frame(object_color, object_hist):
         """
         Save the Object color and HSV Frame to a txt file enabling single time detection for a single profile
         """
         try:
 
-            object_color_file = open(os.getcwd() + "/Outdoor_Object_Recognition_Engine/object_color.txt", "r+")
-            object_hsv_file = open(os.getcwd() + "/Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
+            here = os.path.dirname(os.path.abspath(__file__))
 
-            object_color_file.write(str(self.objectColor))
-            object_hsv_file.write(str(self.objectHistogram))
+            object_color_file = open(os.path.join(here, "object_color.txt"), "w")
+            object_hsv_file = open(os.path.join(here, "object_histogram.txt"), "w")
 
-            print(self.objectColor)
-            print(self.objectHistogram)
+            temp_clr = [object_color]
+            temp_hsv = [object_hist]
+
+            object_color_file.write(cPickle.dumps(temp_clr))
+            object_hsv_file.write(cPickle.dumps(temp_hsv))
 
             object_color_file.close()
             object_hsv_file.close()
 
             return True
 
-        except FileNotFoundError:
+        except FileNotFoundError as e:
+            print(str(e))
             print("Object Color or Object Histogram save files not found, will be created now")
             open("Outdoor_Object_Recognition_Engine/object_color.txt", "w+").close()
             open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "w+").close()
@@ -346,27 +350,11 @@ class TrackHand:
     # Load Color profile and HSV profile from the test file
     @staticmethod
     def load_object_color_and_hsv_from_file():
-        object_color_file = open("Outdoor_Object_Recognition_Engine/object_color.txt", "r+")
-        object_hsv_file = open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
 
-        object_c, object_hsv = object_color_file.read(), object_hsv_file.read()
-
-        print(object_c)
-        print(object_hsv)
+        object_color_file = cPickle.loads(open("Outdoor_Object_Recognition_Engine/object_color.txt", "r+"))
+        object_hsv_file = cPickle.loads(open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+"))
 
         object_color_file.close()
         object_hsv_file.close()
 
-        return object_c, object_hsv
-
-
-# import os
-#
-# print(os.getcwd())
-#
-# object_color_file = open(os.getcwd() + "/object_color.txt", "r+")
-#
-# #object_hsv_file = open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+")
-#
-# object_color_file.write("Sad")
-# object_color_file.close()
+        return object_color_file, object_hsv_file

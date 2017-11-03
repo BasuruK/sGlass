@@ -16,7 +16,7 @@ from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import Trac
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
 
-from Description_Generator.generate_description import DescriptionGenerator
+# from Description_Generator.generate_description import DescriptionGenerator
 
 from Dialogue_Manager.settings_manager import SettingsManager
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
