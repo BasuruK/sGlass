@@ -64,8 +64,10 @@ while True:
                 # Track the hand
                 captured_frame, finger_location = Hand_Tracker.track_hand()
             except AttributeError:
+                print(AttributeError)
                 continue
             except TypeError:
+                print(TypeError)
                 continue
 
             print("Finger Location", finger_location)
@@ -102,23 +104,26 @@ while True:
                 Text_To_Speech.speak("The Object user is pointing cannot be identified")
 
             read_image = IMPORT_MANAGER.imutils.imread("Outdoor_Object_Recognition_Engine/edited.jpg")
-
             if Configurations.is_pointer_loc_enabled():
                 fig, ax = IMPORT_MANAGER.plt.subplots(1)
                 ax.imshow(read_image)
 
-                for prediction, image_coordinates in prediction_and_selected_box:
-                    print(prediction, image_coordinates)
-                    string = "You pointed at a "
-                    Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
+            for prediction, image_coordinates in prediction_and_selected_box:
+                print(prediction, image_coordinates)
+                string = "You pointed at a "
+                Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
+
+                if Configurations.is_pointer_loc_enabled():
                     x, y, w, h = image_coordinates
                     color = IMPORT_MANAGER.randomize_color()
                     rect = IMPORT_MANAGER.patches.Rectangle((x, y), w, h, linewidth=3, edgecolor=color, facecolor=color, alpha=0.5)
                     IMPORT_MANAGER.plt.text(x, y, prediction, color=color)
                     ax.add_patch(rect)
 
+            if Configurations.is_pointer_loc_enabled():
                 IMPORT_MANAGER.plt.show()
-        """
+
+        """lll
         ##############################
         END REGION MULTIPLE OBJECT DETECTION
         ##############################
