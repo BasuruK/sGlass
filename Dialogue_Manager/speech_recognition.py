@@ -15,7 +15,7 @@ from Dialogue_Manager.text_to_speech_processesor import error, speak
 from Dialogue_Manager.settings_manager import SettingsManager
 
 lock = threading.Lock()
-
+SettingsController = SettingsManager()
 
 class RecognizeSpeech:
 
@@ -38,12 +38,15 @@ class RecognizeSpeech:
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "Dialogue_Manager/Dialogue_Manager_59010a9be645.json"
 
     def __del__(self):
-        del self.file_name
-        del self.num_seconds
-        del self.recordAudio
-        del self.apiai_devAccessToken
-        del self.apiai_cliAccessToken
-        del self.speech_to_text_result
+        try:
+            del self.file_name
+            del self.num_seconds
+            del self.recordAudio
+            del self.apiai_devAccessToken
+            del self.apiai_cliAccessToken
+            del self.speech_to_text_result
+        except AttributeError:
+            pass
 
     def recognize(self):
         # Connect to Google Speech API by using Service Account access token
@@ -113,6 +116,7 @@ def speech_coordinator_worker():
             2. Enable/ Disable GBPD display output
             3. Enable/ Disable Finger Location Output
         """
+        settings_controller.immediate_queue()
 
         print("Unlocking Worker")
     except KeyError:

@@ -3,12 +3,29 @@ This file is responsible for changing settings of the application. the command q
 command the application receives
 """
 import os
+import threading
 from config import Configurations as ConfigManager
 
 
 class SettingsManager:
+
     CommandQueueFile = None
     Configurations = None
+
+    # Singleton Variables
+    _lock = threading.Lock()
+    _instance = None
+
+    # Use a Singleton Object to initiate Thread safe SettingsManager Instance
+    def __new__(cls, *args, **kwargs):
+        """
+        Singleton Configuration Object
+        :return: Single object of SettingsManager class
+        """
+        with SettingsManager._lock:
+            if SettingsManager._instance is None:
+                SettingsManager._instance = super(SettingsManager, cls).__new__(cls)
+        return SettingsManager._instance
 
     def __init__(self):
         self.Configurations = ConfigManager()
@@ -20,7 +37,10 @@ class SettingsManager:
         del self.Configurations
 
     # Change Settings according to the commands present in Command Queue
-    def queue_manager(self, immediate_query=False):
+    def queue_manager(self):
+        """
+        Runs the normal commands:- Platform changes, environment changes
+        """
         if not self.is_command_queue_empty():
             self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
             # Read the contents
@@ -47,9 +67,6 @@ class SettingsManager:
             elif command == self.Configurations.change_platform_multiple_detection:
                 self.Configurations.set_platform_mode_multiple_detection()
 
-            elif command == self.Configurations.current_environment:
-                self.Configurations.get_current_environment_mode_name()
-
             elif command == self.Configurations.quit:
                 self.clear_command_queue()
                 exit(0)
@@ -57,12 +74,18 @@ class SettingsManager:
             self.clear_command_queue()
 
     def immediate_queue(self):
+        """
+        Handle Immediate Queries:- Queries that are used to control application specific commands used for
+        testing purposes in the development mode
+
+        Does not use the class CommandQueueFile variable as it raises a conflict with the main Queuelllll
+        """
         # Run only for Immediate Queries
-        self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
+        CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         # Read the contents
-        command = self.CommandQueueFile.read()
+        command = CommandQueueFile.read()
         # Close the file pointer and clear
-        self.CommandQueueFile.close()
+        CommandQueueFile.close()
 
         if command == self.Configurations.enable_description:
             self.Configurations.enable_description_generator()
@@ -86,7 +109,10 @@ class SettingsManager:
 
         elif command == self.Configurations.disable_finger_loc_display_output:
             self.Configurations.disable_pointer_loc_display()
-        self.clear_command_queue()
+            self.clear_command_queue()
+
+        elif command == self.Configurations.current_environment:
+            self.Configurations.get_current_environment_mode_name()
 
     # Clear Command Queue
     @staticmethod
@@ -148,6 +174,7 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
+
         change = self.is_platform_change_command_issued()
 
         return command == change
