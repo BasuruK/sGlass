@@ -52,3 +52,13 @@ def speak(sentence):
     tts = gTTS(text=sentence, lang='en', slow=False)
     tts.save("speak.mp3")
     os.system("mpg321 speak.mp3")
+
+
+def speak_secondary(sentence):
+    """
+    Only use when the primary function is busy
+    :param sentence: The sentence to be spoken
+    """
+    tts = gTTS(text=sentence, lang='en', slow=False)
+    tts.save("speak_secondary.mp3")
+    os.system("mpg321 speak_secondary.mp3")

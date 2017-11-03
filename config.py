@@ -6,7 +6,7 @@ This file is acting as the settings file for the program which corresponds to Ou
 Engine.
 """
 import threading
-from Dialogue_Manager.text_to_speech_processesor import speak
+from Dialogue_Manager.text_to_speech_processesor import speak_secondary
 
 
 class Configurations(object):
@@ -37,9 +37,9 @@ class Configurations(object):
         :return: current ENVIRONMENT_NAME
         """
         if self.is_indoor_mode():
-            return "Indoor Mode"
+            speak_secondary("Indoor Mode")
         elif self.is_outdoor_mode():
-            speak("Outdoor Mode")
+            speak_secondary("Outdoor Mode")
 
     def get_environment_mode(self):
         """
@@ -230,6 +230,8 @@ class Configurations(object):
     """
     Available User Commands are Listed below. The commands are sent as a reference point to other classes
     """
+    capture_image = "wit_capture_image"
+
     change_environment = "wit_cng_env"
 
     change_environment_indoor = "wit_cng_env_in"
