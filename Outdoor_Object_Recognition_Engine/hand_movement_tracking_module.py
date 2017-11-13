@@ -10,6 +10,7 @@ operate the system at a particular time, and only able to detect single hand.
 import cv2
 import numpy as np
 import os
+import h5py
 import _pickle as cPickle
 from Dialogue_Manager.settings_manager import SettingsManager
 from config import Configurations
@@ -73,7 +74,6 @@ class TrackHand:
                 # Checking if the color profile is already saved
 
                 self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
-                # self.objectColor, self.objectHistogram = self.get_hsv_of_hand()
 
                 if self.objectColor is None and self.objectHistogram is None:
                     break  # Platform change or quit issued
@@ -217,6 +217,7 @@ class TrackHand:
                 object_histogram = cv2.calcHist([hsv_color], [0, 1], None, [12, 15], [0, 180, 0, 256])
                 # Normalize the Histogram
                 object_histogram = cv2.normalize(object_histogram, object_histogram, 0, 255, cv2.NORM_MINMAX)
+                self.save_object_color_and_hsv_frame(object_color, object_histogram)
                 return object_color, object_histogram
 
     # Returns the Contour with the maximum area
@@ -320,14 +321,11 @@ class TrackHand:
 
             here = os.path.dirname(os.path.abspath(__file__))
 
-            object_color_file = open(os.path.join(here, "object_color.txt"), "w")
-            object_hsv_file = open(os.path.join(here, "object_histogram.txt"), "w")
+            object_color_file = h5py.File(os.path.join(here, "object_color.h5"), "w")
+            object_hsv_file = h5py.File(os.path.join(here, "object_histogram.h5"), "w")
 
-            temp_clr = [object_color]
-            temp_hsv = [object_hist]
-
-            object_color_file.write(cPickle.dumps(temp_clr))
-            object_hsv_file.write(cPickle.dumps(temp_hsv))
+            object_color_file.create_dataset("ColorProfile", data=object_color)
+            object_hsv_file.create_dataset("HSVProfile", data=object_hist)
 
             object_color_file.close()
             object_hsv_file.close()
@@ -337,24 +335,33 @@ class TrackHand:
         except FileNotFoundError as e:
             print(str(e))
             print("Object Color or Object Histogram save files not found, will be created now")
-            open("Outdoor_Object_Recognition_Engine/object_color.txt", "w+").close()
-            open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "w+").close()
+            open("Outdoor_Object_Recognition_Engine/object_color.h5", "w+").close()
+            open("Outdoor_Object_Recognition_Engine/object_histogram.h5", "w+").close()
 
     # Check weather Object color and HSV files are empty
     @staticmethod
     def is_object_color_and_hsv_files_empty():
-        object_color_file = os.stat("Outdoor_Object_Recognition_Engine/object_color.txt").st_size
-        object_hsv_file = os.stat("Outdoor_Object_Recognition_Engine/object_histogram.txt").st_size
-        return object_color_file == 0 and object_hsv_file == 0
+        try:
+            object_color_file = os.stat("Outdoor_Object_Recognition_Engine/object_color.h5").st_size
+            object_hsv_file = os.stat("Outdoor_Object_Recognition_Engine/object_histogram.h5").st_size
+            return object_color_file == 0 and object_hsv_file == 0
+
+        except FileNotFoundError:
+            print("H5 files not found, Will create")
+            open("Outdoor_Object_Recognition_Engine/object_color.h5", "w+").close()
+            open("Outdoor_Object_Recognition_Engine/object_histogram.h5", "w+").close()
 
     # Load Color profile and HSV profile from the test file
     @staticmethod
     def load_object_color_and_hsv_from_file():
 
-        object_color_file = cPickle.loads(open("Outdoor_Object_Recognition_Engine/object_color.txt", "r+"))
-        object_hsv_file = cPickle.loads(open("Outdoor_Object_Recognition_Engine/object_histogram.txt", "r+"))
+        object_color_file = h5py.File("Outdoor_Object_Recognition_Engine/object_color.h5", "r")
+        object_hsv_file = h5py.File("Outdoor_Object_Recognition_Engine/object_histogram.h5", "r")
 
+        color_profile = object_color_file["ColorProfile"][:]
+        hsv_profile = object_hsv_file["HSVProfile"][:
+                     ]
         object_color_file.close()
         object_hsv_file.close()
 
-        return object_color_file, object_hsv_file
+        return color_profile, hsv_profile
