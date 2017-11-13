@@ -2,10 +2,8 @@
 Main.py handles the main functions of the Application.
 NO UNAUTHORIZED EDITS ARE ALLOWED
 
-TODO: 1. Change the Outdoor object recognition module to recognize one object at a time.
-2. Hide the Hand Track and GBPD algorithm, add keypress event to activate them when required.
-3. Integrate Indoor Object Recognition Module to work with voice commands as well as shortcut key.
-4. Put the program in a infinite loop with a break condition to make sure the program runs every time.
+TODO: 1. Change description modules Model to load at import manager
+2. Integrate Indoor Object recognition Module
 """
 
 import imports as IMPORT_MANAGER
