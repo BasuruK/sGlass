@@ -69,6 +69,7 @@ class SettingsManager:
 
             elif command == self.Configurations.quit:
                 self.clear_command_queue()
+                self.Configurations.set_to_shutdown_state()
                 exit(0)
 
             elif command == self.Configurations.clear_hand_tracking_profiles:
@@ -81,7 +82,7 @@ class SettingsManager:
         Handle Immediate Queries:- Queries that are used to control application specific commands used for
         testing purposes in the development mode
 
-        Does not use the class CommandQueueFile variable as it raises a conflict with the main Queuelllll
+        Does not use the class CommandQueueFile variable as it raises a conflict with the main Queue
         """
         # Run only for Immediate Queries
         CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
@@ -116,6 +117,12 @@ class SettingsManager:
 
         elif command == self.Configurations.current_environment:
             self.Configurations.get_current_environment_mode_name()
+
+        elif command == self.Configurations.enable_description_generation:
+            self.Configurations.enable_description_generator()
+
+        elif command == self.Configurations.disable_description_generation:
+            self.Configurations.disable_description_generator()
 
     # Clear Command Queue
     @staticmethod
@@ -187,6 +194,7 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
+        self.Configurations.set_to_shutdown_state()
         quit_command = "wit_quit"
 
         return command == quit_command
