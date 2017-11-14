@@ -14,7 +14,7 @@ from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import Trac
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
 
-# from Description_Generator.generate_description import DescriptionGenerator
+from Description_Generator.generate_description import DescriptionGenerator
 
 from Dialogue_Manager.settings_manager import SettingsManager
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
@@ -46,9 +46,7 @@ while True:
 
     if Configurations.is_outdoor_mode():
         """
-        ##############################
-        REGION MULTIPLE OBJECT DETECTION
-        ##############################
+        # REGION MULTIPLE OBJECT DETECTION
         """
         # Check if its Multiple Object Detection Platform
         if Configurations.is_multiple_object_detection_mode():
@@ -121,16 +119,12 @@ while True:
             if Configurations.is_pointer_loc_enabled():
                 IMPORT_MANAGER.plt.show()
 
-        """lll
-        ##############################
-        END REGION MULTIPLE OBJECT DETECTION
-        ##############################
+        """
+        # END REGION MULTIPLE OBJECT DETECTION
         """
 
         """
-        ##############################
-        REGION SINGLE OBJECT DETECTION
-        ##############################
+        # REGION SINGLE OBJECT DETECTION
         """
         # Check if its Single Object Detection Platform
         if Configurations.is_single_object_detection_mode():
@@ -144,17 +138,27 @@ while True:
                 Text_To_Speech.single_object_speech(prediction=prediction)
 
         """
-        ##############################
-        END REGION SINGLE OBJECT DETECTION
-        ##############################
+        # END REGION SINGLE OBJECT DETECTION
         """
 
-# Initiate Description Generator Module
+        """
+        # REGION DESCRIPTION GENERATOR
+        """
+        if Configurations.is_description_generator_enabled() and not Configurations.is_in_shutdown_state():
+            # Initiate Description Generator Module
 
-# Generate the description for the identified object
-Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
-generated_description = Description_Generator.show_description(image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
-print(generated_description)
-Text_To_Speech.speak(generated_description)
+            # Generate the description for the identified object
+            Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
+            generated_description = Description_Generator.show_description(
+                image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
+            print(generated_description)
+            Text_To_Speech.speak(generated_description)
+
+        """
+        # END REGION DESCRIPTION GENERATOR
+        """
+
+
+
 
 
