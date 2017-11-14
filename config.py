@@ -259,3 +259,5 @@ class Configurations(object):
     disable_finger_loc_display_output = "wit_fin_loc_dis"
 
     quit = "wit_quit"
+
+    clear_hand_tracking_profiles = "wit_clr_hnd_trk"

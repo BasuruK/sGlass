@@ -71,6 +71,9 @@ class SettingsManager:
                 self.clear_command_queue()
                 exit(0)
 
+            elif command == self.Configurations.clear_hand_tracking_profiles:
+                self.clear_hand_tracking_profiles()
+
             self.clear_command_queue()
 
     def immediate_queue(self):
@@ -187,3 +190,9 @@ class SettingsManager:
         quit_command = "wit_quit"
 
         return command == quit_command
+
+    # Clear Object and HSV hand profiles
+    @staticmethod
+    def clear_hand_tracking_profiles():
+        open("Outdoor_Object_Recognition_Engine/object_color.h5", "w+").close()
+        open("Outdoor_Object_Recognition_Engine/object_histogram.h5", "w+").close()
