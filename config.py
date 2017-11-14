@@ -228,6 +228,33 @@ class Configurations(object):
         return self.POINTER_LOC_DISPLAY == 0
 
     """
+    SHUTDOWN_STATE:-
+        1 => In Shutdown State, Cease all activities
+        0 => Not in Shutdown state
+        
+    # Only used to prevent description generation when the shutdown command is issued
+    """
+    SHUTDOWN_STATE = 0
+
+    def get_shutdown_state(self):
+        """
+        :return: Return current state
+        """
+        return self.SHUTDOWN_STATE
+
+    def is_in_shutdown_state(self):
+        """
+        :return: True if in shutdown state | False if in operational state
+        """
+        return self.SHUTDOWN_STATE != 0
+
+    def set_to_shutdown_state(self):
+        """
+        Set the state to Shutdown, this cannot be reversed
+        """
+        self.SHUTDOWN_STATE = 1
+
+    """
     Available User Commands are Listed below. The commands are sent as a reference point to other classes
     """
     capture_image = "wit_capture_image"
@@ -261,3 +288,9 @@ class Configurations(object):
     quit = "wit_quit"
 
     clear_hand_tracking_profiles = "wit_clr_hnd_trk"
+
+    enable_description_generation = "wit_enb_des"
+
+    disable_description_generation = "wit_dis_des"
+
+
