@@ -36,15 +36,18 @@ class SingleDetection:
         speak_secondary("Single Detection Mode")
 
     def __del__(self):
-        del self.IMPORT_MANAGER
-        # del self.Prediction
-        # del self.Frame
-        self.CameraController.release()
-        cv2.destroyAllWindows()
-        del self.CameraController
-        del self.CameraID
-        del self.SettingsController
-        del self.Configurations_Controller
+        try:
+            del self.IMPORT_MANAGER
+            # del self.Prediction
+            # del self.Frame
+            self.CameraController.release()
+            cv2.destroyAllWindows()
+            del self.CameraController
+            del self.CameraID
+            del self.SettingsController
+            del self.Configurations_Controller
+        except TypeError:
+            pass
 
     def track_object(self):
         while True:
