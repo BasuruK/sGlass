@@ -246,7 +246,10 @@ class Configurations(object):
         """
         :return: True if in shutdown state | False if in operational state
         """
-        return self.SHUTDOWN_STATE != 0
+        if self.SHUTDOWN_STATE == 0:
+            return False
+        elif self.SHUTDOWN_STATE == 1:
+            return True
 
     def set_to_shutdown_state(self):
         """
