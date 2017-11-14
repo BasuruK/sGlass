@@ -69,7 +69,6 @@ class SettingsManager:
 
             elif command == self.Configurations.quit:
                 self.clear_command_queue()
-                self.Configurations.set_to_shutdown_state()
                 exit(0)
 
             elif command == self.Configurations.clear_hand_tracking_profiles:
@@ -123,6 +122,10 @@ class SettingsManager:
 
         elif command == self.Configurations.disable_description_generation:
             self.Configurations.disable_description_generator()
+
+        elif command == self.Configurations.quit:
+            self.Configurations.set_to_shutdown_state()
+            exit(0)
 
     # Clear Command Queue
     @staticmethod
@@ -194,7 +197,6 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
-        self.Configurations.set_to_shutdown_state()
         quit_command = "wit_quit"
 
         return command == quit_command
