@@ -1,9 +1,4 @@
 
-# coding: utf-8
-
-# In[1]:
-
-
 import os,cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,22 +22,25 @@ USE_SKLEARN_PREPROCESSING=False
 
 from sklearn import preprocessing
 
-
-# In[2]:
-
-
 class Indoor_Object_Recognition_System:
-    
-    def __inti__(objectdatasetpath):
-        self.objectdatasetpath=objectdatasetpath;
+
+    img_rows = 128
+    img_colms = 128
+    num_channels = 3
+    num_epoch = 6
+    img_data_scaled = None
+    img_name = None
+
+    def __init__(self, objectdatasetpath=None):
+        self.objectdatasetpath=objectdatasetpath
         
     def image_to_feature_vector(image,size=(128,128)):
-        #resize the image to a fixed size , then flttern the image into a list of raw pixels intensities
+        # resize the image to a fixed size , then flttern the image into a list of raw pixels intensities
         return cv2.resize(image,size).flatten()
 
     def train_indoorObjectRecognition_CNN(self):
         if USE_SKLEARN_PREPROCESSING:
-            img_data=img_data_scaled
+            img_data=self.img_data_scaled
     
         PATH = os.getcwd()
 
@@ -50,10 +48,6 @@ class Indoor_Object_Recognition_System:
         data_path = PATH + self.objectdatasetpath
         data_dir_list = os.listdir(data_path)
 
-        img_rows=128
-        img_colms=128
-        num_channels=3
-        num_epoch=6
 
         img_data_list=[]
         for dataset in data_dir_list:
@@ -63,7 +57,7 @@ class Indoor_Object_Recognition_System:
             for img in img_list:
                 input_img=cv2.imread(data_path+'/'+dataset+'/'+img)
 
-                input_img_flatten=image_to_feature_vector(input_img,(128,128))
+                input_img_flatten = self.image_to_feature_vector(input_img, (128, 128))
 
                 img_data_list.append(input_img_flatten)
 
@@ -71,7 +65,7 @@ class Indoor_Object_Recognition_System:
         img_data=img_data.astype('float')
         print('Image Data',img_data.shape)
 
-        if num_channels==1:
+        if self.num_channels==1:
             if K.image_dim_ordering()=='th':
                 img_data=np.expand_dims(img_data,axis=1)
                 print('Image Data BnW',img_data.shape)
@@ -88,13 +82,13 @@ class Indoor_Object_Recognition_System:
         print("Image Data Scaled" , image_data_scaled)
 
         if K.image_dim_ordering()=='th':
-            image_data_scaled=image_data_scaled.reshape(img_data.shape[0],num_channels,img_rows,img_colms)
+            image_data_scaled=image_data_scaled.reshape(img_data.shape[0],self.num_channels,self.img_rows,self.img_colms)
             print('Image Data Scaled BnW',image_data_scaled.shape)
         else:
-            image_data_scaled=image_data_scaled.reshape(img_data.shape[0],img_rows,img_colms,num_channels)
+            image_data_scaled=image_data_scaled.reshape(img_data.shape[0],self.img_rows,self.img_colms,self.num_channels)
             print('Image Data Scaled RGB',image_data_scaled.shape)
 
-        #Define classes
+        # Define classes
 
         num_classes=2
 
@@ -106,27 +100,27 @@ class Indoor_Object_Recognition_System:
 
         names=['bottel','mug']
 
-        #convert class labels to on-hot encoding
-        Y=np_utils.to_categorical(labels,num_classes)
+        # convert class labels to on-hot encoding
+        Y = np_utils.to_categorical(labels,num_classes)
 
-        x,y=shuffle(img_data,Y,random_state=2)
+        x, y = shuffle(img_data,Y,random_state=2)
 
-        X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=4)
+        X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=4)
 
-        X_train = X_train.reshape(X_train.shape[0], img_colms, img_rows, -1)
-        X_test = X_test.reshape(X_test.shape[0], img_colms, img_rows, -1)
+        X_train = X_train.reshape(X_train.shape[0], self.img_colms, self.img_rows, -1)
+        X_test = X_test.reshape(X_test.shape[0], self.img_colms, self.img_rows, -1)
 
-        input_shape=(img_colms, img_rows, 1)
+        input_shape = (self.img_colms, self.img_rows, 1)
 
         # Defining the model
-        input_shape=img_data[0].shape
+        input_shape = img_data[0].shape
 
         model = Sequential()
 
-        model.add(Conv2D(32, (3,3),border_mode='same',input_shape=(128,128,3)))
+        model.add(Conv2D(32, (3, 3), border_mode='same', input_shape=(128, 128, 3)))
         model.add(Activation('relu'))
 
-        model.add(Conv2D(32,( 3, 3)))
+        model.add(Conv2D(32, ( 3, 3)))
         model.add(Activation('relu'))
 
         model.add(MaxPooling2D(pool_size=(2, 2),dim_ordering='th'))
@@ -163,7 +157,7 @@ class Indoor_Object_Recognition_System:
         # Training
 
         if os.path.isfile('Indoor_Object_Recognition.h5') == False:
-            hist = model.fit(X_train, y_train, batch_size=150, epochs=num_epoch, verbose=1, validation_data=(X_test, y_test))
+            hist = model.fit(X_train, y_train, batch_size=150, epochs=self.num_epoch, verbose=1, validation_data=(X_test, y_test))
             model.save('Indoor_Object_Recognition.h5')
         else:
             hist=load_model('Indoor_Object_Recognition.h5')
@@ -180,7 +174,7 @@ class Indoor_Object_Recognition_System:
 
         return model
 
-    def capture_IO_image():
+    def capture_IO_image(self):
 
         cam=cv2.VideoCapture(0)
 
@@ -203,13 +197,13 @@ class Indoor_Object_Recognition_System:
                 break
             elif k%256 == 32:
                 #SPACE pressed
-                img_name="indoor_object_{}.png".format(img_counter)
+                self.img_name="indoor_object_{}.png".format(img_counter)
 
                 return_value, image = cam.read()
 
-                cv2.imwrite(os.path.join(save, img_name), image)
+                cv2.imwrite(os.path.join(save, self.img_name), image)
 
-                print("{} written!".format(img_name))
+                print("{} written!".format(self.img_name))
 
                 img_counter +=1
 
@@ -217,9 +211,9 @@ class Indoor_Object_Recognition_System:
 
         cv2.destroyAllWindows()
 
-        return img_name
+        return self.img_name
     
-    def predict_object_class(path):
+    def predict_object_class(self, path):
 
         # Predicting the test image
         test_image = cv2.imread(path)
@@ -228,9 +222,9 @@ class Indoor_Object_Recognition_System:
         test_image = test_image.astype('float32')
         test_image /= 255
 
-        if num_channels==1:
+        if self.num_channels == 1:
             if K.image_dim_ordering()=='th':
-                test_image= np.expand_dims(test_image, axis=1)
+                test_image = np.expand_dims(test_image, axis=1)
 
             else:
                 test_image= np.expand_dims(test_image, axis=4) 
@@ -241,7 +235,7 @@ class Indoor_Object_Recognition_System:
             else:
                 test_image= np.expand_dims(test_image, axis=0)
 
-        objectModel=train_indoorObjectRecognition_CNN(self)
+        objectModel = self.load_cnn_model()
         
         # Predicting the test image
         print(objectModel.predict(test_image))
@@ -249,9 +243,28 @@ class Indoor_Object_Recognition_System:
        
         return predict_class
 
+    def load_cnn_model(self):
+        hist = load_model('Indoor_Object_Recognition_Engine/IOIM/Indoor_Object_Recognition.h5')
+        return hist
 
-# In[ ]:
+    def predict_singleObject(self):
 
+        indoor_object = self.capture_IO_image()
 
+        path = os.path.abspath(indoor_object)
+
+        predict_class = None
+
+        prediction = self.predict_object_class(
+            path="Indoor_Object_Recognition_Engine/IOIM/Indoor Objects/Test/indoor_object_0.png")
+
+        if prediction == [0]:
+            predict_class = 'Bottle'
+            print("This is a Bottle")
+        elif prediction == [1]:
+            predict_class = 'Mug'
+            print("This is a Mug")
+
+        return predict_class
 
 
