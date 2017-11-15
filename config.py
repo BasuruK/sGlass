@@ -139,6 +139,45 @@ class Configurations(object):
         return self.PLATFORM_MODE == 2
 
     """
+    PLATFORM_MODE_INDOOR:-
+        1 => Enable with Hand Tracking
+        2 => Enable without Hand Tracking
+    
+    Used in Indoor Object Recognition Module
+    """
+    PLATFORM_MODE_INDOOR = 1
+
+    def get_indoor_platform_mode(self):
+        """
+        :return: Current Platform Mode
+        """
+        return self.PLATFORM_MODE_INDOOR
+
+    def enable_indoor_hand_tracking(self):
+        """
+        Enable Hand tracking in indoor mode
+        """
+        self.PLATFORM_MODE_INDOOR = 1
+
+    def disable_indoor_hand_tracking(self):
+        """
+        Disable Hand tracking in indoor mode
+        """
+        self.PLATFORM_MODE_INDOOR = 2
+
+    def is_indoor_mode_tracking_enabled(self):
+        """
+        :return: True if Tracking is enabled
+        """
+        return self.PLATFORM_MODE_INDOOR == 1
+
+    def is_indoor_mode_tracking_disabled(self):
+        """
+        :return: True if Tracking Disabled
+        """
+        return self.PLATFORM_MODE_INDOOR == 2
+
+    """
     DESCRIPTION_GENERATOR:-
         1 => Enable (default)
         0 => Disable
