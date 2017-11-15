@@ -45,23 +45,28 @@ while True:
         # Initiate Indoor Object Mode
         Hand_Gesture = Hand_Gesture_Recognition_System(IMPORT_MANAGER)
         Indoor_Object = Indoor_Object_Recognition_System(IMPORT_MANAGER)
-        # Capture Hand Gesture
-        hand_gesture_capture = Hand_Gesture.capture_hand_gesture()
-        # Detect the Hand Gesture
-        hand_prediction = Hand_Gesture.get_result_of_hand_gesture(hand_gesture_capture)
-        print(hand_prediction)
-        # Detect Object
-        if hand_prediction == "Positive Hand Gesture":
 
-            prediction = Indoor_Object.predict_objects(hand_gesture_capture)
+        if Configurations.is_indoor_mode_tracking_enabled():
+            # Capture Hand Gesture
+            hand_gesture_capture = Hand_Gesture.capture_hand_gesture()
+            # Detect the Hand Gesture
+            if hand_gesture_capture is not None:
+                hand_prediction = Hand_Gesture.get_result_of_hand_gesture(hand_gesture_capture)
+                print(hand_prediction)
+                # Detect Object
+                if hand_prediction == "Positive Hand Gesture":
 
-            if prediction == [0]:
-                print("This is a Bottle")
-            elif prediction == [1]:
-                print("This is a Mug")
+                    prediction = Indoor_Object.predict_objects(hand_gesture_capture)
 
-        else:
-            print("Hand Gesture is not suitable for tracking the object")
+                    if prediction == [0]:
+                        print("This is a Bottle")
+                    elif prediction == [1]:
+                        print("This is a Mug")
+
+                else:
+                    print("Hand Gesture is not suitable for tracking the object")
+        elif Configurations.is_indoor_mode_tracking_disabled():
+            print("Disabled")
 
     if Configurations.is_outdoor_mode():
         """
