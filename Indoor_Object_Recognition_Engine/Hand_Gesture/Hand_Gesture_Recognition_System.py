@@ -23,6 +23,9 @@ USE_SKLEARN_PREPROCESSING = False
 from sklearn import preprocessing
 from Dialogue_Manager.settings_manager import SettingsManager
 from config import Configurations
+from PIL import Image
+from keras.preprocessing import image as keras_preprocess
+
 
 class Hand_Gesture_Recognition_System:
 
@@ -34,15 +37,21 @@ class Hand_Gesture_Recognition_System:
     img_data_scaled = None
     SettingsController = None
     Configurations_Controller = None
+    CameraController = None
+    Frame = None
     img_name = None
+    IMPORT_MANAGER = None
 
-    def __init__(self, datasetpath=None):
+    def __init__(self, import_manager,datasetpath=None):
         self.datasetpath = datasetpath
         self.SettingsController = SettingsManager()
         self.Configurations_Controller = Configurations()
-        
-    def image_to_feature_vector(image, size=(128,128)):
-        # resize the image to a fixed size , then flttern the image into a list of raw pixels intensities
+        self.CameraController = cv2.VideoCapture(self.Configurations_Controller.CAMERA_ID)
+        self.IMPORT_MANAGER = import_manager
+
+    @staticmethod
+    def image_to_feature_vector(image, size=(128, 128)):
+        # resize the image to a fixed size , then flatten the image into a list of raw pixels intensities
         return cv2.resize(image, size).flatten()
 
     def train_handGestureRecognition_CNN(self):
@@ -54,8 +63,6 @@ class Hand_Gesture_Recognition_System:
         # Define data path
         data_path = PATH + self.datasetpath
         data_dir_list = os.listdir(data_path)
-
-
 
         img_data_list=[]
         for dataset in data_dir_list:
@@ -213,7 +220,7 @@ class Hand_Gesture_Recognition_System:
 
         # Predicting the test image
         
-        hgModel = self.load_hand_model()
+        hgModel = self.IMPORT_MANAGER.load_hand_model()
         
         print(hgModel.predict(test_image))
         predict_class=hgModel.predict_classes(test_image)
@@ -265,7 +272,7 @@ class Hand_Gesture_Recognition_System:
                 img_counter += 1
             # Change environment to Outdoor
             if k == 101:
-                self.Configurations_Controller.set_environment_mode_indoor()
+                self.Configurations_Controller.set_environment_mode_outdoor()
                 print("Environment Changing")
                 k = 10
 
@@ -285,8 +292,35 @@ class Hand_Gesture_Recognition_System:
 
         return self.img_name
 
-    def load_hand_model(self):
-        hist = load_model('Indoor_Object_Recognition_Engine/Hand_Gesture/Hand_Gesture_Recognition.h5')
-        return hist
+    def capture_hand_gesture(self):
+        while True:
+            _, self.Frame = self.CameraController.read()
+            cv2.imshow("Indoor Object Rec Module", self.Frame)
 
+            waitkey = cv2.waitKey(1) % 256
+            # print(waitkey)
+            if waitkey == 99:
+                self.CameraController.release()
+                cv2.destroyAllWindows()
+                processed_image = self.preprocessed_image(self.Frame)
+                return processed_image
 
+    def get_result_of_hand_gesture(self, image):
+
+        classification_model = self.IMPORT_MANAGER.load_hand_model()
+        prediction = classification_model.predict_classes(image)
+
+        if prediction == [0]:
+            return "Negative Hand Gesture"
+        elif prediction == [1]:
+            return "Positive Hand Gesture"
+
+    # Pre-process the image as for classifier requirements
+    @staticmethod
+    def preprocessed_image(image):
+        processed_image = Image.fromarray(image)
+        processed_image = processed_image.resize((128, 128))
+        processed_image = keras_preprocess.img_to_array(processed_image)
+        processed_image = np.expand_dims(processed_image, axis=0)
+
+        return processed_image

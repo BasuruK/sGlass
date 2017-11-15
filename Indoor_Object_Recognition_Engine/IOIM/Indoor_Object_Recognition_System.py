@@ -19,6 +19,8 @@ import os.path
 from keras.models import load_model
 
 USE_SKLEARN_PREPROCESSING=False
+from Dialogue_Manager.settings_manager import SettingsManager
+from config import Configurations
 
 from sklearn import preprocessing
 
@@ -30,9 +32,15 @@ class Indoor_Object_Recognition_System:
     num_epoch = 6
     img_data_scaled = None
     img_name = None
+    SettingsController = None
+    ConfigurationsController = None
+    IMPORT_MANAGER = None
 
-    def __init__(self, objectdatasetpath=None):
+    def __init__(self, import_manager,objectdatasetpath=None):
         self.objectdatasetpath=objectdatasetpath
+        self.SettingsController = SettingsManager()
+        self.ConfigurationsController = Configurations()
+        self.IMPORT_MANAGER = import_manager
         
     def image_to_feature_vector(image,size=(128,128)):
         # resize the image to a fixed size , then flttern the image into a list of raw pixels intensities
@@ -192,11 +200,11 @@ class Indoor_Object_Recognition_System:
             k=cv2.waitKey(1)
 
             if k%256 == 27:
-                #ESC pressed
+                # ESC pressed
                 print("Escape hit, closing...")
                 break
             elif k%256 == 32:
-                #SPACE pressed
+                # SPACE pressed
                 self.img_name="indoor_object_{}.png".format(img_counter)
 
                 return_value, image = cam.read()
@@ -235,17 +243,13 @@ class Indoor_Object_Recognition_System:
             else:
                 test_image= np.expand_dims(test_image, axis=0)
 
-        objectModel = self.load_cnn_model()
+        objectModel = self.IMPORT_MANAGER.load_cnn_model()
         
         # Predicting the test image
         print(objectModel.predict(test_image))
         predict_class=objectModel.predict_classes(test_image)
        
         return predict_class
-
-    def load_cnn_model(self):
-        hist = load_model('Indoor_Object_Recognition_Engine/IOIM/Indoor_Object_Recognition.h5')
-        return hist
 
     def predict_singleObject(self):
 
@@ -267,4 +271,7 @@ class Indoor_Object_Recognition_System:
 
         return predict_class
 
-
+    def predict_objects(self, image):
+        classification_model = self.IMPORT_MANAGER.load_cnn_model()
+        prediction = classification_model.predict_classes(image)
+        return prediction
