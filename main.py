@@ -14,6 +14,9 @@ from Outdoor_Object_Recognition_Engine.hand_movement_tracking_module import Trac
 from Outdoor_Object_Recognition_Engine.point_to_grid_mapper import PointToFingerMapper
 from Outdoor_Object_Recognition_Engine.single_detection_mode import SingleDetection
 
+from Indoor_Object_Recognition_Engine.Hand_Gesture.Hand_Gesture_Recognition_System import Hand_Gesture_Recognition_System
+from Indoor_Object_Recognition_Engine.IOIM.Indoor_Object_Recognition_System import Indoor_Object_Recognition_System
+
 from Description_Generator.generate_description import DescriptionGenerator
 
 from Dialogue_Manager.settings_manager import SettingsManager
@@ -39,10 +42,26 @@ while True:
 
     # Initiate Checking for Indoor or Outdoor Mode
     if Configurations.is_indoor_mode():
+        # Initiate Indoor Object Mode
+        Hand_Gesture = Hand_Gesture_Recognition_System(IMPORT_MANAGER)
+        Indoor_Object = Indoor_Object_Recognition_System(IMPORT_MANAGER)
+        # Capture Hand Gesture
+        hand_gesture_capture = Hand_Gesture.capture_hand_gesture()
+        # Detect the Hand Gesture
+        hand_prediction = Hand_Gesture.get_result_of_hand_gesture(hand_gesture_capture)
+        print(hand_prediction)
+        # Detect Object
+        if hand_prediction == "Positive Hand Gesture":
 
-        while i < 2:
-            print("Indoor Mode")
-            i += 1
+            prediction = Indoor_Object.predict_objects(hand_gesture_capture)
+
+            if prediction == [0]:
+                print("This is a Bottle")
+            elif prediction == [1]:
+                print("This is a Mug")
+
+        else:
+            print("Hand Gesture is not suitable for tracking the object")
 
     if Configurations.is_outdoor_mode():
         """
