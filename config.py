@@ -26,11 +26,21 @@ class Configurations(object):
         return Configurations._instance
 
     """
+    CAMERA_ID:-
+        0 => Default Camera
+        1 => External Camera
+    """
+    CAMERA_ID = 0
+
+    def get_camera_id(self):
+        return self.CAMERA_ID
+
+    """
     ENVIRONMENT MODE:-
         1 => Indoor Object Detection (default)
         2 => Outdoor Object Detection
     """
-    ENVIRONMENT_MODE = 2
+    ENVIRONMENT_MODE = 1
 
     def get_current_environment_mode_name(self):
         """
