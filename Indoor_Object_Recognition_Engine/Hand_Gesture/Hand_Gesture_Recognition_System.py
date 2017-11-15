@@ -299,11 +299,29 @@ class Hand_Gesture_Recognition_System:
 
             waitkey = cv2.waitKey(1) % 256
             # print(waitkey)
-            if waitkey == 99:
+            # Capture Object
+            if waitkey == 99 or (self.SettingsController.check_command_queue() == Configurations.capture_image):
                 self.CameraController.release()
                 cv2.destroyAllWindows()
                 processed_image = self.preprocessed_image(self.Frame)
                 return processed_image
+
+            # Change environment to Outdoor
+            if waitkey == 101:
+                self.Configurations_Controller.set_environment_mode_outdoor()
+                print("Environment Changing to Outdoor")
+                waitkey = 10
+
+            # Platform Change
+            if (waitkey == 10 or
+                    self.SettingsController.signal_recognition_engines_to_quit() or
+                    self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or
+                    self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
+
+                cv2.destroyAllWindows()
+                self.CameraController.release()
+                print("Indoor Object Detection System Exiting")
+                return None
 
     def get_result_of_hand_gesture(self, image):
 
