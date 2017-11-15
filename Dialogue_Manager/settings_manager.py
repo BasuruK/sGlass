@@ -127,6 +127,18 @@ class SettingsManager:
             self.Configurations.set_to_shutdown_state()
             exit(0)
 
+    @staticmethod
+    def check_command_queue():
+        file_content = os.stat("Dialogue_Manager/command_temp.txt").st_size
+
+        if file_content != 0:
+            # Command is in the queue, read
+            f = open("Dialogue_Manager/command_temp.txt", 'r')
+            command = f.read()
+            return command
+        else:
+            return False
+
     # Clear Command Queue
     @staticmethod
     def clear_command_queue():
