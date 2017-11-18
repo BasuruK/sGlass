@@ -190,6 +190,17 @@ class Configurations(object):
         """
         return self.DESCRIPTION_GENERATOR
 
+    def set_description_generator(self):
+        """
+        Changes value based on the existing values
+        """
+        if self.is_description_generator_enabled():
+            print("Description generator disabled")
+            self.disable_description_generator()
+        elif self.is_description_generator_disabled():
+            print("Description generator enabled")
+            self.enable_description_generator()
+
     def enable_description_generator(self):
         """
         Enable Description Generation
@@ -306,6 +317,25 @@ class Configurations(object):
         """
         self.SHUTDOWN_STATE = 1
 
+    """
+    ENVIRONMENT_CHANGING_STATE:-
+        1 => is in changing state
+        0 => not in changing state
+    """
+
+    ENVIRONMENT_CHANGING_STATE = 0
+
+    def get_changing_state(self):
+        return self.ENVIRONMENT_CHANGING_STATE
+
+    def is_in_changing_state(self):
+        return self.ENVIRONMENT_CHANGING_STATE == 1
+
+    def set_to_changing_state(self):
+        self.ENVIRONMENT_CHANGING_STATE = 1
+
+    def unset_from_changing_state(self):
+        self.ENVIRONMENT_CHANGING_STATE = 0
     """
     Available User Commands are Listed below. The commands are sent as a reference point to other classes
     """

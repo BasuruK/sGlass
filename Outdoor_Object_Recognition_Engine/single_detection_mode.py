@@ -58,6 +58,10 @@ class SingleDetection:
 
             wait_key = cv2.waitKey(20) & 0xFF
 
+            # Disable descriptions
+            if wait_key == 100:
+                print("Disabled description generation")
+                self.Configurations_Controller.set_description_generator()
             # Change Platform mode to Multiple detection
             if wait_key == 112:
                 self.Configurations_Controller.set_platform_mode_multiple_detection()
@@ -65,7 +69,7 @@ class SingleDetection:
                 wait_key = 10
             # Change environment to indoor
             if wait_key == 101:
-                self.Configurations_Controller.set_environment_mode_outdoor()
+                self.Configurations_Controller.set_environment_mode_indoor()
                 print("Environment Changing")
                 wait_key = 10
 

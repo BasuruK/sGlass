@@ -142,6 +142,10 @@ class TrackHand:
 
                 waitkey = cv2.waitKey(20) & 0xFF
 
+                # Disable descriptions
+                if waitkey == 100:
+                    self.Configurations_Controller.set_description_generator()
+
                 # Disable Grid Output window DEV OPT
                 if waitkey == 103:
                     self.Configurations_Controller.disable_gbpd_display()

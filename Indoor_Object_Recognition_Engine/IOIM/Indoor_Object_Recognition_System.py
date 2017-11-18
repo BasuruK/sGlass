@@ -274,4 +274,5 @@ class Indoor_Object_Recognition_System:
     def predict_objects(self, image):
         classification_model = self.IMPORT_MANAGER.load_cnn_model()
         prediction = classification_model.predict_classes(image)
+
         return prediction
