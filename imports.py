@@ -52,6 +52,7 @@ def load_hand_model():
     hist = load_model('Indoor_Object_Recognition_Engine/Hand_Gesture/Hand_Gesture_Recognition.h5')
     return hist
 
+
 # Load VGG19 model
 baseVgg19Model = VGG19(weights='imagenet')
 # Load Description Generator Model
