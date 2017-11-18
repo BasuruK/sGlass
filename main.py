@@ -22,6 +22,7 @@ from Description_Generator.generate_description import DescriptionGenerator
 from Dialogue_Manager.settings_manager import SettingsManager
 from Dialogue_Manager.text_to_speech_processesor import TextToSpeech
 from Dialogue_Manager.keyboard_listener import listen_to_keypress
+from Dialogue_Manager.text_to_speech_processesor import speak
 
 # Initiate Dialogue Manager
 Text_To_Speech = TextToSpeech(IMPORT_MANAGER)
@@ -60,8 +61,11 @@ while True:
 
                     if prediction == [0]:
                         print("This is a Bottle")
+                        speak("This is a Bottle")
+
                     elif prediction == [1]:
                         print("This is a Mug")
+                        speak("This is a Mug")
 
                 else:
                     print("Hand Gesture is not suitable for tracking the object")
@@ -75,7 +79,7 @@ while True:
         # Check if its Multiple Object Detection Platform
         if Configurations.is_multiple_object_detection_mode():
             # Initiate Outdoor Object Recognition Module & Hand Tracking Module
-            Hand_Tracker = TrackHand(threshold=70, camera=0, blur_value=21)
+            Hand_Tracker = TrackHand(threshold=70, camera=ConfigManager.CAMERA_ID, blur_value=21)
             Grid_Based_Probability_Detection = GBPD(imports=IMPORT_MANAGER, classifier=IMPORT_MANAGER.outdoor_objects_classifier,
                                                     window_size=(256, 256))
 
@@ -154,7 +158,7 @@ while True:
         if Configurations.is_single_object_detection_mode():
             print("Single Detection")
 
-            single_detection = SingleDetection(IMPORT_MANAGER, camera_id=0, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
+            single_detection = SingleDetection(IMPORT_MANAGER, camera_id=ConfigManager.CAMERA_ID, classifier=IMPORT_MANAGER.outdoor_objects_classifier)
             prediction = single_detection.track_object()
 
             if prediction is not None:
@@ -182,8 +186,3 @@ while True:
         """
         # END REGION DESCRIPTION GENERATOR
         """
-
-
-
-
-
