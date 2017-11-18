@@ -181,7 +181,6 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
         change = self.is_environment_change_command_issued()
-
         return command == change
 
     # Check weather command queue possesses a command to change platform
