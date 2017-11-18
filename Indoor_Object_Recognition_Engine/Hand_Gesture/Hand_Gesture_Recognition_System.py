@@ -48,6 +48,7 @@ class Hand_Gesture_Recognition_System:
         self.Configurations_Controller = Configurations()
         self.CameraController = cv2.VideoCapture(self.Configurations_Controller.CAMERA_ID)
         self.IMPORT_MANAGER = import_manager
+        self.Frame
 
     @staticmethod
     def image_to_feature_vector(image, size=(128, 128)):
@@ -304,7 +305,13 @@ class Hand_Gesture_Recognition_System:
                 self.CameraController.release()
                 cv2.destroyAllWindows()
                 processed_image = self.preprocessed_image(self.Frame)
+                cv2.imwrite("Outdoor_Object_Recognition_Engine/edited.jpg", self.Frame)
                 return processed_image
+
+            # Disable descriptions
+            if waitkey == 100:
+                print("Disabled description generation")
+                self.Configurations_Controller.set_description_generator()
 
             # Change environment to Outdoor
             if waitkey == 101:
