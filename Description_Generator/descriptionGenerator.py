@@ -80,7 +80,7 @@ class Generator(object):
         from keras.preprocessing import image
         from keras.models import Model
         from keras.applications.vgg19 import preprocess_input
-        from keras.applications import VGG19
+        import imports as IMPORT_MANAGER
         from Description_Generator.CNNModel import CNNModel
 
         if self.CNN_Name == 'basuru':
@@ -100,7 +100,7 @@ class Generator(object):
         elif self.CNN_Name == 'vgg19':
             
             self.IMG_FEATS = 4096
-            base_model = VGG19(weights='imagenet')
+            base_model = IMPORT_MANAGER.baseVgg19Model
             model =  Model(input=base_model.input, output=base_model.get_layer('fc2').output)
             self.extracted_features = []
             img = image.load_img(image_path, target_size=(224, 224))

@@ -28,6 +28,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from keras.models import load_model
+from keras.applications import VGG19
 import threading
 
 # Use this section to import Machine Learning and AI Models
@@ -51,7 +52,8 @@ def load_hand_model():
     hist = load_model('Indoor_Object_Recognition_Engine/Hand_Gesture/Hand_Gesture_Recognition.h5')
     return hist
 
-
+# Load VGG19 model
+baseVgg19Model = VGG19(weights='imagenet')
 # Load Description Generator Model
 description_generator_model = load_model('Description_Generator/Data/pretrainedmodel/descgenrator.30-2.19.hdf5')
 
