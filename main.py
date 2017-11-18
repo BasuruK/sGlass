@@ -169,20 +169,20 @@ while True:
         # END REGION SINGLE OBJECT DETECTION
         """
 
-        """
-        # REGION DESCRIPTION GENERATOR
-        """
-        x = Configurations.is_in_shutdown_state()
-        if Configurations.is_description_generator_enabled() and x is False:
-            # Initiate Description Generator Module
+    """
+    # REGION DESCRIPTION GENERATOR
+    """
+    x = Configurations.is_in_shutdown_state()
+    if Configurations.is_description_generator_enabled() and x is False:
+        # Initiate Description Generator Module
 
-            # Generate the description for the identified object
-            Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
-            generated_description = Description_Generator.show_description(
-                image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
-            print(generated_description)
-            Text_To_Speech.speak(generated_description)
+        # Generate the description for the identified object
+        Description_Generator = DescriptionGenerator(imports=IMPORT_MANAGER)
+        generated_description = Description_Generator.show_description(
+            image_path='Outdoor_Object_Recognition_Engine/edited.jpg')
+        print(generated_description)
+        Text_To_Speech.speak(generated_description)
 
-        """
-        # END REGION DESCRIPTION GENERATOR
-        """
+    """
+    # END REGION DESCRIPTION GENERATOR
+    """
