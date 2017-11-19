@@ -1,9 +1,11 @@
 """
+Author : Balasuriya B.K | IT14020254
+        Ranasinghe A.R.M.D.N | IT14043574
+        Lokuhettiarachchi N.P | IT14024214
+
 Main.py handles the main functions of the Application.
 NO UNAUTHORIZED EDITS ARE ALLOWED
 
-TODO: 1. Change description modules Model to load at import manager
-2. Integrate Indoor Object recognition Module
 """
 
 import imports as IMPORT_MANAGER
