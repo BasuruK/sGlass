@@ -30,7 +30,7 @@ class Configurations(object):
         0 => Default Camera
         1 => External Camera
     """
-    CAMERA_ID = 0
+    CAMERA_ID = 1
 
     def get_camera_id(self):
         return self.CAMERA_ID
@@ -40,7 +40,7 @@ class Configurations(object):
         1 => Indoor Object Detection (default)
         2 => Outdoor Object Detection
     """
-    ENVIRONMENT_MODE = 1
+    ENVIRONMENT_MODE = 2
 
     def get_current_environment_mode_name(self):
         """
@@ -317,25 +317,6 @@ class Configurations(object):
         """
         self.SHUTDOWN_STATE = 1
 
-    """
-    ENVIRONMENT_CHANGING_STATE:-
-        1 => is in changing state
-        0 => not in changing state
-    """
-
-    ENVIRONMENT_CHANGING_STATE = 0
-
-    def get_changing_state(self):
-        return self.ENVIRONMENT_CHANGING_STATE
-
-    def is_in_changing_state(self):
-        return self.ENVIRONMENT_CHANGING_STATE == 1
-
-    def set_to_changing_state(self):
-        self.ENVIRONMENT_CHANGING_STATE = 1
-
-    def unset_from_changing_state(self):
-        self.ENVIRONMENT_CHANGING_STATE = 0
     """
     Available User Commands are Listed below. The commands are sent as a reference point to other classes
     """

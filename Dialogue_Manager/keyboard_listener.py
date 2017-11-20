@@ -42,3 +42,4 @@ def listen_to_keypress():
 
     print("Keyboard Listener Terminated")
     lock.release()
+    print("Number of threads active: ",threading.active_count())
