@@ -316,15 +316,31 @@ class Configurations(object):
         """
         self.SHUTDOWN_STATE = 1
 
+    """
+    RESET:-
+        1 => Is in reset state
+        0 => Not in reset state
+        
+    Only used when the user issues a clear hand tracking profile command
+    """
     RESET = 0
 
     def is_in_reset_state(self):
+        """
+        :return: True if is in Reset state
+        """
         return self.RESET == 1
 
     def set_to_reset_state(self):
+        """
+        Set to reset state
+        """
         self.RESET = 1
 
     def unset_reset_state(self):
+        """
+        Set to default state
+        """
         self.RESET = 0
 
     """
