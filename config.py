@@ -10,7 +10,6 @@ from Dialogue_Manager.text_to_speech_processesor import speak_secondary
 
 
 class Configurations(object):
-
     _instance = None
     _lock = threading.Lock()
 
@@ -317,6 +316,17 @@ class Configurations(object):
         """
         self.SHUTDOWN_STATE = 1
 
+    RESET = 0
+
+    def is_in_reset_state(self):
+        return self.RESET == 1
+
+    def set_to_reset_state(self):
+        self.RESET = 1
+
+    def unset_reset_state(self):
+        self.RESET = 0
+
     """
     Available User Commands are Listed below. The commands are sent as a reference point to other classes
     """
@@ -355,5 +365,3 @@ class Configurations(object):
     enable_description_generation = "wit_enb_des"
 
     disable_description_generation = "wit_dis_des"
-
-
