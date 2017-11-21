@@ -177,7 +177,7 @@ while True:
     # REGION DESCRIPTION GENERATOR
     """
     x = Configurations.is_in_shutdown_state()
-    if Configurations.is_description_generator_enabled() and x is False:
+    if Configurations.is_description_generator_enabled() and x is False and Configurations.is_in_reset_state() is False:
         # Initiate Description Generator Module
 
         # Generate the description for the identified object

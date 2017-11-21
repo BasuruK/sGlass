@@ -181,6 +181,7 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
         change = self.is_environment_change_command_issued()
+        self.Configurations.set_to_reset_state()
         return command == change
 
     # Check weather command queue possesses a command to change platform
@@ -200,7 +201,7 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
-
+        self.Configurations.set_to_reset_state()
         change = self.is_platform_change_command_issued()
 
         return command == change
@@ -211,6 +212,7 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
         quit_command = "wit_quit"
+        self.Configurations.set_to_reset_state()
 
         return command == quit_command
 
