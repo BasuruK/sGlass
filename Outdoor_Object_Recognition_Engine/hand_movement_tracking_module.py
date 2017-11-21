@@ -169,7 +169,8 @@ class TrackHand:
                 if (waitkey == 10 or
                         self.SettingsController.signal_recognition_engines_to_quit() or
                         self.SettingsController.signal_recognition_engines_to_quit_on_platform_change() or
-                        self.SettingsController.signal_recognition_engines_to_quit_when_system_quits()):
+                        self.SettingsController.signal_recognition_engines_to_quit_when_system_quits() or
+                        self.SettingsController.reset_recognition_engine_when_hand_track_data_clears()):
 
                     cv2.destroyAllWindows()
                     self.cameraController.release()

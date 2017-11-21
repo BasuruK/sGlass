@@ -73,9 +73,6 @@ class SettingsManager:
                 self.clear_command_queue()
                 exit(0)
 
-            elif command == self.Configurations.clear_hand_tracking_profiles:
-                self.clear_hand_tracking_profiles()
-
             self.clear_command_queue()
 
     def immediate_queue(self):
@@ -124,6 +121,9 @@ class SettingsManager:
 
         elif command == self.Configurations.disable_description_generation:
             self.Configurations.disable_description_generator()
+
+        elif command == self.Configurations.clear_hand_tracking_profiles:
+            self.clear_hand_tracking_profiles()
 
         elif command == self.Configurations.quit:
             self.Configurations.set_to_shutdown_state()
@@ -215,7 +215,14 @@ class SettingsManager:
         return command == quit_command
 
     # Clear Object and HSV hand profiles
-    @staticmethod
-    def clear_hand_tracking_profiles():
+    def clear_hand_tracking_profiles(self):
         open("Outdoor_Object_Recognition_Engine/object_color.h5", "w+").close()
         open("Outdoor_Object_Recognition_Engine/object_histogram.h5", "w+").close()
+        self.Configurations.set_to_reset_state()
+
+    def reset_recognition_engine_when_hand_track_data_clears(self):
+        if self.Configurations.is_in_reset_state():
+            return True
+        else:
+            return False
+
