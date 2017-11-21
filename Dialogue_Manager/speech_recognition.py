@@ -117,6 +117,7 @@ def speech_coordinator_worker():
             1. Enable/ Disable Description
             2. Enable/ Disable GBPD display output
             3. Enable/ Disable Finger Location Output
+            4. Clear Hand profile Data
         """
         settings_controller.immediate_queue()
 
