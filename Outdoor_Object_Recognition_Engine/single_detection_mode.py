@@ -33,6 +33,9 @@ class SingleDetection:
         self.CameraController.set(cv2.CAP_PROP_FRAME_HEIGHT, 1400)
         self.CameraController.set(cv2.CAP_PROP_FRAME_WIDTH, 1150)
 
+        # Unset reset status
+        self.Configurations_Controller.unset_reset_state()
+
         speak_secondary("Single Detection Mode")
 
     def __del__(self):
