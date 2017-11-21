@@ -37,7 +37,8 @@ keyboard_listener = IMPORT_MANAGER.threading.Thread(target=listen_to_keypress, n
 keyboard_listener.daemon = True
 keyboard_listener.start()
 
-i = 1
+# Only generate description if Indoor or Outdoor generates True outputs
+true_output = False
 while True:
 
     # Check for settings changes
@@ -71,8 +72,13 @@ while True:
                         print("This is a Mug")
                         speak("This is a Mug")
 
+                    # set true output
+                    true_output = True
+
                 else:
                     print("Hand Gesture is not suitable for tracking the object")
+                    true_output = False
+
         elif Configurations.is_indoor_mode_tracking_disabled():
             print("Disabled")
 
@@ -130,6 +136,7 @@ while True:
             if len(prediction_and_selected_box) is 0:
                 print("The Object user is pointing cannot be identified")
                 Text_To_Speech.speak("The Object user is pointing cannot be identified")
+                true_output = False
 
             read_image = IMPORT_MANAGER.imutils.imread("Outdoor_Object_Recognition_Engine/edited.jpg")
             if Configurations.is_pointer_loc_enabled():
@@ -140,6 +147,9 @@ while True:
                 print(prediction, image_coordinates)
                 string = "You pointed at a "
                 Text_To_Speech.predict_speech(sentence=string, prediction=prediction)
+
+                # Set true output
+                true_output = True
 
                 if Configurations.is_pointer_loc_enabled():
                     x, y, w, h = image_coordinates
@@ -177,7 +187,8 @@ while True:
     # REGION DESCRIPTION GENERATOR
     """
     x = Configurations.is_in_shutdown_state()
-    if Configurations.is_description_generator_enabled() and x is False and Configurations.is_in_reset_state() is False:
+    if Configurations.is_description_generator_enabled() and x is False and Configurations.is_in_reset_state() is False\
+            and true_output:
         # Initiate Description Generator Module
 
         # Generate the description for the identified object
