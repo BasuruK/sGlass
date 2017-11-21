@@ -48,7 +48,7 @@ class Hand_Gesture_Recognition_System:
         self.Configurations_Controller = Configurations()
         self.CameraController = cv2.VideoCapture(self.Configurations_Controller.CAMERA_ID)
         self.IMPORT_MANAGER = import_manager
-        self.Frame
+        self.Configurations_Controller.unset_reset_state()
 
     @staticmethod
     def image_to_feature_vector(image, size=(128, 128)):

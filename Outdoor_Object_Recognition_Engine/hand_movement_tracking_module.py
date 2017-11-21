@@ -49,6 +49,9 @@ class TrackHand:
         # Clear the command queue to remove any previous commands stored
         self.clear_command_queue()
 
+        # Unset reset commands set
+        self.Configurations_Controller.unset_reset_state()
+
         speak_secondary("Multiple Object Detection Mode.")
 
     def __del__(self):
