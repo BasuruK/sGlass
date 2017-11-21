@@ -42,6 +42,8 @@ while True:
 
     # Check for settings changes
     Settings.queue_manager()
+    # Unset previously set reset states
+    Configurations.unset_reset_state()
 
     # Initiate Checking for Indoor or Outdoor Mode
     if Configurations.is_indoor_mode():
