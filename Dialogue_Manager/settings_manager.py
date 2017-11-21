@@ -181,8 +181,11 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
         change = self.is_environment_change_command_issued()
-        self.Configurations.set_to_reset_state()
-        return command == change
+        if command == change:
+            self.Configurations.set_to_reset_state()
+            return True
+        else:
+            return False
 
     # Check weather command queue possesses a command to change platform
     def is_platform_change_command_issued(self):
@@ -201,10 +204,12 @@ class SettingsManager:
         self.CommandQueueFile = open("Dialogue_Manager/command_temp.txt", "r+")
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
-        self.Configurations.set_to_reset_state()
         change = self.is_platform_change_command_issued()
-
-        return command == change
+        if command == change:
+            self.Configurations.set_to_reset_state()
+            return True
+        else:
+            return False
 
     # Issue a signal when quit command is issued
     def signal_recognition_engines_to_quit_when_system_quits(self):
@@ -212,9 +217,12 @@ class SettingsManager:
         command = self.CommandQueueFile.read()
         self.CommandQueueFile.close()
         quit_command = "wit_quit"
-        self.Configurations.set_to_reset_state()
 
-        return command == quit_command
+        if command == quit_command:
+            self.Configurations.set_to_reset_state()
+            return True
+        else:
+            return False
 
     # Clear Object and HSV hand profiles
     def clear_hand_tracking_profiles(self):
