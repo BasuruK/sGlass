@@ -1,6 +1,4 @@
 """
-Author : Balasuriya B.K | IT14020254
-
 This file is responsible for handling keyboard events. This file contains a class which acts as a listener
 that listen to keyboard inputs
 

@@ -1,6 +1,4 @@
 """
-Author : Balasuriya B.K | IT14020254
-
 This file is responsible for changing settings of the application. the command queue will be updated according to the
 command the application receives
 """
