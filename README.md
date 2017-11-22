@@ -15,6 +15,22 @@ libraries.
 
 _This Application is developped using following libreries_
 
-- :point_right: Keras
+This research product is specialized to use in a place with good lighting conditions and requires the following plugins and requirements in order to successfully execute.
+
+- :point_right: Python 3.5+
 - :point_right: Tensorflow
-- :point_right: CMUSphinx
+- :point_right: Keras Library
+- :point_right: H5py library
+- :point_right: GCloud
+- :point_right: GCloud Authentication file
+- :point_right: Scikit learn library
+- :point_right: Scikit Image library
+- :point_right: OpenCV 3+
+- :point_right: gTTS
+- :point_right: Pillow
+- :point_right: Numpy
+- :point_right: VGG19
+- :point_right: Matplotlib
+- :point_right: 720p+ web camera
+- :point_right: 16000Hz+ Microphone
+
